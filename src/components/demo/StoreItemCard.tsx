@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ShoppingCart } from "lucide-react";
-import { Product, useStore } from "@/app/(demo)/kopi-semesta-full/StoreContext";
+import { Product, useStore } from "@/components/demo/StoreContext";
 import ProductCustomizationModal from "./ProductCustomizationModal";
 
 interface StoreItemCardProps {

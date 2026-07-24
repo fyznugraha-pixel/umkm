@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { X, Plus, Check } from "lucide-react";
-import { Product, useStore } from "@/app/(demo)/kopi-semesta-full/StoreContext";
+import { Product, useStore } from "@/components/demo/StoreContext";
 
 interface ProductCustomizationModalProps {
   isOpen: boolean;

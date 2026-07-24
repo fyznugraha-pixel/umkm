@@ -11,7 +11,8 @@ export interface Product {
   description: string;
   image: string;
   stock: number;
-  category: "Kopi" | "Non-Kopi" | "Snack";
+  category: "Kopi" | "Non-Kopi" | "Snack" | "Atasan" | "Bawahan" | "Aksesoris";
+  sizes?: string[]; // Added for fashion
 }
 
 export interface CartItem {
@@ -20,6 +21,7 @@ export interface CartItem {
   quantity: number;
   options?: string[];
   optionPrice?: number;
+  selectedSize?: string; // Added for fashion
 }
 
 export interface OrderItem {
@@ -29,6 +31,7 @@ export interface OrderItem {
   quantity: number;
   options?: string[];
   optionPrice?: number;
+  selectedSize?: string; // Added for fashion
 }
 
 export interface Order {
@@ -38,9 +41,10 @@ export interface Order {
   notes?: string;
   items: OrderItem[];
   totalAmount: number;
-  paymentMethod: "transfer" | "qris" | "cash";
+  paymentMethod: "transfer" | "qris" | "cash" | "cod";
   paymentProof?: string;
-  status: "menunggu_verifikasi" | "diproses" | "menunggu_diambil" | "selesai";
+  shippingAddress?: string; // Added for COD
+  status: "menunggu_verifikasi" | "diproses" | "menunggu_diambil" | "menunggu_pengiriman" | "dikirim" | "selesai";
   createdAt: string;
 }
 
@@ -58,7 +62,7 @@ interface StoreContextType {
   getCartTotal: () => number;
   
   // Order actions
-  checkout: (customerName: string, customerWhatsApp: string, paymentMethod: Order["paymentMethod"], paymentProof?: string, notes?: string) => Order | null;
+  checkout: (customerName: string, customerWhatsApp: string, paymentMethod: Order["paymentMethod"], paymentProof?: string, notes?: string, shippingAddress?: string) => Order | null;
   updateOrderStatus: (orderId: string, newStatus: Order["status"]) => void;
   
   // Admin Product actions
@@ -72,61 +76,7 @@ interface StoreContextType {
   resetDemoData: () => void;
 }
 
-// --- Seed Data ---
-
-const SEED_PRODUCTS: Product[] = [
-  { id: "p1", name: "Es Kopi Semesta", price: 25000, description: "Kopi susu gula aren signature kami dengan espresso house blend.", image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=600", stock: 15, category: "Kopi" },
-  { id: "p2", name: "Latte Art", price: 30000, description: "Espresso dengan steamed milk yang lembut.", image: "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&q=80&w=600", stock: 10, category: "Kopi" },
-  { id: "p3", name: "Manual Brew V60", price: 35000, description: "Kopi filter dengan pilihan biji single origin nusantara.", image: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=600", stock: 8, category: "Kopi" },
-  { id: "p4", name: "Matcha Latte", price: 32000, description: "Premium Uji Matcha dipadukan dengan fresh milk.", image: "https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&q=80&w=600", stock: 12, category: "Non-Kopi" },
-  { id: "p5", name: "Artisan Tea", price: 25000, description: "Pilihan teh artisan dengan aroma menenangkan.", image: "https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?auto=format&fit=crop&q=80&w=600", stock: 20, category: "Non-Kopi" },
-  { id: "p6", name: "Kue Coklat Lumer", price: 18000, description: "Brownies panggang dengan coklat lumer di dalam.", image: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&q=80&w=600", stock: 5, category: "Snack" },
-  { id: "p7", name: "Croissant Butter", price: 20000, description: "Classic french pastry yang renyah di luar.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600", stock: 0, category: "Snack" }, // Stok habis contoh
-];
-
-const SEED_ORDERS: Order[] = [
-  {
-    id: "#ORD-1001",
-    customerName: "Budi Santoso",
-    customerWhatsApp: "08123456789",
-    notes: "Es kopi gulanya dikit aja ya",
-    items: [
-      { productId: "p1", name: "Es Kopi Semesta", price: 25000, quantity: 2 },
-      { productId: "p6", name: "Kue Coklat Lumer", price: 18000, quantity: 1 }
-    ],
-    totalAmount: 68000,
-    paymentMethod: "transfer",
-    paymentProof: "data:image/png;base64,iVBORw0KGgo...", // Dummy
-    status: "menunggu_verifikasi",
-    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString() // 30 mins ago
-  },
-  {
-    id: "#ORD-1002",
-    customerName: "Siti Aminah",
-    customerWhatsApp: "08198765432",
-    notes: "",
-    items: [
-      { productId: "p4", name: "Matcha Latte", price: 32000, quantity: 1 }
-    ],
-    totalAmount: 32000,
-    paymentMethod: "qris",
-    status: "diproses",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString() // 2 hours ago
-  },
-  {
-    id: "#ORD-1003",
-    customerName: "Rudi Hartono",
-    customerWhatsApp: "08122334455",
-    notes: "Minum di tempat",
-    items: [
-      { productId: "p2", name: "Latte Art", price: 30000, quantity: 2 }
-    ],
-    totalAmount: 60000,
-    paymentMethod: "cash",
-    status: "menunggu_diambil",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString() // 1 day ago
-  }
-];
+// Seed Data moved to respective demo folders
 
 // --- Context ---
 
@@ -138,7 +88,17 @@ export const useStore = () => {
   return context;
 };
 
-export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
+export const StoreProvider = ({ 
+  children, 
+  storeId, 
+  seedProducts, 
+  seedOrders 
+}: { 
+  children: React.ReactNode;
+  storeId: string;
+  seedProducts: Product[];
+  seedOrders: Order[];
+}) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -148,23 +108,23 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   // Load from localStorage on mount
   useEffect(() => {
     const loadState = () => {
-      const storedProducts = localStorage.getItem("kopi_semesta_products");
-      const storedCart = localStorage.getItem("kopi_semesta_cart");
-      const storedOrders = localStorage.getItem("kopi_semesta_orders");
-      const storedAuth = localStorage.getItem("kopi_semesta_admin_auth");
+      const storedProducts = localStorage.getItem(`${storeId}_products`);
+      const storedCart = localStorage.getItem(`${storeId}_cart`);
+      const storedOrders = localStorage.getItem(`${storeId}_orders`);
+      const storedAuth = localStorage.getItem(`${storeId}_admin_auth`);
 
       if (storedProducts) {
         setProducts(JSON.parse(storedProducts));
       } else {
-        setProducts(SEED_PRODUCTS);
-        localStorage.setItem("kopi_semesta_products", JSON.stringify(SEED_PRODUCTS));
+        setProducts(seedProducts);
+        localStorage.setItem(`${storeId}_products`, JSON.stringify(seedProducts));
       }
 
       if (storedOrders) {
         setOrders(JSON.parse(storedOrders));
       } else {
-        setOrders(SEED_ORDERS);
-        localStorage.setItem("kopi_semesta_orders", JSON.stringify(SEED_ORDERS));
+        setOrders(seedOrders);
+        localStorage.setItem(`${storeId}_orders`, JSON.stringify(seedOrders));
       }
 
       if (storedCart) {
@@ -181,26 +141,28 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     loadState();
-  }, []);
+  }, [storeId, seedProducts, seedOrders]);
 
   // Save to localStorage when state changes
   useEffect(() => {
     if (!isLoaded) return;
-    localStorage.setItem("kopi_semesta_products", JSON.stringify(products));
-    localStorage.setItem("kopi_semesta_cart", JSON.stringify(cart));
-    localStorage.setItem("kopi_semesta_orders", JSON.stringify(orders));
-    localStorage.setItem("kopi_semesta_admin_auth", JSON.stringify(isAdminLoggedIn));
-  }, [products, cart, orders, isAdminLoggedIn, isLoaded]);
+    localStorage.setItem(`${storeId}_products`, JSON.stringify(products));
+    localStorage.setItem(`${storeId}_cart`, JSON.stringify(cart));
+    localStorage.setItem(`${storeId}_orders`, JSON.stringify(orders));
+    localStorage.setItem(`${storeId}_admin_auth`, JSON.stringify(isAdminLoggedIn));
+  }, [products, cart, orders, isAdminLoggedIn, isLoaded, storeId]);
 
   // --- Cart Methods ---
-  const addToCart = (productId: string, quantity = 1, options?: string[], optionPrice = 0) => {
+  const addToCart = (productId: string, quantity = 1, options?: string[], optionPrice = 0, selectedSize?: string) => {
     const product = products.find(p => p.id === productId);
     if (!product || product.stock < quantity) return; // Prevent adding if out of stock
 
     setCart(prev => {
       const optionsStr = options ? JSON.stringify(options) : "";
       const existing = prev.find(item => 
-        item.productId === productId && (item.options ? JSON.stringify(item.options) : "") === optionsStr
+        item.productId === productId && 
+        (item.options ? JSON.stringify(item.options) : "") === optionsStr &&
+        item.selectedSize === selectedSize
       );
       
       if (existing) {
@@ -212,7 +174,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       }
       
       const cartItemId = Math.random().toString(36).substring(7);
-      return [...prev, { cartItemId, productId, quantity, options, optionPrice }];
+      return [...prev, { cartItemId, productId, quantity, options, optionPrice, selectedSize }];
     });
   };
 
@@ -248,7 +210,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // --- Order Methods ---
-  const checkout = (customerName: string, customerWhatsApp: string, paymentMethod: Order["paymentMethod"], paymentProof?: string, notes?: string) => {
+  const checkout = (customerName: string, customerWhatsApp: string, paymentMethod: Order["paymentMethod"], paymentProof?: string, notes?: string, shippingAddress?: string) => {
     if (cart.length === 0) return null;
 
     // Build order items
@@ -262,18 +224,21 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         orderItems.push({
           productId: product.id,
           name: product.name,
-          price: itemPrice,
+          price: product.price,
           quantity: cartItem.quantity,
           options: cartItem.options,
-          optionPrice: cartItem.optionPrice
+          optionPrice: cartItem.optionPrice,
+          selectedSize: cartItem.selectedSize
         });
         totalAmount += itemPrice * cartItem.quantity;
       }
     }
 
-    let initialStatus: Order["status"] = "menunggu_verifikasi";
+    // Determine initial status based on payment method
+    let initialStatus: Order["status"] = "menunggu_verifikasi"; // Default for transfer
     if (paymentMethod === "qris") initialStatus = "diproses";
     if (paymentMethod === "cash") initialStatus = "menunggu_diambil";
+    if (paymentMethod === "cod") initialStatus = "menunggu_pengiriman";
 
     const newOrder: Order = {
       id: `#ORD-${Math.floor(1000 + Math.random() * 9000)}`,
@@ -284,6 +249,7 @@ export const StoreProvider = ({ children }: { children: React.ReactNode }) => {
       totalAmount,
       paymentMethod,
       paymentProof,
+      shippingAddress,
       status: initialStatus,
       createdAt: new Date().toISOString()
     };

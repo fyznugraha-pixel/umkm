@@ -15,7 +15,7 @@ import RatingBadge from "@/components/demo/RatingBadge";
 import ScrollReveal from "@/components/demo/ScrollReveal";
 import StoreItemCard from "@/components/demo/StoreItemCard";
 import CartDrawer from "@/components/demo/CartDrawer";
-import { useStore } from "./StoreContext";
+import { useStore } from "@/components/demo/StoreContext";
 
 const DUMMY_WA = "6280000000000";
 

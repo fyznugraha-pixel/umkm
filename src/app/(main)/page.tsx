@@ -30,8 +30,7 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col items-center">
       {/* Hero Section */}
-      <section className="w-full relative overflow-hidden pt-24 pb-32 px-4 flex flex-col items-center text-center">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-900/20 via-slate-950 to-slate-950 -z-10"></div>
+      <section className="w-full relative overflow-hidden pt-32 pb-40 px-4 flex flex-col items-center text-center">
         <motion.div 
           className="max-w-5xl mx-auto"
           initial="hidden" animate="visible" variants={staggerContainer}
@@ -78,14 +77,14 @@ export default function HomePage() {
       </section>
 
       {/* Trust Section */}
-      <section className="w-full py-20 px-4 bg-[#FDFBF7] text-slate-900 flex justify-center">
+      <section className="w-full py-20 px-4 bg-[#f8f5f0] text-slate-900 flex justify-center">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp}
           className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-8 md:gap-12"
         >
           <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-slate-800 shrink-0 bg-slate-800">
             <img 
-              src="/profile/fayiz.png" 
+              src="/profile/fayiz.webp" 
               alt="Faiz - Web Developer" 
               className="w-full h-full object-cover object-top scale-[1.15] translate-y-2"
             />
@@ -102,11 +101,14 @@ export default function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="w-full py-24 px-4 bg-[#FDFBF7] flex justify-center">
+      <section className="w-full py-24 px-4 bg-[#f8f5f0] flex justify-center">
         <div className="max-w-[1400px] mx-auto w-full">
-          <div className="text-center mb-16">
+          <div className="text-center mb-12 md:mb-16">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-slate-900">Bagaimana Proses Kerjanya?</h2>
-            <p className="text-slate-600 font-medium">Anti ribet, terima beres. Anda cukup siapkan materi bisnisnya.</p>
+            <p className="text-slate-600 font-medium mb-6">Anti ribet, terima beres. Anda cukup siapkan materi bisnisnya.</p>
+            <div className="md:hidden flex items-center justify-center text-xs text-slate-400 font-bold uppercase tracking-wider animate-pulse gap-2">
+              <ArrowRight size={14} /> Geser untuk tahap selanjutnya <ArrowRight size={14} />
+            </div>
           </div>
           
           <div className="flex flex-nowrap md:grid md:grid-cols-4 gap-4 md:gap-8 relative overflow-x-auto pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -122,9 +124,9 @@ export default function HomePage() {
                 key={idx}
                 initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.1 }}}}
-                className="relative z-10 flex flex-col items-center text-center bg-white p-6 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 min-w-[85vw] sm:min-w-[300px] md:min-w-0 snap-center shrink-0"
+                className="relative z-10 flex flex-col items-center text-center bg-white p-6 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 min-w-[80vw] sm:min-w-[300px] md:min-w-0 snap-center shrink-0"
               >
-                <div className="w-16 h-16 bg-[#FDFBF7] border border-slate-200 rounded-full flex items-center justify-center text-yellow-600 mb-6 shadow-sm">
+                <div className="w-16 h-16 bg-[#f8f5f0] border border-slate-200 rounded-full flex items-center justify-center text-yellow-600 mb-6 shadow-sm">
                   <step.icon size={28} />
                 </div>
                 <h3 className="text-xl font-bold mb-2 text-slate-900">{step.title}</h3>
@@ -148,13 +150,13 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="flex flex-nowrap lg:grid lg:grid-cols-3 gap-4 lg:gap-8 items-start mb-16 overflow-x-auto lg:overflow-visible pt-6 lg:pt-8 px-4 lg:px-0 -mx-4 lg:mx-0 pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 lg:gap-8 items-stretch mb-16 pt-6 lg:pt-8 px-4 lg:px-0">
             {pricingPlans.map((plan, idx) => (
               <motion.div 
                 key={plan.id}
                 initial="hidden" whileInView="visible" viewport={{ once: true }}
                 variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { delay: idx * 0.15 }}}}
-                className={`relative min-w-[85vw] sm:min-w-[400px] lg:min-w-0 snap-center shrink-0 ${plan.isPopular ? 'scale-100 lg:scale-105 z-10' : ''}`}
+                className={`relative w-full ${plan.isPopular ? 'scale-100 lg:scale-105 z-10' : ''}`}
               >
                 {plan.isPopular && (
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
@@ -228,7 +230,7 @@ export default function HomePage() {
       </section>
 
       {/* Preview Katalog Teaser */}
-      <section className="w-full py-24 px-4 bg-[#FDFBF7] flex justify-center overflow-hidden">
+      <section className="w-full py-24 px-4 bg-[#f8f5f0] flex justify-center overflow-hidden">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="max-w-5xl mx-auto w-full relative bg-white border border-slate-200 p-8 md:p-16 rounded-3xl text-center shadow-2xl shadow-slate-200/50 overflow-hidden"

@@ -21,6 +21,8 @@ export const pricingPlans: PricingPlan[] = [
     id: "mini",
     name: "Mini Landing Page",
     price: "Rp 350K",
+    originalPrice: "Rp 550K",
+    discountNote: "Diskon 36% (5 Klien Pertama)",
     description: "Cocok untuk validasi ide atau jualan 1 produk khusus.",
     features: [
       { name: "1 Halaman Website", included: true },

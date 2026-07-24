@@ -2,18 +2,21 @@ import React from "react";
 import Link from "next/link";
 import { MessageCircle, Phone, LayoutTemplate } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
+import AuroraBackground from "@/components/AuroraBackground";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const WA_NUMBER = "6287794693241";
   const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website%20UMKM`;
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="text-slate-300 bg-slate-950 min-h-screen">
+      {/* Global Background Elements */}
+      <div className="fixed inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] -z-40 pointer-events-none" style={{ maskImage: "radial-gradient(ellipse 100% 100% at 50% 0%, #000 40%, transparent 110%)", WebkitMaskImage: "radial-gradient(ellipse 100% 100% at 50% 0%, #000 40%, transparent 110%)" }}></div>
       {/* Navbar */}
       <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-[1400px]">
-          <Link href="/" className="hidden md:block font-display font-bold text-xl tracking-tight">
-            Faiz<span className="text-yellow-500">.</span> Web UMKM
+        <div className="container mx-auto px-4 min-h-20 py-2 flex items-center justify-between max-w-[1400px]">
+          <Link href="/" className="hidden md:flex items-center">
+            <img src="/logo/elvora.webp" alt="Elvora Studio" className="h-10 md:h-12 w-auto object-contain" />
           </Link>
           <nav className="flex flex-1 justify-center md:justify-center gap-6 text-sm md:text-base font-medium text-slate-300">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -40,7 +43,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <footer id="kontak" className="border-t border-white/10 bg-slate-950 py-12 w-full flex flex-col items-center">
         <div className="container mx-auto px-4 max-w-[1400px] flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
           <div>
-            <h3 className="font-display font-bold text-lg mb-2">Faiz Web UMKM</h3>
+            <img src="/logo/elvora.webp" alt="Elvora Studio" className="h-16 md:h-20 w-auto mb-2 object-contain" />
             <p className="text-slate-400 text-sm max-w-xs">
               Membantu UMKM Indonesia go digital dengan website profesional dan harga terjangkau.
             </p>
@@ -58,7 +61,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           </div>
         </div>
         <div className="container mx-auto px-4 max-w-[1400px] mt-8 pt-8 border-t border-white/5 text-center text-xs text-slate-500">
-          &copy; {new Date().getFullYear()} Jasa Buat Website UMKM. All rights reserved.
+          &copy; {new Date().getFullYear()} Elvora Studio. All rights reserved.
         </div>
       </footer>
 

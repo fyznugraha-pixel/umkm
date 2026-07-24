@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { CreditCard, QrCode, Banknote, Upload, CheckCircle, Loader2 } from "lucide-react";
 
-export type PaymentMethod = "transfer" | "qris" | "cash";
+export type PaymentMethod = "transfer" | "qris" | "cash" | "cod";
 
 interface PaymentMethodSelectorProps {
   selectedMethod: PaymentMethod | null;
@@ -9,6 +9,7 @@ interface PaymentMethodSelectorProps {
   onProofUploaded: (base64: string) => void;
   onQrisVerified: (isVerified: boolean) => void;
   theme?: "coffee" | "fashion" | "barber";
+  availableMethods?: PaymentMethod[];
 }
 
 export default function PaymentMethodSelector({
@@ -16,7 +17,8 @@ export default function PaymentMethodSelector({
   onSelectMethod,
   onProofUploaded,
   onQrisVerified,
-  theme = "coffee"
+  theme = "coffee",
+  availableMethods = ["transfer", "qris", "cash"]
 }: PaymentMethodSelectorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [proofPreview, setProofPreview] = useState<string | null>(null);
@@ -82,16 +84,31 @@ export default function PaymentMethodSelector({
           <span className={`text-xs font-bold text-center ${selectedMethod === "qris" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>QRIS</span>
         </button>
 
-        <button
-          type="button"
-          onClick={() => onSelectMethod("cash")}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-            selectedMethod === "cash" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
-          }`}
-        >
-          <Banknote size={24} className={`mb-2 ${selectedMethod === "cash" ? colors.primary : "text-slate-400"}`} />
-          <span className={`text-xs font-bold text-center ${selectedMethod === "cash" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>Bayar di Kasir</span>
-        </button>
+        {availableMethods.includes("cash") && (
+          <button
+            type="button"
+            onClick={() => onSelectMethod("cash")}
+            className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
+              selectedMethod === "cash" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
+            }`}
+          >
+            <Banknote size={24} className={`mb-2 ${selectedMethod === "cash" ? colors.primary : "text-slate-400"}`} />
+            <span className={`text-xs font-bold text-center ${selectedMethod === "cash" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>Bayar di Kasir</span>
+          </button>
+        )}
+
+        {availableMethods.includes("cod") && (
+          <button
+            type="button"
+            onClick={() => onSelectMethod("cod")}
+            className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
+              selectedMethod === "cod" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
+            }`}
+          >
+            <Banknote size={24} className={`mb-2 ${selectedMethod === "cod" ? colors.primary : "text-slate-400"}`} />
+            <span className={`text-xs font-bold text-center ${selectedMethod === "cod" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>Bayar di Tempat (COD)</span>
+          </button>
+        )}
       </div>
 
       {/* --- OPSI A: TRANSFER BANK --- */}
@@ -190,6 +207,21 @@ export default function PaymentMethodSelector({
             <h4 className="font-bold text-slate-900 text-sm mb-1">Bayar Saat Ambil (Dine-in / Takeaway)</h4>
             <p className="text-xs text-slate-600 leading-relaxed">
               Anda tidak perlu membayar sekarang. Pesanan Anda akan langsung kami siapkan, silakan bayar di kasir saat Anda tiba di lokasi.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* --- OPSI D: COD --- */}
+      {selectedMethod === "cod" && (
+        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-4 animate-in fade-in slide-in-from-top-2 duration-300 flex items-start gap-4">
+          <div className="bg-blue-100 text-blue-700 p-3 rounded-full shrink-0">
+            <Banknote size={24} />
+          </div>
+          <div>
+            <h4 className="font-bold text-slate-900 text-sm mb-1">Bayar di Tempat (Cash on Delivery)</h4>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              Anda tidak perlu transfer sekarang. Silakan siapkan uang pas untuk diserahkan ke kurir saat pesanan tiba di alamat Anda.
             </p>
           </div>
         </div>

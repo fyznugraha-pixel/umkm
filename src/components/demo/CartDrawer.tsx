@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import { X, ShoppingBag, Plus, Minus, ArrowRight, CheckCircle } from "lucide-react";
-import { useStore } from "@/app/(demo)/kopi-semesta-full/StoreContext";
+import { useStore } from "@/components/demo/StoreContext";
 import PaymentMethodSelector, { PaymentMethod } from "./order/PaymentMethodSelector";
 
 interface CartDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  requiresShipping?: boolean;
+  theme?: "coffee" | "fashion";
 }
 
-export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
+export default function CartDrawer({ isOpen, onClose, requiresShipping = false, theme = "coffee" }: CartDrawerProps) {
   const { cart, products, updateCartQuantity, removeFromCart, getCartTotal, checkout } = useStore();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
   const [customerName, setCustomerName] = useState("");
   const [customerWA, setCustomerWA] = useState("");
+  const [shippingAddress, setShippingAddress] = useState("");
   const [notes, setNotes] = useState("");
   const [successOrderId, setSuccessOrderId] = useState<string | null>(null);
   const [successMethod, setSuccessMethod] = useState<PaymentMethod | null>(null);
@@ -29,6 +32,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
         setSuccessOrderId(null);
         setCustomerName("");
         setCustomerWA("");
+        setShippingAddress("");
         setNotes("");
         setSelectedMethod(null);
         setPaymentProof("");
@@ -39,8 +43,8 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
   const handleCheckout = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!customerName || !customerWA) {
-      alert("Mohon lengkapi nama dan nomor WhatsApp.");
+    if (!customerName || !customerWA || (requiresShipping && !shippingAddress)) {
+      alert("Mohon lengkapi data pemesan (Nama, WhatsApp" + (requiresShipping ? ", dan Alamat" : "") + ").");
       return;
     }
     if (!selectedMethod) {
@@ -56,7 +60,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
       return;
     }
     
-    const order = checkout(customerName, customerWA, selectedMethod, paymentProof, notes);
+    const order = checkout(customerName, customerWA, selectedMethod, paymentProof, notes, shippingAddress);
     if (order) {
       setSuccessOrderId(order.id);
       setSuccessMethod(selectedMethod);
@@ -106,6 +110,7 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                 {successMethod === "transfer" && "Admin kami akan memverifikasi bukti pembayaran Anda dalam 1x24 jam."}
                 {successMethod === "qris" && "Pembayaran Anda telah berhasil diverifikasi secara otomatis."}
                 {successMethod === "cash" && "Silakan menuju kasir untuk melakukan pembayaran saat mengambil pesanan."}
+                {successMethod === "cod" && "Pesanan Anda akan segera diproses dan dikirim ke alamat tujuan."}
               </p>
               <p className="text-sm text-[#3D2B1F]/60 max-w-xs">
                 Anda dapat mengkonfirmasi pesanan langsung via WhatsApp.
@@ -144,7 +149,8 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                       <div key={item.cartItemId} className="flex justify-between text-sm">
                         <span className="text-[#3D2B1F]/70">
                           {item.quantity}x {product.name} 
-                          {item.options && item.options.length > 0 && <span className="text-xs text-[#3D2B1F]/50 italic block ml-5">{item.options.join(", ")}</span>}
+                          {item.selectedSize && <span className="text-xs font-bold px-1 ml-2 bg-gray-200 text-gray-800 rounded">{item.selectedSize}</span>}
+                          {item.options && item.options.length > 0 && <span className="text-xs text-opacity-50 italic block ml-5">{item.options.join(", ")}</span>}
                         </span>
                         <span className="font-medium text-[#3D2B1F]">Rp {(itemPrice * item.quantity).toLocaleString("id-ID")}</span>
                       </div>
@@ -171,18 +177,31 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-[#3D2B1F]/70 mb-1">Nomor WhatsApp *</label>
+                  <label className="block text-sm font-medium opacity-70 mb-1">Nomor WhatsApp *</label>
                   <input 
                     required 
                     type="tel" 
-                    className="w-full px-4 py-3 rounded-lg border border-[#E5D3B3] focus:outline-none focus:ring-2 focus:ring-[#B36A5E] bg-white"
+                    className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 bg-white"
                     placeholder="Contoh: 08123456789"
                     value={customerWA}
                     onChange={e => setCustomerWA(e.target.value)}
                   />
                 </div>
+                {requiresShipping && (
+                  <div>
+                    <label className="block text-sm font-medium opacity-70 mb-1">Alamat Pengiriman Lengkap *</label>
+                    <textarea 
+                      required
+                      rows={3}
+                      className="w-full px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 bg-white"
+                      placeholder="Jalan, RT/RW, Kelurahan, Kecamatan, Kota, Kode Pos"
+                      value={shippingAddress}
+                      onChange={e => setShippingAddress(e.target.value)}
+                    />
+                  </div>
+                )}
                 <div>
-                  <label className="block text-sm font-medium text-[#3D2B1F]/70 mb-1">Catatan Tambahan (Opsional)</label>
+                  <label className="block text-sm font-medium opacity-70 mb-1">Catatan Tambahan (Opsional)</label>
                   <textarea 
                     rows={3}
                     className="w-full px-4 py-3 rounded-lg border border-[#E5D3B3] focus:outline-none focus:ring-2 focus:ring-[#B36A5E] bg-white"
@@ -198,7 +217,8 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     onSelectMethod={setSelectedMethod}
                     onProofUploaded={setPaymentProof}
                     onQrisVerified={setIsQrisVerified}
-                    theme="coffee"
+                    theme={theme}
+                    availableMethods={requiresShipping ? ["transfer", "qris", "cod"] : ["transfer", "qris", "cash"]}
                   />
                 </div>
               </form>
@@ -215,9 +235,12 @@ export default function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                     <div className="flex-1 flex flex-col justify-between">
                       <div className="flex justify-between items-start">
                         <div>
-                          <h4 className="font-bold text-[#3D2B1F] text-sm line-clamp-2 pr-2">{product.name}</h4>
+                          <h4 className="font-bold text-sm line-clamp-2 pr-2">{product.name}</h4>
+                          {item.selectedSize && (
+                            <span className="text-[10px] font-bold px-1.5 py-0.5 mt-1 inline-block bg-gray-200 text-gray-800 rounded">{item.selectedSize}</span>
+                          )}
                           {item.options && item.options.length > 0 && (
-                            <p className="text-[10px] text-[#3D2B1F]/60 mt-0.5 leading-tight">{item.options.join(", ")}</p>
+                            <p className="text-[10px] opacity-60 mt-0.5 leading-tight">{item.options.join(", ")}</p>
                           )}
                         </div>
                         <button 

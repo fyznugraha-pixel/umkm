@@ -7,6 +7,8 @@ export interface CatalogEntry {
   thumbnail: string;
   description: string;
   comparisonGroup?: string;
+  originalPrice?: string;
+  discountNote?: string;
 }
 
 export const catalogData: CatalogEntry[] = [
@@ -15,6 +17,8 @@ export const catalogData: CatalogEntry[] = [
     businessName: "Kopi Semesta",
     packageType: "Mini Landing Page",
     packagePrice: "Rp 350K",
+    originalPrice: "Rp 550K",
+    discountNote: "Diskon 36%",
     category: "Kuliner",
     comparisonGroup: "kopi-semesta",
     // TODO: Ganti dengan screenshot asli setelah deploy web demo kopi-semesta
@@ -40,13 +44,15 @@ export const catalogData: CatalogEntry[] = [
     category: "Kuliner",
     comparisonGroup: "kopi-semesta",
     thumbnail: "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?auto=format&fit=crop&q=80&w=800",
-    description: "Versi paling lengkap dari Kopi Semesta — dengan sistem order online dan admin dashboard untuk kelola produk & penjualan",
+    description: "Versi paling lengkap dari Kopi Semesta dengan sistem order online dan admin dashboard untuk kelola produk & penjualan",
   },
   {
     slug: "ruang-rupa",
     businessName: "Ruang & Rupa",
     packageType: "Mini Landing Page",
     packagePrice: "Rp 350K",
+    originalPrice: "Rp 550K",
+    discountNote: "Diskon 36%",
     category: "Fashion",
     comparisonGroup: "ruang-rupa",
     // TODO: Ganti dengan screenshot asli setelah deploy web demo ruang-rupa
@@ -62,13 +68,25 @@ export const catalogData: CatalogEntry[] = [
     comparisonGroup: "ruang-rupa",
     // TODO: Ganti dengan screenshot asli setelah deploy web demo ruang-rupa-basic
     thumbnail: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800",
-    description: "Versi lengkap dari Ruang & Rupa — dengan lookbook, testimoni pelanggan, dan koleksi produk lebih lengkap",
+    description: "Versi lengkap dari Ruang & Rupa dengan lookbook, testimoni pelanggan, dan koleksi produk lebih lengkap",
+  },
+  {
+    slug: "ruang-rupa-full",
+    businessName: "Ruang & Rupa (Full Katalog)",
+    packageType: "Full Katalog",
+    packagePrice: "Mulai dari Rp 1.5JT",
+    category: "Fashion",
+    comparisonGroup: "ruang-rupa",
+    thumbnail: "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=800",
+    description: "Versi paling lengkap dari Ruang & Rupa dengan sistem order online (mendukung COD/Transfer/QRIS) dan admin dashboard khusus untuk kelola stok pakaian",
   },
   {
     slug: "rapi-barbershop",
     businessName: "RAPI Barbershop",
     packageType: "Mini Landing Page",
     packagePrice: "Rp 350K",
+    originalPrice: "Rp 550K",
+    discountNote: "Diskon 36%",
     category: "Jasa",
     comparisonGroup: "rapi-barbershop",
     // TODO: Ganti dengan screenshot asli setelah deploy web demo rapi-barbershop
@@ -84,6 +102,16 @@ export const catalogData: CatalogEntry[] = [
     comparisonGroup: "rapi-barbershop",
     // TODO: Ganti dengan screenshot asli setelah deploy web demo rapi-barbershop-basic
     thumbnail: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800",
-    description: "Versi lengkap dari RAPI Barbershop — dengan galeri hasil potong, testimoni pelanggan, dan daftar layanan lebih lengkap",
+    description: "Versi lengkap dari RAPI Barbershop dengan galeri hasil potong, testimoni pelanggan, dan daftar layanan lebih lengkap",
+  },
+  {
+    slug: "rapi-barbershop-full",
+    businessName: "RAPI Barbershop",
+    packageType: "Full Katalog",
+    packagePrice: "Mulai dari Rp 1.5JT",
+    category: "Jasa",
+    comparisonGroup: "rapi-barbershop",
+    thumbnail: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800",
+    description: "Versi paling lengkap dari RAPI Barbershop dengan sistem booking online (pilih layanan, jadwal, dan metode bayar) dan admin dashboard",
   }
 ];

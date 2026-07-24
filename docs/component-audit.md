@@ -75,7 +75,7 @@ Komponen interaktif untuk mensimulasikan alur pembayaran yang bercabang (Transfe
 
 #### Props:
 ```typescript
-type PaymentMethod = "transfer" | "qris" | "cash";
+type PaymentMethod = "transfer" | "qris" | "cash" | "cod";
 
 interface PaymentMethodSelectorProps {
   selectedMethod: PaymentMethod | null;
@@ -83,22 +83,43 @@ interface PaymentMethodSelectorProps {
   onProofUploaded: (base64: string) => void;
   onQrisVerified: (isVerified: boolean) => void;
   theme?: "coffee" | "fashion" | "barber";
+  availableMethods?: PaymentMethod[];
 }
 ```
 **Fungsi Kunci:**
 - **Transfer Bank**: Merender UI form *upload* gambar lokal (mengubah *file* ke format *base64 string* via `FileReader`).
 - **QRIS**: Menyediakan tombol "Saya Sudah Bayar" dengan efek *loading spinner* tersimulasi (`setTimeout`) untuk UX *dummy verification*.
 - **Cash**: Menampilkan instruksi pesan simpel untuk metode pembayaran di kasir (*dine-in / takeaway*).
+- **COD (Cash on Delivery)**: Menampilkan instruksi pembayaran di tempat (bayar saat barang sampai), yang digunakan bersamaan dengan input `shippingAddress` di `CartDrawer`.
 
 ### 4.2 CartDrawer
 Merupakan komponen pembungkus berbentuk *sidebar/drawer* yang muncul dari samping layar. 
 
-- **State Cart**: Menampilkan keranjang belanja dengan kontrol kuantitas (+ / -).
-- **Checkout Form**: Jika berlanjut ke tahap pembayaran, komponen beralih *view* untuk menampilkan form identitas pelanggan (Nama, WA, Catatan) dan menyematkan `<PaymentMethodSelector>`.
-- **Validation**: Mencegah *submit* jika `paymentProof` (bukti transfer) kosong atau jika simulasi `isQrisVerified` belum diselesaikan.
+- **State Cart**: Menampilkan keranjang belanja dengan kontrol kuantitas (+ / -) dan ukuran barang (*sizes*).
+- **Checkout Form**: Menampilkan form identitas pelanggan (Nama, WA, Catatan). Jika properti `requiresShipping` bernilai `true`, form akan menampilkan *input text area* untuk `shippingAddress`.
+- **Validation**: Mencegah *submit* jika form identitas belum lengkap, jika `paymentProof` kosong, atau jika simulasi `isQrisVerified` belum selesai.
 
 ### 4.3 OrdersTable & SalesSummary (Bagian dari AdminDashboard)
-Admin Dashboard telah diperkaya untuk menangani *conditional logic* berbasis `paymentMethod`.
-- **Branching Action**: Tombol konfirmasi berbeda-beda (Upload -> *Verifikasi Pembayaran*, Cash -> *Tandai Diambil & Dibayar*).
+Admin Dashboard telah diperkaya untuk menangani *conditional logic* berbasis `paymentMethod` dan properti produk.
+- **Branching Action**: Tombol konfirmasi berbeda-beda (Upload -> *Verifikasi Pembayaran*, Cash -> *Tandai Diambil & Dibayar*, COD -> *Kirim Pesanan* lalu *Tandai Diterima*).
+- **Product Management**: Menampilkan `sizes` dan manajemen `stock` secara dinamis.
 - **Revenue Logic**: Kalkulasi `totalRevenue` secara pintar mengecualikan pesanan berstatus `menunggu_verifikasi` untuk mencegah perhitungan pendapatan palsu sebelum di-acc.
 
+---
+
+## 5. Sistem Booking (Reservasi Jasa)
+Kumpulan komponen khusus untuk menangani alur pemesanan jadwal (appointment) tanpa fitur keranjang belanja. Komponen ini dirancang untuk industri jasa menggunakan `BookingContext` dan `localStorage`.
+
+### 5.1 ServiceSelection & SlotPicker
+- **ServiceSelection**: Merender daftar jasa (services) dengan sistem *multi-select* checkbox. Mengelompokkan layanan berdasarkan `category`.
+- **SlotPicker**: Menampilkan tanggal secara dinamis dari sisa ketersediaan (available slots) yang ditarik dari *context*, dengan layout horizontal untuk *date* dan grid *time* untuk memudahkan seleksi *touch screen*.
+
+### 5.2 BookingForm
+Berbeda dengan `CartDrawer` pada e-commerce, `BookingForm` berdiri sendiri sebagai halaman form.
+- Menggunakan ulang (reuse) komponen `PaymentMethodSelector`, `TransferPaymentUpload`, dan `QRISPaymentSimulation` dari sistem e-commerce.
+- Mensyaratkan penyelesaian input form dan validasi bukti bayar/verifikasi QRIS sebelum tombol `Konfirmasi Booking` dapat di-klik.
+
+### 5.3 BookingDashboard (Admin Jasa)
+Dirancang spesifik untuk manajemen reservasi dan kapasitas (*slot*).
+- **BookingsTable**: Merender jadwal yang dipesan lengkap dengan badge warna-warni untuk merepresentasikan status (*Menunggu Verifikasi*, *Dikonfirmasi*, *Terjadwal*, *Selesai*).
+- **SlotManager**: Antarmuka admin khusus untuk menutup/membuka jadwal waktu pada hari tertentu (*toggle availability*), mencegah double-booking secara simulatif.

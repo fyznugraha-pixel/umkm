@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useStore, Order, Product } from "@/app/(demo)/kopi-semesta-full/StoreContext";
+import { useStore, Order, Product } from "@/components/demo/StoreContext";
 import { LayoutDashboard, ShoppingCart, Package, LogOut, RotateCcw, TrendingUp, Users, DollarSign, CheckCircle, Clock } from "lucide-react";
 
 export default function AdminDashboard() {
@@ -16,6 +16,8 @@ export default function AdminDashboard() {
     switch (status) {
       case "menunggu_verifikasi": return <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700">Menunggu Verifikasi</span>;
       case "menunggu_diambil": return <span className="px-3 py-1 rounded-full text-xs font-bold bg-purple-100 text-purple-700">Menunggu Diambil</span>;
+      case "menunggu_pengiriman": return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">Menyiapkan Pesanan</span>;
+      case "dikirim": return <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">Sedang Dikirim</span>;
       case "diproses": return <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-700">Diproses</span>;
       case "selesai": return <span className="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700">Selesai</span>;
       default: return null;
@@ -27,6 +29,7 @@ export default function AdminDashboard() {
       case "transfer": return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-600 border border-blue-200 uppercase tracking-wider">Transfer</span>;
       case "qris": return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-50 text-teal-600 border border-teal-200 uppercase tracking-wider">QRIS</span>;
       case "cash": return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-300 uppercase tracking-wider">Cash</span>;
+      case "cod": return <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-orange-50 text-orange-600 border border-orange-200 uppercase tracking-wider">COD</span>;
       default: return null;
     }
   };
@@ -189,14 +192,23 @@ export default function AdminDashboard() {
                         </td>
                         <td className="p-4 align-top">
                           <div className="font-medium text-slate-700">{order.customerName}</div>
-                          <div className="text-sm text-slate-500 mb-2">{order.customerWhatsApp}</div>
+                          <div className="text-sm text-slate-500 mb-1">{order.customerWhatsApp}</div>
+                          {order.shippingAddress && (
+                            <div className="text-xs text-slate-500 mb-2 p-1.5 bg-slate-100 rounded">
+                              <span className="font-semibold block mb-0.5 text-slate-600">Alamat Pengiriman:</span>
+                              {order.shippingAddress}
+                            </div>
+                          )}
                           {getPaymentBadge(order.paymentMethod)}
                         </td>
                         <td className="p-4 align-top max-w-xs">
                           <ul className="text-sm text-slate-700 space-y-1 mb-2">
                             {order.items.map((item, i) => (
                               <li key={i} className="mb-1.5">
-                                <div className="font-semibold">{item.quantity}x {item.name}</div>
+                                <div className="font-semibold">
+                                  {item.quantity}x {item.name}
+                                  {item.selectedSize && <span className="ml-1 text-[10px] bg-slate-200 px-1 py-0.5 rounded">{item.selectedSize}</span>}
+                                </div>
                                 {item.options && item.options.length > 0 && (
                                   <div className="text-[10px] text-slate-500 leading-tight">({item.options.join(", ")})</div>
                                 )}
@@ -246,6 +258,25 @@ export default function AdminDashboard() {
                                 className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs py-2 rounded shadow-sm transition-colors"
                               >
                                 Tandai Diambil & Dibayar
+                              </button>
+                            )}
+
+                            {/* Branch: COD */}
+                            {order.paymentMethod === "cod" && order.status === "menunggu_pengiriman" && (
+                              <button 
+                                onClick={() => updateOrderStatus(order.id, "dikirim")}
+                                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs py-2 rounded shadow-sm transition-colors"
+                              >
+                                Kirim Pesanan
+                              </button>
+                            )}
+                            
+                            {order.paymentMethod === "cod" && order.status === "dikirim" && (
+                              <button 
+                                onClick={() => updateOrderStatus(order.id, "selesai")}
+                                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs py-2 rounded shadow-sm transition-colors"
+                              >
+                                Tandai Diterima & Dibayar
                               </button>
                             )}
 
@@ -309,8 +340,15 @@ export default function AdminDashboard() {
                         </td>
                         <td className="p-4 align-middle">
                           <div className="font-bold text-slate-800">{product.name}</div>
-                          <div className="text-xs text-slate-500 bg-slate-200 inline-block px-2 py-0.5 rounded-full mt-1">
-                            {product.category}
+                          <div className="flex gap-1 mt-1 flex-wrap">
+                            <div className="text-xs text-slate-500 bg-slate-200 inline-block px-2 py-0.5 rounded-full">
+                              {product.category}
+                            </div>
+                            {product.sizes && product.sizes.length > 0 && (
+                              <div className="text-xs text-slate-500 bg-slate-100 border border-slate-200 inline-block px-2 py-0.5 rounded-full">
+                                Ukuran: {product.sizes.join(", ")}
+                              </div>
+                            )}
                           </div>
                         </td>
                         <td className="p-4 align-middle font-medium text-slate-700">

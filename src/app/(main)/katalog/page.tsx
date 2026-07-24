@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { LayoutTemplate, MessageCircle, Sparkles, ArrowUpRight } from "lucide-react";
 import { catalogData } from "@/data/catalog";
 
@@ -21,7 +21,7 @@ export default function KatalogPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-display font-bold mb-6"
         >
-          Katalog <span className="text-gradient">Portfolio</span>
+          Katalog <span className="text-yellow-400">Portfolio</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -58,15 +58,18 @@ export default function KatalogPage() {
       {/* Catalog Grid or Empty State */}
       <section className="max-w-6xl w-full flex justify-center">
         {catalogData.filter(item => activeTab === "Semua" || item.packageType === activeTab).length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-            {catalogData.filter(item => activeTab === "Semua" || item.packageType === activeTab).map((item, idx) => (
-              <motion.div
-                key={item.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + (idx * 0.1) }}
-                className="group bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors flex flex-col"
-              >
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+            <AnimatePresence mode="popLayout">
+              {catalogData.filter(item => activeTab === "Semua" || item.packageType === activeTab).map((item, idx) => (
+                <motion.div
+                  layout
+                  key={item.slug}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="group bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors flex flex-col"
+                >
                 <div className="relative h-48 sm:h-56 w-full bg-slate-800 overflow-hidden">
                   <img 
                     src={item.thumbnail} 
@@ -107,6 +110,16 @@ export default function KatalogPage() {
                   
                   <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
                     <div className="flex flex-col">
+                      {item.originalPrice && (
+                        <div className="flex items-center gap-2 mb-0.5">
+                          <span className="text-xs text-slate-500 line-through decoration-red-500/50">{item.originalPrice}</span>
+                          {item.discountNote && (
+                            <span className="text-[10px] font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 rounded-full">
+                              {item.discountNote}
+                            </span>
+                          )}
+                        </div>
+                      )}
                       <span className="font-bold text-white text-lg">{item.packagePrice}</span>
                     </div>
                     <Link 
@@ -119,7 +132,8 @@ export default function KatalogPage() {
                 </div>
               </motion.div>
             ))}
-          </div>
+            </AnimatePresence>
+          </motion.div>
         ) : (
           <motion.div 
             initial={{ opacity: 0, scale: 0.95 }}

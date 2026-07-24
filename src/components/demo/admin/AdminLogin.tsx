@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useStore } from "@/app/(demo)/kopi-semesta-full/StoreContext";
+import { useStore } from "@/components/demo/StoreContext";
 import { Lock, ArrowRight } from "lucide-react";
 
 export default function AdminLogin() {
