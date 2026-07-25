@@ -6,9 +6,9 @@ import AdminLogin from "@/components/demo/admin/AdminLogin";
 import AdminDashboard from "@/components/demo/admin/AdminDashboard";
 
 export default function RuangRupaFullAdmin() {
-  const { isAdminAuthenticated } = useStore();
+  const { isAdminLoggedIn } = useStore();
 
-  if (!isAdminAuthenticated) {
+  if (!isAdminLoggedIn) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
         <AdminLogin />
