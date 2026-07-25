@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import BookingDashboard from "@/components/demo/booking/BookingDashboard";
 import { Scissors, Lock, ArrowRight } from "lucide-react";
