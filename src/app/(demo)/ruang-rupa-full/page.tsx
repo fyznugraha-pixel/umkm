@@ -150,15 +150,15 @@ export default function RuangRupaFullDemo() {
             </div>
           </ScrollReveal>
           
-          <ScrollReveal delay={0.2} className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 gap-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none md:gap-8 scrollbar-hide">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
             {products.map(product => (
-              <div key={product.id} className="shrink-0 snap-center w-[85vw] sm:w-[300px] md:w-auto">
+              <div key={product.id} className="w-full">
                 <StoreItemCard 
                   product={product} 
                 />
               </div>
             ))}
-          </ScrollReveal>
+          </div>
 
           <div className="mt-12 bg-gray-50 border border-gray-200 p-6 flex items-start gap-4 text-sm text-gray-600">
             <Info size={24} className="shrink-0 text-[#111111]" />

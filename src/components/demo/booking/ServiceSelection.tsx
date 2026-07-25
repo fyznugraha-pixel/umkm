@@ -24,7 +24,7 @@ export default function ServiceSelection({ services, selectedServiceIds, onToggl
       {categories.map(category => (
         <div key={category} className="space-y-4">
           <h3 className="text-xl font-bold text-slate-800 border-b border-slate-200 pb-2">{category}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
             {services.filter(s => s.category === category).map(service => {
               const isSelected = selectedServiceIds.includes(service.id);
               
@@ -33,29 +33,29 @@ export default function ServiceSelection({ services, selectedServiceIds, onToggl
                   key={service.id}
                   onClick={() => onToggleService(service.id)}
                   className={`
-                    relative p-4 rounded-xl border-2 cursor-pointer transition-all duration-200
+                    relative p-3 md:p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 flex flex-col
                     ${isSelected ? 'border-blue-500 bg-blue-50' : 'border-slate-200 bg-white hover:border-blue-300'}
                   `}
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h4 className={`font-bold ${isSelected ? 'text-blue-900' : 'text-slate-900'}`}>
+                    <h4 className={`font-bold text-sm md:text-base pr-6 ${isSelected ? 'text-blue-900' : 'text-slate-900'}`}>
                       {service.name}
                     </h4>
                     <div className={`
-                      w-6 h-6 rounded-full border flex items-center justify-center shrink-0 ml-4
+                      absolute top-3 right-3 md:top-4 md:right-4 w-5 h-5 md:w-6 md:h-6 rounded-full border flex items-center justify-center shrink-0
                       ${isSelected ? 'bg-blue-500 border-blue-500 text-white' : 'border-slate-300'}
                     `}>
-                      {isSelected && <Check size={14} strokeWidth={3} />}
+                      {isSelected && <Check size={12} className="md:w-3.5 md:h-3.5" strokeWidth={3} />}
                     </div>
                   </div>
                   
-                  <p className="text-sm text-slate-500 mb-4 line-clamp-2">{service.description}</p>
+                  <p className="text-xs md:text-sm text-slate-500 mb-3 md:mb-4 line-clamp-2 md:line-clamp-none flex-grow">{service.description}</p>
                   
-                  <div className="flex items-center justify-between text-sm mt-auto">
+                  <div className="flex flex-col xl:flex-row xl:items-center justify-between text-xs md:text-sm mt-auto gap-1">
                     <span className="font-bold text-slate-900">
                       Rp {service.price.toLocaleString("id-ID")}
                     </span>
-                    <span className="text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                    <span className="text-slate-500 bg-slate-100 px-1.5 py-0.5 md:px-2 md:py-1 rounded text-[10px] md:text-xs text-center whitespace-nowrap self-start xl:self-auto">
                       {service.durationMinutes} mnt
                     </span>
                   </div>
