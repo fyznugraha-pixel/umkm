@@ -16,7 +16,7 @@ export default function StoreItemCard({ product }: StoreItemCardProps) {
   return (
     <>
       <div className={`bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-[#E5D3B3] flex flex-col h-full ${isOutOfStock ? "opacity-75" : ""}`}>
-      <div className="relative h-48 w-full bg-slate-100 overflow-hidden group">
+      <div className="relative h-32 md:h-48 w-full bg-slate-100 overflow-hidden group">
         <img 
           src={product.image} 
           alt={product.name}
@@ -29,30 +29,30 @@ export default function StoreItemCard({ product }: StoreItemCardProps) {
         )}
       </div>
       
-      <div className="p-5 flex flex-col flex-grow">
-        <div className="flex justify-between items-start mb-2 gap-2">
-          <h4 className="font-bold text-[#3D2B1F] text-lg leading-tight">{product.name}</h4>
-          <span className="font-bold text-[#B36A5E] whitespace-nowrap">Rp {product.price.toLocaleString("id-ID")}</span>
+      <div className="p-3 md:p-5 flex flex-col flex-grow">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-2 gap-1 md:gap-2">
+          <h4 className="font-bold text-[#3D2B1F] text-sm md:text-lg leading-tight">{product.name}</h4>
+          <span className="font-bold text-[#B36A5E] text-xs md:text-base whitespace-nowrap">Rp {product.price.toLocaleString("id-ID")}</span>
         </div>
         
-        <p className="text-[#3D2B1F]/70 text-sm mb-4 flex-grow line-clamp-3">
+        <p className="text-[#3D2B1F]/70 text-xs md:text-sm mb-3 md:mb-4 flex-grow line-clamp-2 md:line-clamp-3">
           {product.description}
         </p>
         
-        <div className="mt-auto pt-4 border-t border-[#E5D3B3]/30 flex items-center justify-between">
-          <span className="text-xs font-medium text-[#3D2B1F]/50">
-            {isOutOfStock ? "Stok Kosong" : `Sisa Stok: ${product.stock}`}
+        <div className="mt-auto pt-3 md:pt-4 border-t border-[#E5D3B3]/30 flex flex-col md:flex-row md:items-center justify-between gap-2">
+          <span className="text-[10px] md:text-xs font-medium text-[#3D2B1F]/50">
+            {isOutOfStock ? "Stok Kosong" : `Sisa: ${product.stock}`}
           </span>
           <button 
             onClick={() => setIsModalOpen(true)}
             disabled={isOutOfStock}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-colors ${
+            className={`flex items-center justify-center gap-1.5 md:gap-2 px-2 py-1.5 md:px-4 md:py-2 rounded-lg text-xs md:text-sm font-bold transition-colors w-full md:w-auto ${
               isOutOfStock 
                 ? "bg-gray-200 text-gray-400 cursor-not-allowed" 
                 : "bg-[#D4A373] hover:bg-[#B36A5E] text-[#3D2B1F] hover:text-white"
             }`}
           >
-            <ShoppingCart size={16} /> 
+            <ShoppingCart size={14} className="md:w-4 md:h-4" /> 
             {isOutOfStock ? "Habis" : "Tambah"}
           </button>
         </div>
