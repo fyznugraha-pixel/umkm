@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { MessageCircle, Menu as MenuIcon, Coffee, Utensils, Info, ShoppingBag, MapPin, Clock, Lock } from "lucide-react";
+import Link from "next/link";
 import MapEmbed from "@/components/demo/MapEmbed";
 import FloatingWhatsApp from "@/components/demo/FloatingWhatsApp";
 import GalleryGrid from "@/components/demo/GalleryGrid";
@@ -14,14 +15,13 @@ import StatusBadge from "@/components/demo/StatusBadge";
 import RatingBadge from "@/components/demo/RatingBadge";
 import ScrollReveal from "@/components/demo/ScrollReveal";
 import StoreItemCard from "@/components/demo/StoreItemCard";
-import CartDrawer from "@/components/demo/CartDrawer";
 import { useStore } from "@/components/demo/StoreContext";
 
 const DUMMY_WA = "6280000000000";
 
 export default function KopiSemestaFullDemo() {
   const { products, cart } = useStore();
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  // Removed isCartOpen state
   const [activeTab, setActiveTab] = useState<"Semua" | "Kopi" | "Non-Kopi" | "Snack">("Semua");
 
   const totalCartItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -31,8 +31,8 @@ export default function KopiSemestaFullDemo() {
     : products.filter(p => p.category === activeTab);
 
   const CartIcon = (
-    <button 
-      onClick={() => setIsCartOpen(true)}
+    <Link 
+      href="/kopi-semesta-full/keranjang"
       className="relative p-2 bg-[#D4A373] hover:bg-[#B36A5E] text-white rounded-full transition-colors flex items-center justify-center shadow-md"
     >
       <ShoppingBag size={20} />
@@ -41,7 +41,7 @@ export default function KopiSemestaFullDemo() {
           {totalCartItems}
         </span>
       )}
-    </button>
+    </Link>
   );
 
   const AdminButton = (
@@ -57,7 +57,6 @@ export default function KopiSemestaFullDemo() {
 
   return (
     <div className="bg-[#F5EFE6] min-h-screen text-[#3D2B1F] font-sans pb-10">
-      <CartDrawer isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
       {/* MARQUEE PROMO */}
       <Marquee text="PROMO SPESIAL: DISKON 20% UNTUK PELAJAR & MAHASISWA DENGAN MENUNJUKKAN KARTU PELAJAR • ENJOY LIVE ACOUSTIC SETIAP JUMAT MALAM PKL 19.00" speed={25} />

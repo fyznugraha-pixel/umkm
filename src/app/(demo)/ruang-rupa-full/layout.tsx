@@ -4,7 +4,7 @@ import { SEED_PRODUCTS, SEED_ORDERS } from "./data";
 
 export default function RuangRupaFullLayout({ children }: { children: React.ReactNode }) {
   return (
-    <StoreProvider storeId="ruang_rupa" seedProducts={SEED_PRODUCTS} seedOrders={SEED_ORDERS}>
+    <StoreProvider storeId="ruang_rupa_v3" seedProducts={SEED_PRODUCTS} seedOrders={SEED_ORDERS}>
       {children}
     </StoreProvider>
   );

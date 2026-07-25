@@ -48,6 +48,15 @@ export interface Order {
   createdAt: string;
 }
 
+export interface CheckoutDetails {
+  customerName: string;
+  customerWhatsApp: string;
+  shippingAddress?: string;
+  notes?: string;
+  paymentMethod?: Order["paymentMethod"];
+  paymentProof?: string;
+}
+
 interface StoreContextType {
   products: Product[];
   cart: CartItem[];
@@ -60,6 +69,11 @@ interface StoreContextType {
   removeFromCart: (cartItemId: string) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  
+  // Checkout flow state
+  checkoutDetails: CheckoutDetails;
+  updateCheckoutDetails: (details: Partial<CheckoutDetails>) => void;
+  clearCheckoutDetails: () => void;
   
   // Order actions
   checkout: (customerName: string, customerWhatsApp: string, paymentMethod: Order["paymentMethod"], paymentProof?: string, notes?: string, shippingAddress?: string) => Order | null;
@@ -104,6 +118,10 @@ export const StoreProvider = ({
   const [orders, setOrders] = useState<Order[]>([]);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [checkoutDetails, setCheckoutDetails] = useState<CheckoutDetails>({
+    customerName: "",
+    customerWhatsApp: ""
+  });
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -135,6 +153,12 @@ export const StoreProvider = ({
         }));
         setCart(migratedCart);
       }
+      
+      const storedCheckout = localStorage.getItem(`${storeId}_checkout`);
+      if (storedCheckout) {
+        setCheckoutDetails(JSON.parse(storedCheckout));
+      }
+
       if (storedAuth) setIsAdminLoggedIn(JSON.parse(storedAuth));
       
       setIsLoaded(true);
@@ -150,7 +174,8 @@ export const StoreProvider = ({
     localStorage.setItem(`${storeId}_cart`, JSON.stringify(cart));
     localStorage.setItem(`${storeId}_orders`, JSON.stringify(orders));
     localStorage.setItem(`${storeId}_admin_auth`, JSON.stringify(isAdminLoggedIn));
-  }, [products, cart, orders, isAdminLoggedIn, isLoaded, storeId]);
+    localStorage.setItem(`${storeId}_checkout`, JSON.stringify(checkoutDetails));
+  }, [products, cart, orders, isAdminLoggedIn, checkoutDetails, isLoaded, storeId]);
 
   // --- Cart Methods ---
   const addToCart = (productId: string, quantity = 1, options?: string[], optionPrice = 0, selectedSize?: string) => {
@@ -272,6 +297,14 @@ export const StoreProvider = ({
     setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status: newStatus } : o));
   };
 
+  const updateCheckoutDetails = (details: Partial<CheckoutDetails>) => {
+    setCheckoutDetails(prev => ({ ...prev, ...details }));
+  };
+
+  const clearCheckoutDetails = () => {
+    setCheckoutDetails({ customerName: "", customerWhatsApp: "" });
+  };
+
   // --- Product Methods ---
   const addProduct = (productData: Omit<Product, "id">) => {
     const newProduct: Product = {
@@ -305,8 +338,8 @@ export const StoreProvider = ({
   };
 
   const resetDemoData = () => {
-    setProducts(SEED_PRODUCTS);
-    setOrders(SEED_ORDERS);
+    setProducts(seedProducts);
+    setOrders(seedOrders);
     setCart([]);
     setIsAdminLoggedIn(false);
     localStorage.clear();
@@ -317,9 +350,20 @@ export const StoreProvider = ({
 
   return (
     <StoreContext.Provider value={{
-      products, cart, orders, isAdminLoggedIn,
-      addToCart, updateCartQuantity, removeFromCart, clearCart, getCartTotal,
-      checkout, updateOrderStatus,
+      products,
+      cart,
+      orders,
+      isAdminLoggedIn,
+      addToCart,
+      updateCartQuantity,
+      removeFromCart,
+      clearCart,
+      getCartTotal,
+      checkoutDetails,
+      updateCheckoutDetails,
+      clearCheckoutDetails,
+      checkout,
+      updateOrderStatus,
       addProduct, updateProduct, deleteProduct,
       loginAdmin, logoutAdmin, resetDemoData
     }}>

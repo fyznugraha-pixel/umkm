@@ -15,14 +15,13 @@ import ScrollReveal from "@/components/demo/ScrollReveal";
 import FAQAccordion from "@/components/demo/FAQAccordion";
 import { FaInstagram } from "react-icons/fa";
 import { useStore } from "@/components/demo/StoreContext";
-import CartDrawer from "@/components/demo/CartDrawer";
 import Link from "next/link";
 
 const DUMMY_WA = "6280000000000";
 
 export default function RuangRupaFullDemo() {
   const { products, cart } = useStore();
-  const [isCartOpen, setIsCartOpen] = useState(false);
+  // Removed isCartOpen state
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -55,9 +54,9 @@ export default function RuangRupaFullDemo() {
       />
 
       {/* Floating Cart Button */}
-      <button 
-        onClick={() => setIsCartOpen(true)}
-        className="fixed bottom-24 right-6 z-40 bg-[#111111] text-white p-4 rounded-full shadow-2xl hover:bg-[#C34A36] hover:scale-110 transition-all group flex items-center justify-center"
+      <Link 
+        href="/ruang-rupa-full/keranjang"
+        className="fixed bottom-32 right-6 z-40 bg-[#111111] text-white p-4 rounded-full shadow-2xl hover:bg-[#C34A36] hover:scale-110 transition-all group flex items-center justify-center"
       >
         <ShoppingBag size={24} />
         {cartItemCount > 0 && (
@@ -65,14 +64,7 @@ export default function RuangRupaFullDemo() {
             {cartItemCount}
           </span>
         )}
-      </button>
-
-      <CartDrawer 
-        isOpen={isCartOpen} 
-        onClose={() => setIsCartOpen(false)} 
-        requiresShipping={true}
-        theme="fashion"
-      />
+      </Link>
 
       {/* 1. HERO SECTION */}
       <section id="hero" className="relative w-full min-h-[90vh] flex flex-col lg:flex-row items-stretch">
@@ -158,14 +150,13 @@ export default function RuangRupaFullDemo() {
             </div>
           </ScrollReveal>
           
-          <ScrollReveal delay={0.2} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+          <ScrollReveal delay={0.2} className="flex overflow-x-auto snap-x snap-mandatory pb-8 -mx-6 px-6 gap-4 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none md:gap-8 scrollbar-hide">
             {products.map(product => (
-              <StoreItemCard 
-                key={product.id}
-                product={product} 
-                aspectRatio="portrait" 
-                theme="fashion"
-              />
+              <div key={product.id} className="shrink-0 snap-center w-[85vw] sm:w-[300px] md:w-auto">
+                <StoreItemCard 
+                  product={product} 
+                />
+              </div>
             ))}
           </ScrollReveal>
 
@@ -197,6 +188,71 @@ export default function RuangRupaFullDemo() {
                 { src: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800", caption: "Look #5: Office Ready" }
               ]}
             />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 5. TESTIMONI */}
+      <section id="testimoni" className="py-24 px-6 md:px-16 lg:px-24 bg-[#FAFAFA] border-t border-[#111111]/10">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Apa Kata <span className="text-[#C34A36]">Mereka?</span></h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Kisah dan kepuasan pelanggan setia yang telah menjadikan Ruang & Rupa bagian dari gaya hidup mereka.</p>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <TestimonialCard 
+              name="Sarah G."
+              role="Fashion Blogger"
+              avatar="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"
+              comment="Kemeja oversized-nya jatuh sempurna! Bahannya tidak mudah lecek dan sangat adem dipakai seharian. Definitely my go-to piece."
+              theme="fashion"
+            />
+            <TestimonialCard 
+              name="Michelle A."
+              role="Freelance Designer"
+              avatar="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200"
+              comment="Susah banget cari celana kulot yang pas panjangnya di saya. Ruang & Rupa bikin kulot yang siluetnya bikin kaki terlihat lebih jenjang!"
+              theme="fashion"
+            />
+            <TestimonialCard 
+              name="Anya P."
+              role="Creative Director"
+              avatar="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200"
+              comment="Jahitannya rapi layaknya butik mahal. Sangat worth it untuk harganya. Nggak sabar nunggu koleksi berikutnya!"
+              theme="fashion"
+            />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 6. FAQ ACCORDION */}
+      <section id="faq" className="py-24 px-6 md:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Pertanyaan <span className="text-[#C34A36]">Umum</span></h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Informasi seputar ukuran, pengiriman, dan kebijakan Ruang & Rupa.</p>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2}>
+            <FAQAccordion theme="fashion" items={[
+              {
+                question: "Bagaimana cara mengetahui ukuran yang pas?",
+                answer: "Setiap halaman produk kami menyertakan Size Guide yang mendetail (Lingkar Dada, Panjang Lengan, Panjang Badan). Kami sarankan Anda mengukur pakaian favorit Anda dan membandingkannya dengan panduan kami."
+              },
+              {
+                question: "Apakah bisa melakukan custom size?",
+                answer: "Saat ini kami fokus memproduksi koleksi ready-to-wear dengan sizing S hingga XXL. Untuk custom size (made to order), kami hanya membuka slot terbatas sebulan sekali. Pantau terus Instagram kami untuk info pembukaan slot."
+              },
+              {
+                question: "Berapa lama estimasi pengiriman?",
+                answer: "Order yang masuk sebelum jam 15.00 WIB akan dikirim pada hari yang sama. Pengiriman reguler memakan waktu 2-3 hari kerja untuk Jabodetabek, dan 3-5 hari untuk luar daerah."
+              },
+              {
+                question: "Apakah melayani penukaran (retur) jika kekecilan/kebesaran?",
+                answer: "Tentu! Anda dapat menukar size dalam batas waktu 3 hari setelah barang diterima, dengan syarat tag belum dilepas, belum dicuci, dan belum dipakai beraktivitas. Ongkos kirim retur ditanggung oleh pembeli."
+              }
+            ]} />
           </ScrollReveal>
         </div>
       </section>
@@ -233,7 +289,7 @@ export default function RuangRupaFullDemo() {
       </footer>
       
       <DemoWatermark />
-      <FloatingWhatsApp phoneNumber={DUMMY_WA} message="Halo Ruang & Rupa! Saya ada pertanyaan nih." theme="fashion" />
+      <FloatingWhatsApp phoneNumber={DUMMY_WA} message="Halo Ruang & Rupa, saya mau tanya soal baju/celana yang ada di website." />
     </div>
   );
 }
