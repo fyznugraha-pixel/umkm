@@ -11,6 +11,7 @@ export interface Product {
   description: string;
   image: string;
   stock: number;
+  isBestseller?: boolean;
   category: "Kopi" | "Non-Kopi" | "Snack" | "Atasan" | "Bawahan" | "Aksesoris" | "Luaran";
   sizes?: string[]; // Added for fashion
 }

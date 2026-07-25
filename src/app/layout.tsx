@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Space_Grotesk } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 const archivo = Archivo({
@@ -29,6 +30,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-slate-950 text-slate-50 font-sans selection:bg-yellow-500/30 selection:text-yellow-200">
         {children}
+        <Analytics />
       </body>
     </html>
   );

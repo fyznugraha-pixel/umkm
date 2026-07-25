@@ -106,12 +106,12 @@ export const catalogData: CatalogEntry[] = [
   },
   {
     slug: "rapi-barbershop-full",
-    businessName: "RAPI Barbershop",
+    businessName: "RAPI Barbershop (Full Katalog)",
     packageType: "Full Katalog",
     packagePrice: "Mulai dari Rp 1.5JT",
     category: "Jasa",
     comparisonGroup: "rapi-barbershop",
-    thumbnail: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800",
-    description: "Versi paling lengkap dari RAPI Barbershop dengan sistem booking online (pilih layanan, jadwal, dan metode bayar) dan admin dashboard",
+    thumbnail: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=800",
+    description: "Versi paling lengkap dari RAPI Barbershop dengan sistem booking jadwal interaktif dan admin dashboard untuk atur ketersediaan capster",
   }
 ];

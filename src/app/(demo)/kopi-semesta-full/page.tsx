@@ -137,6 +137,9 @@ export default function KopiSemestaFullDemo() {
             <p>
               Berawal dari kecintaan kami pada kopi lokal di tahun 2020, Kopi Semesta hadir sebagai tempat persinggahan yang nyaman di tengah hiruk-pikuk kota Bandung. Kami percaya bahwa setiap cangkir kopi memiliki cerita dan perjalanannya sendiri, dari tangan petani hingga sampai ke meja Anda.
             </p>
+            <p>
+              Kami menggunakan 100% biji kopi pilihan langsung dari petani Nusantara, disangrai dengan presisi oleh Roaster berpengalaman untuk menghasilkan cita rasa yang tak terlupakan di setiap tegukannya. Filosofi kami sederhana: menyajikan kopi berkualitas tinggi tanpa kompromi, dalam suasana yang membuat Anda merasa di rumah.
+            </p>
           </div>
         </ScrollReveal>
       </section>
@@ -356,7 +359,10 @@ export default function KopiSemestaFullDemo() {
       </footer>
 
       {/* Floating Buttons */}
-      <FloatingWhatsApp phoneNumber={DUMMY_WA} message="Halo Kopi Semesta! Saya mau tanya-tanya nih." />
+      <div className="fixed bottom-24 right-6 z-40 bg-white px-3 py-1.5 rounded-full shadow-md text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2 animate-bounce">
+        <span className="w-2 h-2 rounded-full bg-green-500"></span> Admin membalas dlm 5 mnt
+      </div>
+      <FloatingWhatsApp phoneNumber={DUMMY_WA} message="Halo Kopi Semesta! Saya mau pesan kopi nih." />
     </div>
   );
 }

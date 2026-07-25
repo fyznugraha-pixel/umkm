@@ -1,125 +1,93 @@
-# Final Component Audit
+# E-commerce Flow Design Tokens Standard
 
-Dokumen ini merupakan referensi final untuk developer (sebagai panduan *production-ready*). Komponen-komponen UI di bawah ini telah berhasil melewati *stress-test* lintas 3 industri yang berbeda (F&B / Kuliner, Retail / Fashion, Jasa / Barbershop) dan terbukti sangat *scalable*.
+This document outlines the standard for designing and theming e-commerce/booking flow components (Cart, Checkout, Payment, Success) across all UMKM Demos.
 
-## 1. ItemCard (Alias: ServiceCard / MenuCard)
-Komponen ini sangat serbaguna untuk menampilkan produk (makanan/baju) maupun layanan jasa (potong rambut).
+**Goal:** Ensure that generic components (`PaymentMethodSelector`, `CartItem`, `OrderForm`) do not look like generic templates. Each brand must feel bespoke and tailor-made using specific design tokens.
 
-### Props:
+## Token Structure
+
+Components should accept a `designTokens` prop (or use a Context) following this interface:
+
 ```typescript
-interface ItemCardProps {
-  title: string;
-  price: string;
-  description: string;
-  image: string;
-  duration?: string; // Khusus Jasa (contoh: "45 Menit")
-  aspectRatio?: "square" | "portrait"; // "square" untuk F&B/Jasa, "portrait" (4:5) untuk Fashion
-  theme?: "coffee" | "fashion" | "barber"; // Menentukan warna, font, dan corner-radius
-  ctaText?: string;
-  ctaLink?: string;
+export interface OrderDesignTokens {
+  // Container Styling
+  radius: string;       // e.g., 'rounded-2xl', 'rounded-none', 'rounded-sm'
+  shadow: string;       // e.g., 'shadow-xl shadow-amber-900/10', 'shadow-none border'
+  surfaceBg: string;    // e.g., 'bg-white', 'bg-[#1A1A1A]'
+  pageBg: string;       // e.g., 'bg-[#F5EFE6]', 'bg-[#FAFAFA]'
+  
+  // Interactions & Borders
+  borderStyle: string;  // e.g., 'border-dashed border-2', 'border-solid border-[1px]'
+  borderColor: string;  // e.g., 'border-[#E5D3B3]', 'border-gray-200'
+  
+  // Typography
+  fontHeading: string;  // e.g., 'font-serif', 'font-sans font-black uppercase'
+  fontBody: string;     // e.g., 'font-sans', 'font-light'
+  
+  // Colors
+  primaryColor: string; // The main accent color (e.g., text/bg of primary buttons)
+  textColor: string;    // The main text color (e.g., text-[#3D2B1F])
+  
+  // Visual Aesthetics
+  iconStyle: "organic" | "outline" | "solid";
+  
+  // Microcopy (Tone of Voice)
+  copyTone: {
+    cartEmptyTitle: string;
+    cartEmptyDesc: string;
+    ctaCheckout: string;
+    ctaPay: string;
+    successTitle: string;
+    successSubtitle: string;
+  };
 }
 ```
-### Bukti Skalabilitas:
-- **Kopi Semesta (`coffee`)**: Sudut membulat (*rounded-2xl*), warna *warm/earthy*, foto makanan *square*.
-- **Ruang & Rupa (`fashion`)**: Sudut siku tajam (*rounded-none*), warna monokrom *bold*, foto *lookbook portrait*.
-- **RAPI Barbershop (`barber`)**: Tema *dark mode* (hitam solid + *dark gray*), aksen merah menyala, border *subtle*, dan bisa menampilkan info durasi layanan di samping harga.
 
----
+## Brand Implementations
 
-## 2. GalleryGrid
-Berfungsi untuk membangun galeri estetik asimetris (*masonry-like*) tanpa menggunakan *library* berat eksternal, hanya murni CSS Grid.
+### 1. Kopi Semesta (Warm, Cozy, Organic)
+- **Vibe:** Receipt/POS, paper texture, welcoming cafe.
+- **Radius:** Large (`rounded-2xl`, `rounded-3xl`)
+- **Shadow:** Soft colored shadows (`shadow-xl shadow-amber-900/10`)
+- **Border:** Dashed borders to mimic receipt tear-offs (`border-dashed border-2`)
+- **Microcopy:** Friendly, conversational ("Pesan Sekarang, Yuk!", "Keranjang kamu kosong nih").
+- **Icons:** Organic/soft if possible, or softly padded.
 
-### Props:
-```typescript
-type GalleryImage = string | { src: string; caption?: string };
+### 2. Ruang & Rupa (Editorial, Minimalist, Premium)
+- **Vibe:** Lookbook, magazine, sharp, clean.
+- **Radius:** None or small (`rounded-none`, `rounded-sm`)
+- **Shadow:** Minimal to none, relies on thin borders (`shadow-none border border-gray-200`)
+- **Border:** Thin solid lines (`border-[1px] border-gray-200`)
+- **Microcopy:** Confident, brief ("Checkout", "Pesanan Dikonfirmasi").
+- **Icons:** Thin outline, minimalist.
+- **Typography:** Large bold pricing, high contrast monochrome.
 
-interface GalleryGridProps {
-  images: GalleryImage[];
-  aspectRatio?: "portrait" | "landscape" | "square" | "mixed"; // Mengubah orientasi grid
-  theme?: "coffee" | "fashion" | "barber"; // Menyesuaikan efek hover dan border
-}
-```
-### Bukti Skalabilitas:
-- **Kopi Semesta (`mixed`, `coffee`)**: Grid 3-kolom asimetris untuk menonjolkan foto interior kedai (*landscape/square*).
-- **Ruang & Rupa (`portrait`, `fashion`)**: Grid 4-kolom memanjang ke bawah untuk menyesuaikan bentuk model berfoto (4:5) agar tidak terpotong. Pinggiran tegas, *hover grayscale-to-color*.
-- **RAPI Barbershop (`portrait`, `barber`)**: Menggunakan Union Type (Array of Objects) untuk mendukung penampilan **Caption** (seperti "Fade Cut") di atas *dark overlay gradient* setiap kali di-*hover* (atau permanen di *mobile*).
+### 3. Rapi Barbershop (Masculine, Bold, Dark, Clean)
+- **Vibe:** Barber schedule board, sharp tools, high contrast.
+- **Radius:** Sharp (`rounded-sm` or `rounded-none`)
+- **Shadow:** Heavy dark shadows or none (`shadow-2xl shadow-black/50`)
+- **Surface:** Dark background (`bg-[#111111]`, `bg-[#1A1A1A]`)
+- **Border:** Sharp borders (`border-[#333333]`)
+- **Microcopy:** Actionable, direct ("Booking Sekarang", "Pilih Jadwal").
+- **Icons:** Solid, geometric, bold accents (Electric blue/Red).
 
----
+## Rule of Thumb for Developers
+- **Never hardcode generic white cards** on dark-themed sites just because it's a checkout form.
+- **Customize empty states** (Empty Cart, Empty Slots) to match the brand.
+- **Loading states** should reflect the brand (e.g., snappy for barbershop, organic fade for coffee).
+- Always test the checkout flow side-by-side to ensure visual distinction.
 
-## 3. TestimonialCard
-Komponen *social-proof* untuk memaparkan ulasan pelanggan.
+## Web Bluetooth & Hardware Integration
 
-### Props:
-```typescript
-interface TestimonialCardProps {
-  name: string;
-  avatar: string;
-  comment: string;
-  rating?: number; // Jumlah bintang (default: 5)
-  role?: string; // Pekerjaan / status pelanggan
-  theme?: "coffee" | "fashion" | "barber";
-}
-```
-### Bukti Skalabilitas:
-- **Kopi Semesta (`coffee`)**: Estetika hangat, *border* krem lembut, avatar membulat.
-- **Ruang & Rupa (`fashion`)**: Monokrom industrial, bintang berwarna *rust*, teks tipis elegan, avatar dipaksa menjadi *grayscale* (hitam putih) untuk menyatu dengan identitas visual.
-- **RAPI Barbershop (`barber`)**: Mode super *dark* dengan siluet *shadow* tegas, garis pembatas abu-abu tua, teks kontras tinggi (putih), bintang menyala merah (*electric red*).
+### Bluetooth Thermal Printer (BLE)
+Fitur cetak struk via bluetooth diimplementasikan menggunakan Web Bluetooth API (`navigator.bluetooth`).
 
----
+**Komponen Utama:**
+- `hooks/usePrinterConnection.ts`: Mengelola siklus koneksi BLE (connect, disconnect, chunking transfer).
+- `lib/escpos.ts`: Menggunakan `@point-of-sale/receipt-printer-encoder` untuk me-*render* data struk menjadi *raw byte arrays* ESC/POS.
+- `config/printerConfig.ts`: Konfigurasi *hardware-dependent* (`serviceUUID`, `characteristicUUID`, `paperWidth`).
 
-## 4. Sistem Order (Katalog / Toko Online)
-Kumpulan komponen khusus untuk menangani interaksi keranjang belanja dan siklus *checkout* pesanan. Komponen ini dirancang independen dari *backend* dengan memanfaatkan `StoreContext` dan `localStorage`.
-
-### 4.1 PaymentMethodSelector
-Komponen interaktif untuk mensimulasikan alur pembayaran yang bercabang (Transfer, QRIS, Cash).
-
-#### Props:
-```typescript
-type PaymentMethod = "transfer" | "qris" | "cash" | "cod";
-
-interface PaymentMethodSelectorProps {
-  selectedMethod: PaymentMethod | null;
-  onSelectMethod: (method: PaymentMethod) => void;
-  onProofUploaded: (base64: string) => void;
-  onQrisVerified: (isVerified: boolean) => void;
-  theme?: "coffee" | "fashion" | "barber";
-  availableMethods?: PaymentMethod[];
-}
-```
-**Fungsi Kunci:**
-- **Transfer Bank**: Merender UI form *upload* gambar lokal (mengubah *file* ke format *base64 string* via `FileReader`).
-- **QRIS**: Menyediakan tombol "Saya Sudah Bayar" dengan efek *loading spinner* tersimulasi (`setTimeout`) untuk UX *dummy verification*.
-- **Cash**: Menampilkan instruksi pesan simpel untuk metode pembayaran di kasir (*dine-in / takeaway*).
-- **COD (Cash on Delivery)**: Menampilkan instruksi pembayaran di tempat (bayar saat barang sampai), yang digunakan bersamaan dengan input `shippingAddress` di `CartDrawer`.
-
-### 4.2 CartDrawer
-Merupakan komponen pembungkus berbentuk *sidebar/drawer* yang muncul dari samping layar. 
-
-- **State Cart**: Menampilkan keranjang belanja dengan kontrol kuantitas (+ / -) dan ukuran barang (*sizes*).
-- **Checkout Form**: Menampilkan form identitas pelanggan (Nama, WA, Catatan). Jika properti `requiresShipping` bernilai `true`, form akan menampilkan *input text area* untuk `shippingAddress`.
-- **Validation**: Mencegah *submit* jika form identitas belum lengkap, jika `paymentProof` kosong, atau jika simulasi `isQrisVerified` belum selesai.
-
-### 4.3 OrdersTable & SalesSummary (Bagian dari AdminDashboard)
-Admin Dashboard telah diperkaya untuk menangani *conditional logic* berbasis `paymentMethod` dan properti produk.
-- **Branching Action**: Tombol konfirmasi berbeda-beda (Upload -> *Verifikasi Pembayaran*, Cash -> *Tandai Diambil & Dibayar*, COD -> *Kirim Pesanan* lalu *Tandai Diterima*).
-- **Product Management**: Menampilkan `sizes` dan manajemen `stock` secara dinamis.
-- **Revenue Logic**: Kalkulasi `totalRevenue` secara pintar mengecualikan pesanan berstatus `menunggu_verifikasi` untuk mencegah perhitungan pendapatan palsu sebelum di-acc.
-
----
-
-## 5. Sistem Booking (Reservasi Jasa)
-Kumpulan komponen khusus untuk menangani alur pemesanan jadwal (appointment) tanpa fitur keranjang belanja. Komponen ini dirancang untuk industri jasa menggunakan `BookingContext` dan `localStorage`.
-
-### 5.1 ServiceSelection & SlotPicker
-- **ServiceSelection**: Merender daftar jasa (services) dengan sistem *multi-select* checkbox. Mengelompokkan layanan berdasarkan `category`.
-- **SlotPicker**: Menampilkan tanggal secara dinamis dari sisa ketersediaan (available slots) yang ditarik dari *context*, dengan layout horizontal untuk *date* dan grid *time* untuk memudahkan seleksi *touch screen*.
-
-### 5.2 BookingForm
-Berbeda dengan `CartDrawer` pada e-commerce, `BookingForm` berdiri sendiri sebagai halaman form.
-- Menggunakan ulang (reuse) komponen `PaymentMethodSelector`, `TransferPaymentUpload`, dan `QRISPaymentSimulation` dari sistem e-commerce.
-- Mensyaratkan penyelesaian input form dan validasi bukti bayar/verifikasi QRIS sebelum tombol `Konfirmasi Booking` dapat di-klik.
-
-### 5.3 BookingDashboard (Admin Jasa)
-Dirancang spesifik untuk manajemen reservasi dan kapasitas (*slot*).
-- **BookingsTable**: Merender jadwal yang dipesan lengkap dengan badge warna-warni untuk merepresentasikan status (*Menunggu Verifikasi*, *Dikonfirmasi*, *Terjadwal*, *Selesai*).
-- **SlotManager**: Antarmuka admin khusus untuk menutup/membuka jadwal waktu pada hari tertentu (*toggle availability*), mencegah double-booking secara simulatif.
+> **PENTING (HARDWARE DEPENDENT):**
+> 1. Web Bluetooth API hanya didukung di **Chrome & Edge** (Desktop/Android). Safari dan iOS **tidak didukung**.
+> 2. Printer harus menggunakan protokol BLE (Bluetooth Low Energy) GATT. Printer Classic Bluetooth SPP tidak bisa terkoneksi melalui browser.
+> 3. Pengembang selanjutnya harus melakukan uji coba langsung ke fisik printer BLE (misal GOOJPRT dsb.) untuk memastikan UUID di `printerConfig.ts` sudah sesuai dengan spesifikasi *hardware* klien. Gunakan `printerContext.simulatePrint` untuk simulasi pada konsol saat *hardware* fisik belum tersedia.

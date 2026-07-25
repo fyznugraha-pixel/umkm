@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { MessageCircle, ShoppingBag, ArrowRight, Info } from "lucide-react";
+import { MessageCircle, ShoppingBag, ArrowRight, Info, MapPin } from "lucide-react";
 import StoreItemCard from "@/components/demo/StoreItemCard";
 import MapEmbed from "@/components/demo/MapEmbed";
 import DemoWatermark from "@/components/demo/DemoWatermark";
@@ -257,6 +257,72 @@ export default function RuangRupaFullDemo() {
         </div>
       </section>
 
+      {/* 7. LOKASI / STUDIO & INFO KONTAK */}
+      <section id="lokasi" className="py-24 px-6 md:px-16 lg:px-24 bg-[#111111] text-white">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-6">Kunjungi <span className="text-[#C34A36]">Studio</span></h2>
+            <div className="mb-6">
+              <StatusBadge theme="fashion" schedule={[
+                { days: [1, 2, 3, 4, 5], openHour: 10, closeHour: 18 },
+                { days: [0, 6], openHour: 12, closeHour: 16 }
+              ]} />
+            </div>
+            <p className="text-gray-400 mb-12 max-w-md font-light leading-relaxed">
+              Punya pertanyaan mengenai ukuran, bahan, atau custom order? Ingin mencoba koleksi secara langsung? Tim kami siap membantu Anda dari studio.
+            </p>
+            
+            <div className="space-y-6">
+              <a href={`https://wa.me/${DUMMY_WA}`} target="_blank" rel="noreferrer" className="flex items-center gap-6 group w-max">
+                <div className="w-14 h-14 bg-white/10 text-white rounded-full flex items-center justify-center group-hover:bg-[#C34A36] transition-colors">
+                  <MessageCircle size={24} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">WhatsApp CS</p>
+                  <p className="text-lg font-medium group-hover:text-[#C34A36] transition-colors">+62 800 0000 0000</p>
+                </div>
+              </a>
+              
+              <a href="https://instagram.com/" target="_blank" rel="noreferrer" className="flex items-center gap-6 group w-max">
+                <div className="w-14 h-14 bg-white/10 text-white rounded-full flex items-center justify-center group-hover:bg-[#C34A36] transition-colors">
+                  <FaInstagram size={24} />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">Katalog & Lookbook IG</p>
+                  <p className="text-lg font-medium group-hover:text-[#C34A36] transition-colors">@ruangrupa.official</p>
+                </div>
+              </a>
+              
+              <div className="mt-8 pt-8 border-t border-white/10 max-w-sm">
+                <p className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Jam Operasional (By Appointment)</p>
+                <div className="flex justify-between text-sm text-gray-400 mb-2">
+                  <span>Senin - Jumat</span>
+                  <span>10:00 - 18:00</span>
+                </div>
+                <div className="flex justify-between text-sm text-gray-400">
+                  <span>Sabtu - Minggu</span>
+                  <span>12:00 - 16:00</span>
+                </div>
+              </div>
+            </div>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2} className="relative">
+            <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#C34A36] -z-10"></div>
+            <div className="bg-white p-2">
+              <MapEmbed src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126748.56347862248!2d107.573117!3d-6.9034443!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e68e6398252477f%3A0x146a1f93d3e815b2!2sBandung%2C%20Bandung%20City%2C%20West%20Java!5e0!3m2!1sen!2sid!4v1714561234567!5m2!1sen!2sid" />
+            </div>
+            <div className="mt-4 flex gap-3 items-start">
+              <MapPin className="text-[#C34A36] shrink-0 mt-1" size={20} />
+              <div>
+                <p className="font-bold uppercase tracking-wider text-sm mb-1">Creative Studio & Workshop</p>
+                <p className="text-gray-400 text-sm">Jl. Buah Batu No.123, Bandung, Jawa Barat</p>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* FOOTER */}
       <footer className="bg-[#111111] text-white pt-20 pb-10 px-6 md:px-16 lg:px-24">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -289,6 +355,9 @@ export default function RuangRupaFullDemo() {
       </footer>
       
       <DemoWatermark />
+      <div className="fixed bottom-24 right-6 z-40 bg-white px-3 py-1.5 rounded-none shadow-md text-[10px] font-bold text-[#111111] uppercase tracking-wider border border-[#111111] flex items-center gap-2">
+        <span className="w-1.5 h-1.5 bg-[#C34A36]"></span> ADMIN ONLINE (RESPON &lt; 5 MNT)
+      </div>
       <FloatingWhatsApp phoneNumber={DUMMY_WA} message="Halo Ruang & Rupa, saya mau tanya soal baju/celana yang ada di website." />
     </div>
   );

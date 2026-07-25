@@ -2,17 +2,43 @@
 
 import React, { useState } from "react";
 import { Booking, Service } from "./BookingContext";
-import { Calendar, Clock, CreditCard, Check, X, Search, MoreVertical, MessageCircle, AlertCircle } from "lucide-react";
+import { Calendar, Clock, CreditCard, Check, X, Search, MoreVertical, MessageCircle, AlertCircle, Printer } from "lucide-react";
+import { generateBookingReceiptBytes } from "@/lib/escpos";
 
 interface BookingsTableProps {
   bookings: Booking[];
   services: Service[];
   onUpdateStatus: (id: string, status: string) => void;
+  printerContext?: {
+    isConnected: boolean;
+    error: string;
+    printReceipt: (bytes: Uint8Array) => Promise<boolean>;
+    simulatePrint: (bytes: Uint8Array) => boolean;
+  };
 }
 
-export default function BookingsTable({ bookings, services, onUpdateStatus }: BookingsTableProps) {
+export default function BookingsTable({ bookings, services, onUpdateStatus, printerContext }: BookingsTableProps) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
+
+  const handlePrintReceipt = async (booking: Booking) => {
+    if (!printerContext) return;
+    
+    const bytes = generateBookingReceiptBytes("RAPI Barbershop", booking, services);
+    
+    if (printerContext.isConnected) {
+      const success = await printerContext.printReceipt(bytes);
+      if (!success) {
+        alert(printerContext.error || "Gagal mencetak struk.");
+      }
+    } else {
+      if (typeof window !== "undefined") {
+        printerContext.simulatePrint(bytes);
+        alert("Printer BLE belum terhubung. Melakukan simulasi cetak di console (lihat console.log).");
+        window.print();
+      }
+    }
+  };
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -165,6 +191,19 @@ export default function BookingsTable({ bookings, services, onUpdateStatus }: Bo
                             {booking.paymentMethod === "cash" ? "Tandai Selesai & Dibayar" : "Tandai Selesai"}
                           </button>
                         )}
+                        
+                        {/* Print Receipt Button */}
+                        <button
+                          onClick={() => handlePrintReceipt(booking)}
+                          className={`w-full flex items-center justify-center gap-1.5 font-bold text-xs py-1.5 px-3 rounded-lg transition-colors border mt-1 ${
+                            printerContext?.isConnected 
+                              ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border-emerald-200"
+                              : "bg-white text-slate-600 hover:bg-slate-50 border-slate-300"
+                          }`}
+                        >
+                          <Printer size={12} />
+                          {printerContext?.isConnected ? "Cetak Struk" : "Cetak (Browser)"}
+                        </button>
                       </div>
                     </td>
                   </tr>

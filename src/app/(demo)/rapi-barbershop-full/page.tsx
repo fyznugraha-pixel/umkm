@@ -1,13 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { businessData } from "./data";
-import { useBooking, Service } from "@/components/demo/booking/BookingContext";
-import ServiceSelection from "@/components/demo/booking/ServiceSelection";
-import SlotPicker from "@/components/demo/booking/SlotPicker";
-import BookingSummaryBar from "@/components/demo/booking/BookingSummaryBar";
-import BookingForm from "@/components/demo/booking/BookingForm";
+import { useBooking } from "@/components/demo/booking/BookingContext";
 import AnchorNav from "@/components/demo/AnchorNav";
 import ItemCard from "@/components/demo/ItemCard";
 import MapEmbed from "@/components/demo/MapEmbed";
@@ -19,159 +15,8 @@ import { FaInstagram } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 export default function RapiBarbershopFull() {
-  const { services, slots, addBooking } = useBooking();
-  
-  // Booking Flow State
-  const [step, setStep] = useState<"landing" | "services" | "slots" | "form" | "success">("landing");
-  
-  const [selectedServiceIds, setSelectedServiceIds] = useState<string[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  
-  const selectedServices = services.filter(s => selectedServiceIds.includes(s.id));
-  const totalPrice = selectedServices.reduce((sum, s) => sum + s.price, 0);
+  const { services } = useBooking();
 
-  const navItems = [
-    { label: "Tentang", id: "tentang" },
-    { label: "Layanan", id: "layanan" },
-    { label: "Galeri", id: "galeri" },
-    { label: "Testimoni", id: "testimoni" },
-  ];
-
-  const handleToggleService = (id: string) => {
-    setSelectedServiceIds(prev => 
-      prev.includes(id) ? prev.filter(sId => sId !== id) : [...prev, id]
-    );
-  };
-
-  const handleSelectSlot = (date: string, time: string) => {
-    setSelectedDate(date);
-    setSelectedTime(time);
-  };
-
-  const handleSubmitBooking = (data: any) => {
-    if (!selectedDate || !selectedTime) return;
-    
-    addBooking({
-      ...data,
-      serviceIds: selectedServiceIds,
-      totalPrice,
-      bookingDate: selectedDate,
-      bookingTime: selectedTime,
-    });
-    
-    setStep("success");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const resetFlow = () => {
-    setSelectedServiceIds([]);
-    setSelectedDate(null);
-    setSelectedTime(null);
-    setStep("landing");
-  };
-
-  // Render content based on step
-  if (step === "success") {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-zinc-950 text-center">
-        <motion.div 
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="bg-zinc-900 border border-zinc-800 p-8 rounded-3xl max-w-lg w-full"
-        >
-          <div className="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 size={40} />
-          </div>
-          <h2 className="text-3xl font-display font-bold text-white mb-4">Booking Berhasil!</h2>
-          <p className="text-zinc-400 mb-8">
-            Terima kasih! Reservasi Anda untuk tanggal <strong className="text-white">{selectedDate}</strong> jam <strong className="text-white">{selectedTime}</strong> telah kami terima.
-            Silakan cek WhatsApp Anda secara berkala untuk konfirmasi lebih lanjut.
-          </p>
-          <div className="flex flex-col gap-3">
-            <button 
-              onClick={resetFlow}
-              className="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-3 rounded-xl transition-colors"
-            >
-              Kembali ke Beranda
-            </button>
-            <Link 
-              href="/rapi-barbershop-full/admin"
-              className="text-sm text-cyan-500 hover:text-cyan-400 mt-4"
-            >
-              Lihat di Dashboard Admin (Demo) &rarr;
-            </Link>
-          </div>
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (step !== "landing") {
-    return (
-      <div className="min-h-screen bg-zinc-50 pb-32">
-        {/* Header */}
-        <header className="sticky top-0 z-40 bg-white border-b border-zinc-200 shadow-sm">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-3xl">
-            <button 
-              onClick={() => {
-                if (step === "form") setStep("slots");
-                else if (step === "slots") setStep("services");
-                else setStep("landing");
-              }}
-              className="flex items-center gap-2 text-zinc-600 hover:text-zinc-900 font-medium"
-            >
-              <ArrowLeft size={18} /> Kembali
-            </button>
-            <div className="font-display font-bold text-lg text-zinc-900">
-              Langkah {step === "services" ? "1" : step === "slots" ? "2" : "3"} dari 3
-            </div>
-          </div>
-        </header>
-
-        {/* Form Content */}
-        <div className="container mx-auto px-4 py-8">
-          {step === "services" && (
-            <ServiceSelection 
-              services={services} 
-              selectedServiceIds={selectedServiceIds} 
-              onToggleService={handleToggleService} 
-            />
-          )}
-          
-          {step === "slots" && (
-            <SlotPicker 
-              slots={slots} 
-              selectedDate={selectedDate}
-              selectedTime={selectedTime}
-              onSelectSlot={handleSelectSlot}
-            />
-          )}
-          
-          {step === "form" && (
-            <BookingForm 
-              onSubmit={handleSubmitBooking}
-              totalPrice={totalPrice}
-            />
-          )}
-        </div>
-
-        {/* Summary Bar for Step 1 & 2 */}
-        {(step === "services" || step === "slots") && (
-          <BookingSummaryBar 
-            selectedServices={selectedServices}
-            onNext={() => {
-              if (step === "services") setStep("slots");
-              if (step === "slots" && selectedDate && selectedTime) setStep("form");
-            }}
-            nextLabel={step === "services" ? "Pilih Jadwal" : "Isi Data Diri"}
-          />
-        )}
-      </div>
-    );
-  }
-
-  // === LANDING PAGE ===
   return (
     <div className="bg-[#0A0A0A] min-h-screen text-gray-300 font-sans selection:bg-[#E63946] selection:text-white pb-10">
       
@@ -218,15 +63,12 @@ export default function RapiBarbershopFull() {
           </motion.div>
           
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.5 }} className="flex flex-col sm:flex-row gap-4">
-            <button 
-              onClick={() => {
-                setStep("services");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
+            <Link 
+              href="/rapi-barbershop-full/booking"
               className="bg-[#E63946] hover:bg-[#D90429] text-white font-black uppercase tracking-wider px-10 py-5 transition-transform hover:scale-105 flex items-center justify-center gap-3 text-lg"
             >
               <CalendarCheck size={24} /> Booking Jadwal
-            </button>
+            </Link>
             <a 
               href="#layanan"
               className="bg-[#1A1A1A] hover:bg-[#222222] text-white border border-[#333333] font-black uppercase tracking-wider px-10 py-5 transition-transform hover:scale-105 flex items-center justify-center text-lg"
@@ -271,11 +113,7 @@ export default function RapiBarbershopFull() {
                 aspectRatio="square" 
                 theme="barber" 
                 ctaText="Booking Now"
-                onCtaClick={() => {
-                  setSelectedServiceIds([service.id]);
-                  setStep("services");
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
+                ctaLink="/rapi-barbershop-full/booking"
               />
             ))}
           </div>

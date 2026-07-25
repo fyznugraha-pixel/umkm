@@ -6,10 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LayoutTemplate, MessageCircle, Sparkles, ArrowUpRight } from "lucide-react";
 import { catalogData } from "@/data/catalog";
 
-const categories = ["Semua", "Mini Landing Page", "Basic", "Full Katalog"];
+const tiers = ["Semua", "Mini Landing Page", "Basic", "Full Katalog"];
+const nicheCategories = ["Semua Kategori", "Kuliner", "Fashion", "Jasa"];
 
 export default function KatalogPage() {
   const [activeTab, setActiveTab] = useState("Semua");
+  const [activeCategory, setActiveCategory] = useState("Semua Kategori");
   const WA_NUMBER = "6287794693241";
 
   return (
@@ -34,18 +36,37 @@ export default function KatalogPage() {
       </section>
 
       {/* Tabs */}
-      <section className="max-w-6xl w-full mb-16">
+      <section className="max-w-6xl w-full mb-16 space-y-6">
         <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-          {categories.map((cat, idx) => (
+          {tiers.map((tier, idx) => (
+            <motion.button
+              key={tier}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + (idx * 0.05) }}
+              onClick={() => setActiveTab(tier)}
+              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+                activeTab === tier 
+                  ? 'bg-yellow-500 text-slate-950 shadow-lg shadow-yellow-500/20' 
+                  : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+              }`}
+            >
+              {tier}
+            </motion.button>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-2 md:gap-4">
+          {nicheCategories.map((cat, idx) => (
             <motion.button
               key={cat}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + (idx * 0.05) }}
-              onClick={() => setActiveTab(cat)}
+              transition={{ delay: 0.3 + (idx * 0.05) }}
+              onClick={() => setActiveCategory(cat)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                activeTab === cat 
-                  ? 'bg-yellow-500 text-slate-950 shadow-lg shadow-yellow-500/20' 
+                activeCategory === cat 
+                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' 
                   : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
               }`}
             >
@@ -57,10 +78,17 @@ export default function KatalogPage() {
 
       {/* Catalog Grid or Empty State */}
       <section className="max-w-6xl w-full flex justify-center">
-        {catalogData.filter(item => activeTab === "Semua" || item.packageType === activeTab).length > 0 ? (
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-            <AnimatePresence mode="popLayout">
-              {catalogData.filter(item => activeTab === "Semua" || item.packageType === activeTab).map((item, idx) => (
+        {(() => {
+          const filteredData = catalogData.filter(item => {
+            const matchTier = activeTab === "Semua" || item.packageType === activeTab;
+            const matchCategory = activeCategory === "Semua Kategori" || item.category === activeCategory;
+            return matchTier && matchCategory;
+          });
+
+          return filteredData.length > 0 ? (
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full relative">
+            <AnimatePresence>
+              {filteredData.map((item, idx) => (
                 <motion.div
                   layout
                   key={item.slug}
@@ -93,35 +121,20 @@ export default function KatalogPage() {
                   )}
                 </div>
                 
-                <div className="p-6 flex-1 flex flex-col">
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="text-2xl font-bold font-display text-white group-hover:text-yellow-500 transition-colors">
-                      {item.businessName}
-                    </h3>
-                  </div>
-                  <div className="mb-4">
-                    <span className="inline-block bg-teal-500/20 text-teal-400 border border-teal-500/30 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
-                      Promo 5 Pemesan Pertama
-                    </span>
-                  </div>
-                  <p className="text-slate-400 text-sm mb-6 flex-1 line-clamp-3">
-                    {item.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
-                    <div className="flex flex-col">
-                      {item.originalPrice && (
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <span className="text-xs text-slate-500 line-through decoration-red-500/50">{item.originalPrice}</span>
-                          {item.discountNote && (
-                            <span className="text-[10px] font-bold text-red-400 bg-red-400/10 px-1.5 py-0.5 rounded-full">
-                              {item.discountNote}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      <span className="font-bold text-white text-lg">{item.packagePrice}</span>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex justify-between items-start mb-4">
+                      <h3 className="text-2xl font-bold font-display text-white group-hover:text-yellow-500 transition-colors">
+                        {item.businessName}
+                      </h3>
                     </div>
+                    <p className="text-slate-400 text-sm mb-6 flex-1 line-clamp-3">
+                      {item.description}
+                    </p>
+                    
+                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-white text-lg">{item.packagePrice}</span>
+                      </div>
                     <Link 
                       href={`/${item.slug}`} 
                       className="inline-flex items-center gap-2 text-yellow-500 text-sm font-medium hover:text-yellow-400 transition-transform group-hover:translate-x-1"
@@ -130,8 +143,8 @@ export default function KatalogPage() {
                     </Link>
                   </div>
                 </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
             </AnimatePresence>
           </motion.div>
         ) : (
@@ -177,7 +190,8 @@ export default function KatalogPage() {
               </div>
             </div>
           </motion.div>
-        )}
+        );
+        })()}
       </section>
     </div>
   );

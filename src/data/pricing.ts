@@ -65,6 +65,7 @@ export const pricingPlans: PricingPlan[] = [
       { name: "Detail Produk", included: true },
       { name: "Bisa Order", included: true },
       { name: "Admin Dashboard", included: true },
+      { name: "Cetak Struk Bluetooth", included: true },
       { name: "Info Data Penjualan", included: true },
       { name: "Galeri / Testimoni", included: true },
       { name: "Include Domain Custom", included: true },

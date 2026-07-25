@@ -9,7 +9,8 @@ export const SEED_PRODUCTS: Product[] = [
     description: "Kemeja oxford klasik yang nyaman dipakai sehari-hari.",
     image: "https://images.unsplash.com/photo-1626497764746-6dc36546b388?auto=format&fit=crop&q=80&w=600",
     stock: 12,
-    sizes: ["S", "M", "L", "XL"]
+    sizes: ["S", "M", "L", "XL"],
+    isBestseller: true
   },
   {
     id: "rr-2",
@@ -19,7 +20,8 @@ export const SEED_PRODUCTS: Product[] = [
     description: "Jaket denim selvedge tebal dengan potongan modern.",
     image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=600",
     stock: 5,
-    sizes: ["M", "L"]
+    sizes: ["M", "L"],
+    isBestseller: true
   },
   {
     id: "rr-3",

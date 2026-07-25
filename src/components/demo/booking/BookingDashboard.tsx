@@ -4,11 +4,14 @@ import React, { useState } from "react";
 import { useBooking } from "./BookingContext";
 import BookingsTable from "./BookingsTable";
 import SlotManager from "./SlotManager";
-import { Calendar, Users, DollarSign, Activity } from "lucide-react";
+import { Calendar, Users, DollarSign, Activity, Bluetooth } from "lucide-react";
+import { usePrinterConnection } from "@/hooks/usePrinterConnection";
 
 export default function BookingDashboard() {
   const { bookings, services, slots, updateBookingStatus, updateSlotAvailability, resetDemoData } = useBooking();
   const [activeTab, setActiveTab] = useState<"bookings" | "slots">("bookings");
+
+  const printerContext = usePrinterConnection();
 
   // Analytics
   const totalBookings = bookings.length;
@@ -26,17 +29,38 @@ export default function BookingDashboard() {
           <p className="text-slate-600">Kelola reservasi dan ketersediaan waktu RAPI Barbershop.</p>
         </div>
         
-        <button 
-          onClick={() => {
-            if (confirm("Reset semua data booking demo?")) {
-              resetDemoData();
-            }
-          }}
-          className="text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-lg transition-colors"
-        >
-          Reset Data Demo
-        </button>
+        <div className="flex items-center gap-3">
+          <button 
+            onClick={printerContext.connectPrinter}
+            disabled={printerContext.isConnecting}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-colors ${
+              printerContext.isConnected 
+                ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200" 
+                : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+            }`}
+          >
+            <Bluetooth size={16} className={printerContext.isConnecting ? "animate-pulse" : ""} />
+            {printerContext.isConnecting ? "Menghubungkan..." : printerContext.isConnected ? `Printer: ${printerContext.deviceName}` : "Hubungkan Printer"}
+          </button>
+          
+          <button 
+            onClick={() => {
+              if (confirm("Reset semua data booking demo?")) {
+                resetDemoData();
+              }
+            }}
+            className="text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-lg transition-colors"
+          >
+            Reset Data
+          </button>
+        </div>
       </div>
+      
+      {printerContext.error && (
+        <div className="text-xs text-red-600 bg-red-50 p-2 rounded-lg border border-red-100 mt-2">
+          {printerContext.error}
+        </div>
+      )}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -103,13 +127,15 @@ export default function BookingDashboard() {
 
       {/* Content */}
       <div className="pt-2">
-        {activeTab === "bookings" ? (
+        {activeTab === "bookings" && (
           <BookingsTable 
             bookings={bookings} 
             services={services} 
             onUpdateStatus={updateBookingStatus} 
+            printerContext={printerContext}
           />
-        ) : (
+        )}
+        {activeTab === "slots" && (
           <SlotManager 
             slots={slots} 
             onToggleSlot={updateSlotAvailability} 

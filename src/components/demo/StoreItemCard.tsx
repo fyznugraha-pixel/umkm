@@ -27,6 +27,13 @@ export default function StoreItemCard({ product }: StoreItemCardProps) {
             <span className="bg-red-500 text-white font-bold py-1 px-4 rounded-full text-sm uppercase tracking-wider">Habis</span>
           </div>
         )}
+        {!isOutOfStock && product.isBestseller && (
+          <div className="absolute top-2 left-2 z-10">
+            <span className="bg-yellow-400 text-yellow-900 font-bold py-1 px-2.5 rounded-full text-[10px] md:text-xs uppercase tracking-wider shadow-sm flex items-center gap-1">
+              ⭐ Terlaris
+            </span>
+          </div>
+        )}
       </div>
       
       <div className="p-3 md:p-5 flex flex-col flex-grow">

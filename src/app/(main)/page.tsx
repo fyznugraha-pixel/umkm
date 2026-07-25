@@ -3,8 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, MessageCircle, ArrowRight, LayoutTemplate, PenTool, Rocket, Code2, ChevronDown, Coffee, Shirt, Briefcase, Smartphone, Tent, Sparkles } from "lucide-react";
+import { Check, MessageCircle, ArrowRight, LayoutTemplate, PenTool, Rocket, Code2, ChevronDown, Coffee, Shirt, Briefcase, Smartphone, Tent, Sparkles, ExternalLink } from "lucide-react";
 import { pricingPlans, addOns } from "@/data/pricing";
+import { catalogData } from "@/data/catalog";
 import SpotlightCard from "@/components/SpotlightCard";
 import BlurText from "@/components/BlurText";
 import RotatingText from "@/components/RotatingText";
@@ -75,6 +76,11 @@ export default function HomePage() {
           </motion.div>
         </motion.div>
       </section>
+
+      {/* Decorative Divider */}
+      <div className="w-full flex items-center justify-center -mb-px relative z-20">
+        <div className="h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent w-full max-w-5xl"></div>
+      </div>
 
       {/* Trust Section */}
       <section className="w-full py-20 px-4 bg-[#f8f5f0] text-slate-900 flex justify-center">
@@ -229,31 +235,79 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Decorative Divider */}
+      <div className="w-full flex items-center justify-center -mt-px relative z-20">
+        <div className="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent w-full max-w-5xl"></div>
+      </div>
+
       {/* Preview Katalog Teaser */}
-      <section className="w-full py-24 px-4 bg-[#f8f5f0] flex justify-center overflow-hidden">
+      <section className="w-full py-24 px-4 bg-[#050B14] flex justify-center overflow-hidden">
         <motion.div 
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-          className="max-w-5xl mx-auto w-full relative bg-white border border-slate-200 p-8 md:p-16 rounded-3xl text-center shadow-2xl shadow-slate-200/50 overflow-hidden"
+          className="max-w-6xl mx-auto w-full relative text-center"
         >
           {/* Decorative blur */}
-          <div className="absolute top-0 left-0 w-64 h-64 bg-teal-100 blur-3xl rounded-full"></div>
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-yellow-100 blur-3xl rounded-full"></div>
+          <div className="absolute top-0 left-0 w-64 h-64 bg-blue-500/5 blur-[100px] rounded-full pointer-events-none"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-yellow-500/5 blur-[100px] rounded-full pointer-events-none"></div>
           
-          <div className="relative z-10">
-            <LayoutTemplate size={48} className="mx-auto text-slate-400 mb-6" />
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 text-slate-900">Contoh Hasil Kerja</h2>
-            <p className="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
-              Portfolio pertama saya sedang dalam proses pembuatan. Jadilah salah satu klien awal saya dan dapatkan <span className="text-yellow-600 font-bold">Prioritas Revisi Unlimited</span> tanpa syarat!
+          <div className="relative z-10 mb-16">
+            <LayoutTemplate size={48} className="mx-auto text-yellow-500 mb-6" />
+            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4 text-white">Sudah Dipakai 3 Jenis UMKM</h2>
+            <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+              Contoh nyata, bukan sekadar template. Jelajahi fitur premium yang disesuaikan khusus untuk tiap model bisnis.
             </p>
-            <Link 
-              href="/katalog"
-              className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-full font-bold transition-transform hover:scale-105 shadow-xl shadow-slate-900/20"
-            >
-              Lihat Ruang Katalog <ArrowRight size={18} />
-            </Link>
           </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-16 relative z-10">
+            {catalogData
+              .filter(item => item.packageType === "Full Katalog")
+              .slice(0, 3)
+              .map((item, idx) => (
+                <Link 
+                  href={`/demo/${item.slug}`} 
+                  key={idx}
+                  className="group relative bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/10 hover:-translate-y-2 flex flex-col h-full backdrop-blur-sm"
+                >
+                  <div className="aspect-[4/3] overflow-hidden relative">
+                    <img 
+                      src={item.thumbnail} 
+                      alt={item.businessName} 
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90" />
+                    <div className="absolute top-4 left-4 flex gap-2">
+                      <span className="bg-slate-950/80 backdrop-blur border border-white/10 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+                        {item.category}
+                      </span>
+                      <span className="bg-gradient-to-r from-yellow-500 to-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md">
+                        {item.packageType}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="p-6 flex-1 flex flex-col">
+                    <div className="flex justify-between items-start mb-2">
+                      <h3 className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors">{item.businessName}</h3>
+                      <ExternalLink size={18} className="text-slate-500 group-hover:text-yellow-500 transition-colors" />
+                    </div>
+                    <p className="text-sm text-slate-400 line-clamp-2">{item.description}</p>
+                  </div>
+                </Link>
+              ))}
+          </div>
+
+          <Link 
+            href="/katalog"
+            className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-full font-bold transition-all hover:scale-105 shadow-xl relative z-10"
+          >
+            Lihat Semua di Katalog <ArrowRight size={18} />
+          </Link>
         </motion.div>
       </section>
+
+      {/* Decorative Divider */}
+      <div className="w-full flex items-center justify-center -mt-px relative z-20">
+        <div className="h-px bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent w-full max-w-5xl"></div>
+      </div>
 
       {/* FAQ */}
       <section className="w-full py-24 px-4 bg-[#FDFBF7] border-t border-slate-200 flex justify-center">

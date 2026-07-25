@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { CreditCard, QrCode, Banknote, Upload, CheckCircle, Loader2 } from "lucide-react";
+import { OrderDesignTokens, defaultCoffeeTokens, defaultFashionTokens, defaultBarberTokens } from "./designTokens";
 
 export type PaymentMethod = "transfer" | "qris" | "cash" | "cod";
 
@@ -10,6 +11,7 @@ interface PaymentMethodSelectorProps {
   onQrisVerified: (isVerified: boolean) => void;
   theme?: "coffee" | "fashion" | "barber";
   availableMethods?: PaymentMethod[];
+  designTokens?: OrderDesignTokens;
 }
 
 export default function PaymentMethodSelector({
@@ -18,18 +20,22 @@ export default function PaymentMethodSelector({
   onProofUploaded,
   onQrisVerified,
   theme = "coffee",
-  availableMethods = ["transfer", "qris", "cash"]
+  availableMethods = ["transfer", "qris", "cash"],
+  designTokens
 }: PaymentMethodSelectorProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [proofPreview, setProofPreview] = useState<string | null>(null);
   const [isSimulatingQris, setIsSimulatingQris] = useState(false);
   const [qrisSuccess, setQrisSuccess] = useState(false);
 
+  const tokens = designTokens || (theme === "fashion" ? defaultFashionTokens : theme === "barber" ? defaultBarberTokens : defaultCoffeeTokens);
+  
+  // Backwards compatibility for older theme colors (though we try to use tokens)
   const getThemeColors = () => {
     switch (theme) {
       case "coffee": return { primary: "text-[#B36A5E]", bg: "bg-[#B36A5E]", active: "border-[#B36A5E] bg-orange-50", hover: "hover:border-[#D4A373]" };
-      case "fashion": return { primary: "text-slate-900", bg: "bg-slate-900", active: "border-slate-900 bg-slate-50", hover: "hover:border-slate-400" };
-      case "barber": return { primary: "text-[#D4AF37]", bg: "bg-[#1A1A1A]", active: "border-[#D4AF37] bg-stone-900 text-white", hover: "hover:border-[#D4AF37]/50" };
+      case "fashion": return { primary: "text-[#111111]", bg: "bg-[#111111]", active: "border-[#111111] bg-gray-50", hover: "hover:border-gray-400" };
+      case "barber": return { primary: "text-[#E63946]", bg: "bg-[#1A1A1A]", active: "border-[#E63946] bg-zinc-900 text-white", hover: "hover:border-gray-500" };
     }
   };
   const colors = getThemeColors();
@@ -65,35 +71,35 @@ export default function PaymentMethodSelector({
         <button
           type="button"
           onClick={() => { onSelectMethod("transfer"); setProofPreview(null); }}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-            selectedMethod === "transfer" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
+          className={`flex flex-col items-center justify-center p-3 transition-all ${tokens.radius} ${tokens.borderStyle} ${
+            selectedMethod === "transfer" ? `${tokens.borderColor} ${tokens.activeCardBg}` : `border-gray-200 hover:${tokens.borderColor} ${tokens.surfaceBg}`
           }`}
         >
-          <CreditCard size={24} className={`mb-2 ${selectedMethod === "transfer" ? colors.primary : "text-slate-400"}`} />
-          <span className={`text-xs font-bold text-center ${selectedMethod === "transfer" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>Transfer Bank</span>
+          <CreditCard size={24} className={`mb-2 ${selectedMethod === "transfer" ? tokens.primaryColor : "text-gray-400"}`} />
+          <span className={`text-xs font-bold text-center ${selectedMethod === "transfer" ? tokens.textColor : "text-gray-500"}`}>Transfer Bank</span>
         </button>
         
         <button
           type="button"
           onClick={() => { onSelectMethod("qris"); setQrisSuccess(false); onQrisVerified(false); }}
-          className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-            selectedMethod === "qris" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
+          className={`flex flex-col items-center justify-center p-3 transition-all ${tokens.radius} ${tokens.borderStyle} ${
+            selectedMethod === "qris" ? `${tokens.borderColor} ${tokens.activeCardBg}` : `border-gray-200 hover:${tokens.borderColor} ${tokens.surfaceBg}`
           }`}
         >
-          <QrCode size={24} className={`mb-2 ${selectedMethod === "qris" ? colors.primary : "text-slate-400"}`} />
-          <span className={`text-xs font-bold text-center ${selectedMethod === "qris" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>QRIS</span>
+          <QrCode size={24} className={`mb-2 ${selectedMethod === "qris" ? tokens.primaryColor : "text-gray-400"}`} />
+          <span className={`text-xs font-bold text-center ${selectedMethod === "qris" ? tokens.textColor : "text-gray-500"}`}>QRIS</span>
         </button>
 
         {availableMethods.includes("cash") && (
           <button
             type="button"
             onClick={() => onSelectMethod("cash")}
-            className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-              selectedMethod === "cash" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
+            className={`flex flex-col items-center justify-center p-3 transition-all ${tokens.radius} ${tokens.borderStyle} ${
+              selectedMethod === "cash" ? `${tokens.borderColor} ${tokens.activeCardBg}` : `border-gray-200 hover:${tokens.borderColor} ${tokens.surfaceBg}`
             }`}
           >
-            <Banknote size={24} className={`mb-2 ${selectedMethod === "cash" ? colors.primary : "text-slate-400"}`} />
-            <span className={`text-xs font-bold text-center ${selectedMethod === "cash" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>Bayar di Kasir</span>
+            <Banknote size={24} className={`mb-2 ${selectedMethod === "cash" ? tokens.primaryColor : "text-gray-400"}`} />
+            <span className={`text-xs font-bold text-center ${selectedMethod === "cash" ? tokens.textColor : "text-gray-500"}`}>Bayar di Kasir</span>
           </button>
         )}
 
@@ -101,32 +107,32 @@ export default function PaymentMethodSelector({
           <button
             type="button"
             onClick={() => onSelectMethod("cod")}
-            className={`flex flex-col items-center justify-center p-3 rounded-xl border-2 transition-all ${
-              selectedMethod === "cod" ? colors.active : `border-slate-200 ${colors.hover} bg-white`
+            className={`flex flex-col items-center justify-center p-3 transition-all ${tokens.radius} ${tokens.borderStyle} ${
+              selectedMethod === "cod" ? `${tokens.borderColor} ${tokens.activeCardBg}` : `border-gray-200 hover:${tokens.borderColor} ${tokens.surfaceBg}`
             }`}
           >
-            <Banknote size={24} className={`mb-2 ${selectedMethod === "cod" ? colors.primary : "text-slate-400"}`} />
-            <span className={`text-xs font-bold text-center ${selectedMethod === "cod" ? (theme === "barber" ? "text-white" : "text-slate-900") : "text-slate-500"}`}>Bayar di Tempat (COD)</span>
+            <Banknote size={24} className={`mb-2 ${selectedMethod === "cod" ? tokens.primaryColor : "text-gray-400"}`} />
+            <span className={`text-xs font-bold text-center ${selectedMethod === "cod" ? tokens.textColor : "text-gray-500"}`}>Bayar di Tempat (COD)</span>
           </button>
         )}
       </div>
 
       {/* --- OPSI A: TRANSFER BANK --- */}
       {selectedMethod === "transfer" && (
-        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-4 animate-in fade-in slide-in-from-top-2 duration-300">
-          <div className="mb-4 text-sm text-slate-700">
+        <div className={`${tokens.activeCardBg} p-4 ${tokens.radius} border ${tokens.borderColor} mt-4 animate-in fade-in slide-in-from-top-2 duration-300`}>
+          <div className={`mb-4 text-sm ${tokens.textColor}`}>
             <p className="mb-2">Silakan transfer sesuai total tagihan ke rekening berikut:</p>
-            <div className="bg-white p-3 rounded-lg border border-slate-200 flex items-center justify-between">
+            <div className={`${tokens.surfaceBg} p-3 rounded-lg border border-gray-200 flex items-center justify-between`}>
               <div>
-                <p className="font-bold text-lg tracking-wider text-slate-900">BCA 1234 567 890</p>
-                <p className="text-xs text-slate-500">a.n. Bisnis Demo UMKM</p>
+                <p className={`font-bold text-lg tracking-wider ${tokens.textColor}`}>BCA 1234 567 890</p>
+                <p className={`text-xs ${tokens.textColor} opacity-70`}>a.n. Bisnis Demo UMKM</p>
               </div>
               <div className="font-bold text-blue-800 text-xl italic">BCA</div>
             </div>
           </div>
           
-          <div className="border-t border-slate-200 pt-4">
-            <p className="text-sm font-bold text-slate-900 mb-2">Upload Bukti Transfer <span className="text-red-500">*</span></p>
+          <div className="border-t border-gray-200 pt-4">
+            <p className={`text-sm font-bold ${tokens.textColor} mb-2`}>{tokens.copyTone.uploadProof} <span className="text-red-500">*</span></p>
             
             {proofPreview ? (
               <div className="relative rounded-lg overflow-hidden border border-slate-200">
@@ -142,10 +148,10 @@ export default function PaymentMethodSelector({
             ) : (
               <div 
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-slate-300 rounded-lg p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-100 hover:border-slate-400 transition-colors"
+                className={`border-2 border-dashed border-gray-300 ${tokens.radius} p-6 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100/50 hover:border-gray-400 transition-colors`}
               >
-                <Upload size={24} className="text-slate-400 mb-2" />
-                <p className="text-xs text-slate-500 text-center">Klik untuk upload bukti pembayaran (JPG/PNG)</p>
+                <Upload size={24} className="text-gray-400 mb-2" />
+                <p className="text-xs text-gray-500 text-center">Klik untuk upload bukti pembayaran (JPG/PNG)</p>
                 <input 
                   type="file" 
                   ref={fileInputRef}
@@ -155,43 +161,43 @@ export default function PaymentMethodSelector({
                 />
               </div>
             )}
-            <p className="text-[10px] text-slate-400 mt-2 italic">*Simulasi: File hanya diproses di browser lokal Anda.</p>
+            <p className="text-[10px] text-gray-400 mt-2 italic">*Simulasi: File hanya diproses di browser lokal Anda.</p>
           </div>
         </div>
       )}
 
       {/* --- OPSI B: QRIS --- */}
       {selectedMethod === "qris" && (
-        <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 mt-4 animate-in fade-in slide-in-from-top-2 duration-300 flex flex-col items-center text-center">
-          <div className="bg-white p-2 rounded-xl border border-slate-200 shadow-sm mb-4">
+        <div className={`${tokens.activeCardBg} p-4 ${tokens.radius} border ${tokens.borderColor} mt-4 animate-in fade-in slide-in-from-top-2 duration-300 flex flex-col items-center text-center`}>
+          <div className={`${tokens.surfaceBg} p-2 rounded-xl border border-gray-200 shadow-sm mb-4`}>
             {/* Fake QRIS Image */}
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=SIMULASI_QRIS_DEMO_UMKM" alt="QRIS Dummy" className="w-40 h-40" />
           </div>
           
-          <p className="text-sm text-slate-700 font-medium mb-4">Scan QRIS menggunakan aplikasi E-Wallet atau M-Banking Anda.</p>
+          <p className={`text-sm ${tokens.textColor} font-medium mb-4`}>{tokens.copyTone.qrisDesc}</p>
           
           {!qrisSuccess ? (
             <button
               type="button"
               onClick={handleSimulateQris}
               disabled={isSimulatingQris}
-              className={`w-full py-3 rounded-lg font-bold flex items-center justify-center gap-2 transition-colors ${
-                isSimulatingQris ? "bg-slate-200 text-slate-500 cursor-not-allowed" : "bg-teal-600 hover:bg-teal-700 text-white shadow-md shadow-teal-600/20"
+              className={`w-full py-3 ${tokens.radius} font-bold flex items-center justify-center gap-2 transition-colors ${
+                isSimulatingQris ? "bg-gray-200 text-gray-500 cursor-not-allowed" : `${tokens.primaryBg} text-white ${tokens.shadow}`
               }`}
             >
               {isSimulatingQris ? (
-                <><Loader2 size={18} className="animate-spin" /> Memeriksa pembayaran...</>
+                <><Loader2 size={18} className="animate-spin" /> {tokens.copyTone.checking}</>
               ) : (
-                "Saya Sudah Bayar"
+                tokens.copyTone.qrisSimulate
               )}
             </button>
           ) : (
-            <div className="w-full bg-green-50 border border-green-200 text-green-700 py-3 rounded-lg font-bold flex items-center justify-center gap-2 animate-in zoom-in duration-300">
-              <CheckCircle size={20} /> Pembayaran Berhasil
+            <div className={`w-full bg-green-50/10 border border-green-500/30 text-green-500 py-3 ${tokens.radius} font-bold flex items-center justify-center gap-2 animate-in zoom-in duration-300`}>
+              <CheckCircle size={20} /> {tokens.copyTone.qrisSuccess}
             </div>
           )}
           
-          <p className="text-[10px] text-slate-400 mt-4 leading-tight italic">
+          <p className="text-[10px] text-gray-400 mt-4 leading-tight italic">
             *Simulasi untuk keperluan demo. Pada implementasi nyata, QRIS statis tetap memerlukan konfirmasi/pengecekan saldo mutasi secara manual oleh admin/kasir.
           </p>
         </div>

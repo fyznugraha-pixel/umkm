@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, CheckCircle } from "lucide-react";
 import { useStore } from "@/components/demo/StoreContext";
 import PaymentMethodSelector from "@/components/demo/order/PaymentMethodSelector";
+import { defaultCoffeeTokens } from "@/components/demo/order/designTokens";
 
 export default function PaymentPage() {
   const router = useRouter();
@@ -84,6 +85,7 @@ export default function PaymentPage() {
                 onQrisVerified={() => {}}
                 onProofUploaded={(base64: string) => updateCheckoutDetails({ paymentProof: base64 })}
                 theme="coffee"
+                designTokens={defaultCoffeeTokens}
               />
             </div>
           </div>

@@ -1,13 +1,13 @@
 import { Product, Order } from "@/components/demo/StoreContext";
 
 export const SEED_PRODUCTS: Product[] = [
-  { id: "p1", name: "Es Kopi Semesta", price: 25000, description: "Kopi susu gula aren signature kami dengan espresso house blend.", image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=600", stock: 15, category: "Kopi" },
+  { id: "p1", name: "Es Kopi Semesta", price: 25000, description: "Kopi susu gula aren signature kami dengan espresso house blend.", image: "https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=600", stock: 15, category: "Kopi", isBestseller: true },
   { id: "p2", name: "Latte Art", price: 30000, description: "Espresso dengan steamed milk yang lembut.", image: "https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&q=80&w=600", stock: 10, category: "Kopi" },
   { id: "p3", name: "Manual Brew V60", price: 35000, description: "Kopi filter dengan pilihan biji single origin nusantara.", image: "https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=600", stock: 8, category: "Kopi" },
   { id: "p4", name: "Matcha Latte", price: 32000, description: "Premium Uji Matcha dipadukan dengan fresh milk.", image: "https://images.unsplash.com/photo-1515823662972-da6a2e4d3002?auto=format&fit=crop&q=80&w=600", stock: 12, category: "Non-Kopi" },
   { id: "p5", name: "Artisan Tea", price: 25000, description: "Pilihan teh artisan dengan aroma menenangkan.", image: "https://images.unsplash.com/photo-1563822249548-9a72b6353cd1?auto=format&fit=crop&q=80&w=600", stock: 20, category: "Non-Kopi" },
   { id: "p6", name: "Kue Coklat Lumer", price: 18000, description: "Brownies panggang dengan coklat lumer di dalam.", image: "https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&q=80&w=600", stock: 5, category: "Snack" },
-  { id: "p7", name: "Croissant Butter", price: 20000, description: "Classic french pastry yang renyah di luar.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600", stock: 0, category: "Snack" }, // Stok habis contoh
+  { id: "p7", name: "Croissant Butter", price: 20000, description: "Classic french pastry yang renyah di luar.", image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600", stock: 0, category: "Snack", isBestseller: true }, // Stok habis contoh
 ];
 
 export const SEED_ORDERS: Order[] = [

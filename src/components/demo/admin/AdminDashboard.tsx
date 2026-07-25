@@ -2,11 +2,35 @@
 
 import React, { useState } from "react";
 import { useStore, Order, Product } from "@/components/demo/StoreContext";
-import { LayoutDashboard, ShoppingCart, Package, LogOut, RotateCcw, TrendingUp, Users, DollarSign, CheckCircle, Clock } from "lucide-react";
+import { LayoutDashboard, ShoppingCart, Package, LogOut, RotateCcw, TrendingUp, Users, DollarSign, CheckCircle, Clock, Bluetooth, Printer } from "lucide-react";
+import { usePrinterConnection } from "@/hooks/usePrinterConnection";
+import { generateOrderReceiptBytes } from "@/lib/escpos";
 
 export default function AdminDashboard() {
   const { orders, products, logoutAdmin, resetDemoData, updateOrderStatus, updateProduct, deleteProduct, addProduct } = useStore();
   const [activeTab, setActiveTab] = useState<"overview" | "orders" | "products">("overview");
+
+  const { isConnected, isConnecting, deviceName, error, connectPrinter, printReceipt, simulatePrint } = usePrinterConnection();
+
+  const handlePrintReceipt = async (order: Order) => {
+    // Generate bytes
+    const bytes = generateOrderReceiptBytes("Demo UMKM", order);
+    
+    if (isConnected) {
+      const success = await printReceipt(bytes);
+      if (!success) {
+        alert(error || "Gagal mencetak struk.");
+      }
+    } else {
+      // Fallback: Simulasi atau browser print
+      if (typeof window !== "undefined") {
+        simulatePrint(bytes);
+        alert("Printer BLE belum terhubung. Melakukan simulasi cetak di console (lihat console.log).");
+        // Di aplikasi nyata, window.print() akan dipanggil di sini untuk fallback A4/Thermal via driver
+        window.print();
+      }
+    }
+  };
 
   const pendingOrders = orders.filter(o => o.status === "menunggu_verifikasi" || o.status === "menunggu_diambil").length;
   const paidOrders = orders.filter(o => o.status === "diproses" || o.status === "selesai");
@@ -168,7 +192,25 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-slate-800">Kelola Pesanan</h2>
+              
+              <button 
+                onClick={connectPrinter}
+                disabled={isConnecting}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold shadow-sm transition-colors ${
+                  isConnected 
+                    ? "bg-emerald-100 text-emerald-700 hover:bg-emerald-200" 
+                    : "bg-blue-100 text-blue-700 hover:bg-blue-200"
+                }`}
+              >
+                <Bluetooth size={16} className={isConnecting ? "animate-pulse" : ""} />
+                {isConnecting ? "Menghubungkan..." : isConnected ? `Terhubung: ${deviceName}` : "Hubungkan Printer"}
+              </button>
             </div>
+            {error && (
+              <div className="text-xs text-red-600 bg-red-50 p-2 rounded-lg border border-red-100">
+                {error}
+              </div>
+            )}
             
             <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
               <div className="overflow-x-auto">
@@ -298,6 +340,19 @@ export default function AdminDashboard() {
                             >
                               Konfirmasi via WhatsApp
                             </a>
+
+                            {/* Print Receipt Button */}
+                            <button
+                              onClick={() => handlePrintReceipt(order)}
+                              className={`w-full flex items-center justify-center gap-1.5 font-bold text-xs py-2 rounded transition-colors border ${
+                                isConnected 
+                                  ? "bg-slate-800 text-white hover:bg-slate-900 border-transparent shadow-sm"
+                                  : "bg-white text-slate-600 hover:bg-slate-50 border-slate-300"
+                              }`}
+                            >
+                              <Printer size={14} />
+                              {isConnected ? "Cetak Struk" : "Cetak (via Browser)"}
+                            </button>
                           </div>
                         </td>
                       </tr>
