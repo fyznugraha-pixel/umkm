@@ -1,12 +1,15 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  async redirects() {
+  async rewrites() {
     return [
       {
-        source: '/portofolio',
-        destination: 'https://portfolio-fayiz-pied.vercel.app/',
-        permanent: true, // Permanent redirect to the external portfolio
+        source: '/portfolio',
+        destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio',
+      },
+      {
+        source: '/portfolio/:path*',
+        destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio/:path*',
       },
     ];
   },

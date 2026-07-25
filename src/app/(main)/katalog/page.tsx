@@ -136,7 +136,7 @@ export default function KatalogPage() {
                         <span className="font-bold text-white text-lg">{item.packagePrice}</span>
                       </div>
                     <Link 
-                      href={`/${item.slug}`} 
+                      href={`/demo/${item.slug}`} 
                       className="inline-flex items-center gap-2 text-yellow-500 text-sm font-medium hover:text-yellow-400 transition-transform group-hover:translate-x-1"
                     >
                       Lihat Demo <ArrowUpRight size={16} />

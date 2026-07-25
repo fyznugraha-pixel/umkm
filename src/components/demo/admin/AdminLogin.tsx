@@ -55,7 +55,7 @@ export default function AdminLogin() {
           </form>
           
           <div className="mt-8 text-center">
-            <a href="/kopi-semesta-full" className="text-sm text-slate-500 hover:text-[#3D2B1F] transition-colors underline">
+            <a href="/demo/kopi-semesta-full" className="text-sm text-slate-500 hover:text-[#3D2B1F] transition-colors underline">
               &larr; Kembali ke halaman toko
             </a>
           </div>
