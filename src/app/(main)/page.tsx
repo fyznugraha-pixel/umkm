@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, MessageCircle, ArrowRight, LayoutTemplate, PenTool, Rocket, Code2, ChevronDown, Coffee, Shirt, Briefcase, Smartphone, Tent, Sparkles, ExternalLink } from "lucide-react";
@@ -28,51 +28,156 @@ const staggerContainer = {
 export default function HomePage() {
   const WA_NUMBER = "6287794693241";
   
+  // State for Mockup Carousel
+  const [currentMockupIndex, setCurrentMockupIndex] = useState(0);
+  const mockupItems = catalogData.filter(c => ["kopi-semesta", "ruang-rupa", "rapi-barbershop", "bersih-wangi-laundry"].includes(c.comparisonGroup || ""));
+  // Get unique thumbnails (one per group)
+  const uniqueMockups = mockupItems.filter((item, index, self) => 
+    index === self.findIndex((t) => t.comparisonGroup === item.comparisonGroup)
+  );
+
+  // Dynamic categories from catalogData
+  const dynamicCategories = Array.from(new Set(catalogData.map(c => c.category)));
+  const getCategoryIcon = (cat: string) => {
+    if (cat === "Kuliner") return <Coffee size={16} className="text-yellow-400 drop-shadow-sm" />;
+    if (cat === "Fashion") return <Shirt size={16} className="text-yellow-400 drop-shadow-sm" />;
+    if (cat === "Jasa") return <Briefcase size={16} className="text-yellow-400 drop-shadow-sm" />;
+    return <Sparkles size={16} className="text-yellow-400 drop-shadow-sm" />;
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentMockupIndex((prev) => (prev + 1) % uniqueMockups.length);
+    }, 4500);
+    return () => clearInterval(timer);
+  }, [uniqueMockups.length]);
+  
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center relative bg-slate-950">
+      
+      {/* 1. TEKSTUR BACKGROUND (Grain/Noise Halus) */}
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none opacity-5 mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      ></div>
+
       {/* Hero Section */}
-      <section className="w-full relative overflow-hidden pt-32 pb-40 px-4 flex flex-col items-center text-center">
+      <section className="w-full relative pt-32 pb-16 px-4 flex flex-col items-center text-center z-10 min-h-[95vh] overflow-hidden">
+        
+        {/* 2. RADIAL GLOW EFFECT (GOLD) */}
+        <div className="absolute bottom-[-20%] left-1/2 -translate-x-1/2 w-full max-w-4xl h-[600px] bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.15)_0%,rgba(234,179,8,0.05)_40%,transparent_70%)] blur-3xl pointer-events-none"></div>
+        {/* Optional Starfield/Particles - subtle gold */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.8)_1px,transparent_1px)] [background-size:40px_40px] opacity-[0.03] pointer-events-none mask-image-b"></div>
+
         <motion.div 
-          className="max-w-5xl mx-auto"
+          className="max-w-5xl mx-auto relative z-10 w-full flex flex-col items-center"
           initial="hidden" animate="visible" variants={staggerContainer}
         >
-          <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] md:leading-[1.1]">
+          <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] md:leading-[1.1] drop-shadow-sm">
             <BlurText text="Bikin UMKM Kamu Punya" delay={0} /> <br className="hidden md:block"/>
-            <BlurText text="Rumah Sendiri di" className="text-yellow-500" delay={0.3} /> <BlurText text="Internet" className="text-blue-500" delay={0.6} />
+            <BlurText text="Rumah Sendiri di" className="text-yellow-500" delay={0.3} /> <BlurText text="Internet" className="text-blue-400" delay={0.6} />
           </h1>
-          <motion.div variants={fadeUp} className="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
-            <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-x-2 gap-y-1 mb-2">
+          <motion.div variants={fadeUp} className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto drop-shadow-sm">
+            <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-x-3 gap-y-3 mb-4">
               <span>Solusi website premium khusus untuk bisnis</span>
-              <RotatingText 
-                texts={[
-                  <span key="1" className="flex items-center gap-2">F&B dan Kuliner <Coffee size={18} className="text-yellow-400" /></span>, 
-                  <span key="2" className="flex items-center gap-2">Fashion & Hijab <Shirt size={18} className="text-yellow-400" /></span>, 
-                  <span key="3" className="flex items-center gap-2">Jasa Profesional <Briefcase size={18} className="text-yellow-400" /></span>, 
-                  <span key="4" className="flex items-center gap-2">Toko Gadget <Smartphone size={18} className="text-yellow-400" /></span>, 
-                  <span key="5" className="flex items-center gap-2">Event Organizer <Tent size={18} className="text-yellow-400" /></span>, 
-                  <span key="6" className="flex items-center gap-2">Skincare & Beauty <Sparkles size={18} className="text-yellow-400" /></span>
-                ]} 
-                className="text-white font-bold bg-white/10 px-4 py-1 rounded-full text-base md:text-lg border border-white/10 shadow-lg"
-              />
+              
+              {/* 4. ELEVATED BADGE (Glassmorphism) */}
+              <div className="relative group rounded-full overflow-hidden glass-pill shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+                <RotatingText 
+                  texts={dynamicCategories.map((cat, idx) => (
+                    <span key={idx} className="flex items-center gap-2 text-white font-bold">
+                      {cat} {getCategoryIcon(cat)}
+                    </span>
+                  ))}
+                  className="px-5 py-1.5 rounded-full text-base"
+                />
+              </div>
             </div>
             Tingkatkan kredibilitas dan jangkau lebih banyak pelanggan tanpa pusing urusan teknis.
           </motion.div>
-          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+
+          <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
             <a 
               href={`https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20mau%20konsultasi%20gratis%20untuk%20website%20UMKM%20saya`}
               target="_blank"
               rel="noreferrer"
-              className="w-full sm:w-auto bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-transform hover:scale-105"
+              className="w-full sm:w-auto bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-slate-950 font-bold px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-[0_0_30px_rgba(234,179,8,0.2)]"
             >
               Konsultasi Gratis via WhatsApp
               <MessageCircle size={20} />
             </a>
             <a 
               href="#pricelist"
-              className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 font-medium px-8 py-4 rounded-full transition-colors"
+              className="w-full sm:w-auto bg-slate-900/50 backdrop-blur-sm hover:bg-slate-800/80 text-white border border-slate-700 font-medium px-8 py-4 rounded-full transition-colors shadow-xl"
             >
               Lihat Paket Harga
             </a>
+          </motion.div>
+
+          {/* 5. TRUST INDICATOR RINGAN */}
+          <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-xs md:text-sm text-slate-400 font-medium mb-12">
+            <div className="flex items-center gap-1.5">
+              <Check size={14} className="text-yellow-500" />
+              <span>Sudah dipakai UMKM Kuliner, Fashion & Jasa</span>
+            </div>
+            <div className="hidden md:block w-1 h-1 rounded-full bg-slate-700"></div>
+            <div className="flex items-center gap-1.5">
+              <Check size={14} className="text-yellow-500" />
+              <span>Konsultasi gratis, tanpa komitmen</span>
+            </div>
+          </motion.div>
+
+          {/* 6. PRODUCT MOCKUP "MENGINTIP" */}
+          <motion.div 
+            variants={fadeUp}
+            className="w-full max-w-4xl relative mt-4 transform translate-y-8 md:translate-y-24 transition-transform duration-700 ease-out"
+          >
+            {/* Mockup Outer Glow */}
+            <div className="absolute inset-0 bg-yellow-500/10 blur-2xl rounded-t-xl md:rounded-t-3xl transform -translate-y-4"></div>
+            
+            {/* Browser Frame */}
+            <div className="relative glass-card border-[rgba(255,255,255,0.12)] rounded-t-xl md:rounded-t-2xl shadow-[0_-20px_50px_rgba(0,0,0,0.5),0_0_30px_rgba(234,179,8,0.1)] overflow-hidden flex flex-col h-[250px] md:h-[400px]">
+              
+              {/* Browser Header */}
+              <div className="h-8 md:h-10 bg-[rgba(255,255,255,0.03)] border-b border-[rgba(255,255,255,0.08)] flex items-center px-4 gap-2 w-full z-20">
+                <div className="flex gap-1.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                  <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                </div>
+                <div className="flex-1 flex justify-center">
+                  <div className="bg-[#0B1121] rounded-md px-3 py-1 text-[10px] md:text-xs text-slate-500 flex items-center gap-2 w-1/2 md:w-1/3 max-w-[200px] justify-center truncate shadow-inner">
+                    <Check size={10} className="text-green-500" /> elvorastudio.com/demo
+                  </div>
+                </div>
+              </div>
+              
+              {/* Carousel Content */}
+              <div className="relative flex-1 bg-slate-900 w-full h-full overflow-hidden">
+                {uniqueMockups.map((item, index) => (
+                  <motion.div
+                    key={item.slug}
+                    initial={{ opacity: 0, scale: 1.05 }}
+                    animate={{ 
+                      opacity: index === currentMockupIndex ? 1 : 0,
+                      scale: index === currentMockupIndex ? 1 : 1.05
+                    }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <img 
+                      src={item.thumbnail} 
+                      alt={item.businessName} 
+                      className="w-full h-full object-cover object-top"
+                    />
+                    {/* Dark gradient overlay at bottom of mockup to fade it out slightly */}
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#0B1121]/80 to-transparent"></div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </motion.div>
         </motion.div>
       </section>
@@ -173,7 +278,11 @@ export default function HomePage() {
                 )}
                 <SpotlightCard 
                   spotlightColor={plan.isPopular ? "rgba(234, 179, 8, 0.2)" : "rgba(255, 255, 255, 0.05)"}
-                  className={`flex flex-col p-8 h-full rounded-3xl border ${plan.isPopular ? 'border-yellow-500/50 bg-slate-900 shadow-2xl shadow-yellow-500/10' : 'border-white/10 bg-slate-950'}`}
+                  className={`flex flex-col p-8 h-full rounded-3xl relative overflow-hidden glass-card ${
+                    plan.isPopular 
+                      ? 'border-yellow-500/50 shadow-[inset_0_0_20px_rgba(234,179,8,0.2)] shadow-yellow-500/10' 
+                      : ''
+                  }`}
                 >
                 <div className="mb-8">
                   <h3 className="text-2xl font-bold font-display mb-2">{plan.name}</h3>

@@ -61,6 +61,13 @@ export interface OrderDesignTokens {
 - **Microcopy:** Confident, brief ("Checkout", "Pesanan Dikonfirmasi").
 - **Icons:** Thin outline, minimalist.
 - **Typography:** Large bold pricing, high contrast monochrome.
+- [x] Kopi Semesta (Basic UMKM Website) - `/demo/kopi-semesta-basic`
+- [x] Ruang & Rupa (Mini Landing Page) - `/demo/ruang-rupa`
+- [x] Ruang & Rupa (Basic UMKM Website) - `/demo/ruang-rupa-basic`
+- [x] RAPI Barbershop (Mini Landing Page) - `/demo/rapi-barbershop`
+- [x] RAPI Barbershop (Basic UMKM Website) - `/demo/rapi-barbershop-basic`
+- [x] Bersih & Wangi Laundry (Mini Landing Page) - `/demo/bersih-wangi-laundry`
+- [x] Bersih & Wangi Laundry (Basic UMKM Website) - `/demo/bersih-wangi-laundry-basic`
 
 ### 3. Rapi Barbershop (Masculine, Bold, Dark, Clean)
 - **Vibe:** Barber schedule board, sharp tools, high contrast.
@@ -91,3 +98,70 @@ Fitur cetak struk via bluetooth diimplementasikan menggunakan Web Bluetooth API 
 > 1. Web Bluetooth API hanya didukung di **Chrome & Edge** (Desktop/Android). Safari dan iOS **tidak didukung**.
 > 2. Printer harus menggunakan protokol BLE (Bluetooth Low Energy) GATT. Printer Classic Bluetooth SPP tidak bisa terkoneksi melalui browser.
 > 3. Pengembang selanjutnya harus melakukan uji coba langsung ke fisik printer BLE (misal GOOJPRT dsb.) untuk memastikan UUID di `printerConfig.ts` sudah sesuai dengan spesifikasi *hardware* klien. Gunakan `printerContext.simulatePrint` untuk simulasi pada konsol saat *hardware* fisik belum tersedia.
+
+## Final Section Ordering Rules (Basic Tier)
+
+To avoid generic AI-slop layouts, each Basic Tier demo has a strictly enforced, bespoke section ordering that overrides standard conventions (Hero-Profil-Produk-Galeri-Testimoni-FAQ-Lokasi). Do not alter these sequences.
+
+### 1. Kopi Semesta
+1. Hero (compact)
+2. Katalog Rasa / Menu
+3. Tentang Semesta (shortened strip)
+4. Sudut Semesta / Galeri
+5. Mari Berkunjung / Lokasi
+6. Kata Mereka / Testimoni (carousel style)
+7. FAQ
+8. Footer
+
+### 2. Ruang & Rupa
+1. Hero
+2. Produk / Koleksi Terkini
+3. Lookbook / Galeri (grid)
+4. Tentang Kami (Manifesto)
+5. Testimoni (Editorial quote)
+6. FAQ
+7. Lokasi (flagship store)
+8. Footer
+
+### 3. RAPI Barbershop
+1. Hero
+2. Testimoni (The Gentlemen's Review - Trust Layer immediately)
+3. Galeri (Hall of Fades - Showcase before pricing)
+4. Layanan & Harga Lengkap
+5. Profil (Tradisi & Presisi - shortened)
+6. FAQ
+7. Lokasi
+8. Footer
+
+### 4. Bersih & Wangi Laundry
+1. Hero
+2. Kalkulator Harga (Interactive Widget)
+3. Timeline Proses (Interactive flow)
+4. Layanan / Paket
+5. Testimoni
+6. FAQ
+7. Galeri
+14. Lokasi
+15. Footer
+
+## Architecture Patterns: Commerce Flows
+
+Penting untuk dicatat bahwa proyek ini sekarang mengimplementasikan 3 pola *commerce/booking flow* utama:
+
+### 1. Direct Cart (Kopi Semesta, Ruang & Rupa)
+- **Karakteristik:** Harga diketahui 100% di awal.
+- **Alur:** Tambah ke Keranjang → Review Order → Pilih Pembayaran → Proses Pembayaran (Transfer/QRIS/COD) → Selesai.
+- **Kapan Digunakan:** F&B, Retail Fashion, atau produk fisik dengan harga statis.
+
+### 2. Time-Slot Booking (RAPI Barbershop)
+- **Karakteristik:** Transaksi berbasis kalender dan *slot* ketersediaan, bukan inventaris barang.
+- **Alur:** Pilih Layanan → Pilih Jadwal (Hari & Jam) → Konfirmasi Pemesan → Opsional Pembayaran (DP) / Bayar di Tempat → Selesai.
+- **Kapan Digunakan:** Jasa potong rambut, klinik kecantikan, reservasi meja.
+
+### 3. Delayed Pricing / Harga Tertunda (Bersih & Wangi Laundry)
+- **Karakteristik:** Estimasi diberikan di awal, namun *harga final dikunci setelah ada campur tangan Admin* (misal: penimbangan aktual, diagnosis kerusakan).
+- **Alur (2-Branch Architecture):**
+  - *Sisi Pelanggan:* Isi Form Drop-off (Estimasi) → Terima Resi (e.g. LDY-001) → Tunggu.
+  - *Sisi Admin:* Timbang Aktual di Konter → Masukkan Berat Aktual → Sistem Hitung Harga Final.
+  - *Sisi Pelanggan (Lanjutan):* Cek Status Pesanan dengan Resi → Lihat Harga Final → Bayar via Portal Status → Selesai.
+- **Kapan Digunakan:** Laundry Kiloan, Servis Elektronik, Reparasi Otomotif, Jasa Kustom.

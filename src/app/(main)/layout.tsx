@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MessageCircle, Phone, LayoutTemplate } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import AuroraBackground from "@/components/AuroraBackground";
+import MainNavbar from "@/components/MainNavbar";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const WA_NUMBER = "6287794693241";
@@ -13,26 +14,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       {/* Global Background Elements */}
       <div className="fixed inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] -z-40 pointer-events-none" style={{ maskImage: "radial-gradient(ellipse 100% 100% at 50% 0%, #000 40%, transparent 110%)", WebkitMaskImage: "radial-gradient(ellipse 100% 100% at 50% 0%, #000 40%, transparent 110%)" }}></div>
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 min-h-20 py-2 flex items-center justify-between max-w-[1400px]">
-          <Link href="/" className="hidden md:flex items-center">
-            <img src="/logo/elvora.webp" alt="Elvora Studio" className="h-10 md:h-12 w-auto object-contain" />
-          </Link>
-          <nav className="flex flex-1 justify-center md:justify-center gap-6 text-sm md:text-base font-medium text-slate-300">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <Link href="/katalog" className="hover:text-white transition-colors">Katalog</Link>
-            <a href="#kontak" className="hover:text-white transition-colors">Kontak</a>
-          </nav>
-          <a
-            href={WA_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="hidden md:inline-flex bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-semibold px-4 py-2 rounded-full text-sm transition-all"
-          >
-            Konsultasi Gratis
-          </a>
-        </div>
-      </header>
+      <MainNavbar />
 
       {/* Main Content */}
       <main className="flex-1 w-full flex flex-col items-center">

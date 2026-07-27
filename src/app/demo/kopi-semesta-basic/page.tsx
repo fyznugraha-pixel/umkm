@@ -100,11 +100,11 @@ export default function KopiSemestaBasicDemo() {
         theme="coffee"
         sections={[
           { id: "hero", label: "Beranda" },
-          { id: "profil", label: "Tentang" },
           { id: "menu", label: "Menu" },
+          { id: "profil", label: "Tentang" },
           { id: "galeri", label: "Galeri" },
-          { id: "testimoni", label: "Ulasan" },
-          { id: "lokasi", label: "Lokasi" }
+          { id: "lokasi", label: "Lokasi" },
+          { id: "testimoni", label: "Ulasan" }
         ]} 
       />
 
@@ -147,30 +147,8 @@ export default function KopiSemestaBasicDemo() {
         </div>
       </section>
 
-      {/* 2. PROFIL USAHA DETAIL */}
-      <section id="profil" className="py-24 px-4 max-w-4xl mx-auto text-center">
-        <ScrollReveal>
-          <h2 className="text-4xl font-serif mb-6 text-[#B36A5E]">Tentang Semesta</h2>
-          <div className="mb-8">
-            <StatusBadge theme="coffee" schedule={[
-              { days: [1, 2, 3, 4], openHour: 8, closeHour: 22 },
-              { days: [5, 6], openHour: 8, closeHour: 23 },
-              { days: [0], openHour: 7, closeHour: 21 }
-            ]} />
-          </div>
-          <div className="space-y-6 text-lg leading-relaxed text-[#3D2B1F]/80 text-justify md:text-center">
-            <p>
-              Berawal dari kecintaan kami pada kopi lokal di tahun 2020, Kopi Semesta hadir sebagai tempat persinggahan yang nyaman di tengah hiruk-pikuk kota Bandung. Kami percaya bahwa setiap cangkir kopi memiliki cerita dan perjalanannya sendiri, dari tangan petani hingga sampai ke meja Anda.
-            </p>
-            <p>
-              Kami menggunakan 100% biji kopi pilihan langsung dari petani Nusantara, disangrai dengan presisi oleh Roaster berpengalaman untuk menghasilkan cita rasa yang tak terlupakan di setiap tegukannya. Filosofi kami sederhana: menyajikan kopi berkualitas tinggi tanpa kompromi, dalam suasana yang membuat Anda merasa di rumah.
-            </p>
-          </div>
-        </ScrollReveal>
-      </section>
-
-      {/* 3. MENU LENGKAP */}
-      <section id="menu" className="py-24 px-4 bg-white/50 border-y border-[#E5D3B3]">
+      {/* 2. MENU LENGKAP */}
+      <section id="menu" className="py-24 px-4 bg-white/50 border-b border-[#E5D3B3]">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-16">
             <h2 className="text-4xl font-serif mb-4 text-[#3D2B1F]">Katalog Rasa</h2>
@@ -250,7 +228,26 @@ export default function KopiSemestaBasicDemo() {
         </div>
       </section>
 
-      {/* 4. GALERI (Baru di Tier Basic) */}
+      {/* 3. PROFIL USAHA DETAIL (Shortened) */}
+      <section id="profil" className="py-24 px-4 max-w-4xl mx-auto text-center border-b border-[#E5D3B3]">
+        <ScrollReveal>
+          <h2 className="text-4xl font-serif mb-6 text-[#B36A5E]">Tentang Semesta</h2>
+          <div className="mb-8">
+            <StatusBadge theme="coffee" schedule={[
+              { days: [1, 2, 3, 4], openHour: 8, closeHour: 22 },
+              { days: [5, 6], openHour: 8, closeHour: 23 },
+              { days: [0], openHour: 7, closeHour: 21 }
+            ]} />
+          </div>
+          <div className="text-xl leading-relaxed text-[#3D2B1F]/80 text-center max-w-3xl mx-auto">
+            <p>
+              Berawal dari kecintaan kami pada kopi lokal di tahun 2020, Kopi Semesta hadir sebagai tempat persinggahan yang nyaman di tengah hiruk-pikuk kota Bandung. Kami menggunakan 100% biji kopi pilihan langsung dari petani Nusantara, disangrai dengan presisi oleh Roaster berpengalaman untuk menghasilkan cita rasa yang tak terlupakan di setiap tegukannya. Filosofi kami sederhana: menyajikan kopi berkualitas tinggi tanpa kompromi, dalam suasana yang membuat Anda merasa di rumah.
+            </p>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* 4. GALERI */}
       <section id="galeri" className="py-24 px-4 max-w-7xl mx-auto">
         <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl font-serif mb-4 text-[#3D2B1F]">Sudut Semesta</h2>
@@ -270,41 +267,8 @@ export default function KopiSemestaBasicDemo() {
         </ScrollReveal>
       </section>
 
-      {/* 5. TESTIMONI (Baru di Tier Basic) */}
-      <section id="testimoni" className="py-24 px-4 bg-[#3D2B1F] text-[#F5EFE6]">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal className="text-center mb-16">
-            <h2 className="text-4xl font-serif mb-4 text-[#D4A373]">Kata Mereka</h2>
-            <p className="text-white/70 text-lg">Pengalaman nyata dari mereka yang telah singgah di Kopi Semesta.</p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.2} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <TestimonialCard 
-              name="Budi Santoso"
-              role="Freelancer"
-              avatar="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"
-              comment="Tempat pewe banget buat nugas. Kopi susunya juara, kopinya kerasa banget tapi gak bikin kembung. Croissant-nya juga fresh!"
-              rating={5}
-            />
-            <TestimonialCard 
-              name="Siti Aminah"
-              role="Mahasiswa"
-              avatar="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150"
-              comment="Vibes kedainya tuh dapet banget buat chill sore bareng temen. Playlist lagunya enak, baristanya ramah, harganya juga affordable."
-              rating={5}
-            />
-            <TestimonialCard 
-              name="Andi Darmawan"
-              role="Coffee Enthusiast"
-              avatar="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150"
-              comment="Manual brewnya diseduh dengan proper. Variasi beans-nya lumayan banyak untuk kedai sekelas UMKM. Definitely will come back."
-              rating={4}
-            />
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* 6 & 7. LOKASI, JAM BUKA & KONTAK (Lebih Detail) */}
-      <section id="lokasi" className="py-24 px-4 max-w-7xl mx-auto">
+      {/* 5. LOKASI, JAM BUKA & KONTAK */}
+      <section id="lokasi" className="py-24 px-4 max-w-7xl mx-auto border-t border-[#E5D3B3]">
         <ScrollReveal className="grid lg:grid-cols-2 gap-16">
           <div className="flex flex-col h-full">
             <h2 className="text-4xl font-serif mb-6 text-[#B36A5E]">Mari Berkunjung</h2>
@@ -371,8 +335,63 @@ export default function KopiSemestaBasicDemo() {
         </ScrollReveal>
       </section>
 
-      {/* 8. RESERVATION FORM (New Basic Tier Feature) */}
-      <section className="py-24 px-4 bg-[#3D2B1F] text-[#F5EFE6] border-y border-[#E5D3B3]/20">
+      {/* 6. TESTIMONI (Carousel) */}
+      <section id="testimoni" className="py-24 px-4 bg-[#3D2B1F] text-[#F5EFE6] overflow-hidden">
+        <div className="max-w-7xl mx-auto w-full">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl font-serif mb-4 text-[#D4A373]">Kata Mereka</h2>
+            <p className="text-white/70 text-lg">Pengalaman nyata dari mereka yang telah singgah di Kopi Semesta.</p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.2} className="relative w-full">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <div className="snap-center shrink-0 w-[85vw] md:w-[400px]">
+                <TestimonialCard 
+                  name="Budi Santoso"
+                  role="Freelancer"
+                  avatar="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"
+                  comment="Tempat pewe banget buat nugas. Kopi susunya juara, kopinya kerasa banget tapi gak bikin kembung. Croissant-nya juga fresh!"
+                  rating={5}
+                  theme="coffee"
+                />
+              </div>
+              <div className="snap-center shrink-0 w-[85vw] md:w-[400px]">
+                <TestimonialCard 
+                  name="Siti Aminah"
+                  role="Mahasiswa"
+                  avatar="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150"
+                  comment="Vibes kedainya tuh dapet banget buat chill sore bareng temen. Playlist lagunya enak, baristanya ramah, harganya juga affordable."
+                  rating={5}
+                  theme="coffee"
+                />
+              </div>
+              <div className="snap-center shrink-0 w-[85vw] md:w-[400px]">
+                <TestimonialCard 
+                  name="Andi Darmawan"
+                  role="Coffee Enthusiast"
+                  avatar="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150"
+                  comment="Manual brewnya diseduh dengan proper. Variasi beans-nya lumayan banyak untuk kedai sekelas UMKM. Definitely will come back."
+                  rating={4}
+                  theme="coffee"
+                />
+              </div>
+              <div className="snap-center shrink-0 w-[85vw] md:w-[400px]">
+                <TestimonialCard 
+                  name="Reza Pahlevi"
+                  role="Karyawan Swasta"
+                  avatar="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150"
+                  comment="Jujur kaget nemu kedai kopi sebagus ini di gang. Rasa kopinya sangat otentik dan pelayanannya super hangat."
+                  rating={5}
+                  theme="coffee"
+                />
+              </div>
+            </div>
+
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 7. RESERVATION FORM */}
+      <section className="py-24 px-4 bg-[#2A1D15] text-[#F5EFE6] border-b border-[#E5D3B3]/20">
         <ScrollReveal className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-4xl font-serif mb-6 text-[#D4A373]">Reservasi Meja Anda</h2>
@@ -381,7 +400,7 @@ export default function KopiSemestaBasicDemo() {
             </p>
             
             {/* MEET THE TEAM */}
-            <div className="bg-[#2A1D15] p-6 rounded-2xl border border-[#D4A373]/20 mt-12">
+            <div className="bg-[#3D2B1F] p-6 rounded-2xl border border-[#D4A373]/20 mt-12">
               <h3 className="font-bold text-[#D4A373] uppercase tracking-wider mb-6 text-sm">Bertemu dengan Tim Kami</h3>
               <div className="flex items-center gap-4">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150" alt="Head Barista" className="w-16 h-16 rounded-full object-cover border-2 border-[#D4A373]" />

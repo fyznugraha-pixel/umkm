@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio',
       },
       {
-        source: '/portfolio/:path*',
+        source: '/portofolio/:path*',
         destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio/:path*',
       },
     ];

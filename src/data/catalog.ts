@@ -113,5 +113,39 @@ export const catalogData: CatalogEntry[] = [
     comparisonGroup: "rapi-barbershop",
     thumbnail: "https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&q=80&w=800",
     description: "Versi paling lengkap dari RAPI Barbershop dengan sistem booking jadwal interaktif dan admin dashboard untuk atur ketersediaan capster",
+  },
+  {
+    slug: "bersih-wangi-laundry",
+    businessName: "Bersih & Wangi Laundry",
+    packageType: "Mini Landing Page",
+    packagePrice: "Rp 350K",
+    originalPrice: "Rp 550K",
+    discountNote: "Diskon 36%",
+    category: "Jasa",
+    comparisonGroup: "bersih-wangi-laundry",
+    // TODO: Ganti dengan screenshot asli setelah deploy web demo bersih-wangi-laundry
+    thumbnail: "https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?auto=format&fit=crop&q=80&w=800",
+    description: "Landing page laundry kiloan lokal — cocok untuk UMKM jasa dengan sistem harga per-kilogram yang butuh presence online cepat",
+  },
+  {
+    slug: "bersih-wangi-laundry-basic",
+    businessName: "Bersih & Wangi Laundry (Versi Lengkap)",
+    packageType: "Basic",
+    packagePrice: "Rp 600K - 1.2JT",
+    category: "Jasa",
+    comparisonGroup: "bersih-wangi-laundry",
+    // TODO: Ganti dengan screenshot asli setelah deploy web demo bersih-wangi-laundry-basic
+    thumbnail: "https://images.unsplash.com/photo-1545173168-9f1947eebb7f?auto=format&fit=crop&q=80&w=800",
+    description: "Versi lengkap dari Bersih & Wangi Laundry — dengan galeri proses & hasil cuci, testimoni pelanggan, dan daftar layanan lebih detail",
+  },
+  {
+    slug: "bersih-wangi-laundry-full",
+    businessName: "Bersih & Wangi Laundry (Full Katalog)",
+    packageType: "Full Katalog",
+    packagePrice: "Mulai dari Rp 1.5JT",
+    category: "Jasa",
+    comparisonGroup: "bersih-wangi-laundry",
+    thumbnail: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=800",
+    description: "Versi paling lengkap dari Bersih & Wangi Laundry — dengan sistem drop-off online, tracking status real-time, dan admin dashboard"
   }
 ];

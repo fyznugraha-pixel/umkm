@@ -7,8 +7,47 @@ interface TestimonialCardProps {
   comment: string;
   rating?: number;
   role?: string;
-  theme?: "coffee" | "fashion" | "barber";
+  theme?: "coffee" | "fashion" | "barber" | "laundry";
 }
+
+const THEME_CONFIG = {
+  laundry: {
+    container: "bg-[#ECFEFF] border border-[#22D3EE]/30 p-8 shadow-[0_8px_30px_rgb(8,145,178,0.1)] flex flex-col h-full rounded-2xl hover:shadow-[0_20px_40px_rgb(8,145,178,0.15)] transition-shadow",
+    star: "text-[#0891B2]",
+    starEmpty: "text-[#22D3EE]/50",
+    text: "text-[#164E63] font-light leading-relaxed mb-8 flex-1 text-base md:text-lg",
+    name: "font-bold text-[#164E63] text-sm md:text-base",
+    role: "text-xs text-[#0891B2] uppercase tracking-wider font-bold",
+    avatar: "w-14 h-14 rounded-full object-cover border-2 border-[#22D3EE]/50"
+  },
+  coffee: {
+    container: "bg-[#FEF3C7] border border-[#FBBF24]/50 rounded-2xl p-6 shadow-sm flex flex-col h-full",
+    star: "text-[#D4A373]",
+    starEmpty: "text-[#FBBF24]/30",
+    text: "text-[#451A03]/80 italic mb-6 flex-1 text-sm md:text-base",
+    name: "font-bold text-[#451A03] text-sm md:text-base",
+    role: "text-xs text-[#451A03]/60",
+    avatar: "w-12 h-12 rounded-full object-cover border-2 border-[#FEF3C7]"
+  },
+  barber: {
+    container: "bg-[#1E293B]/80 backdrop-blur-md border border-white/10 p-6 shadow-2xl flex flex-col h-full rounded-sm",
+    star: "text-[#F97316]",
+    starEmpty: "text-slate-600",
+    text: "text-slate-300 italic mb-6 flex-1 text-sm md:text-base",
+    name: "font-black text-white text-sm md:text-base uppercase tracking-wider",
+    role: "text-xs text-slate-400",
+    avatar: "w-12 h-12 rounded-none object-cover border-2 border-[#F97316]"
+  },
+  fashion: {
+    container: "bg-[#FAFAFA] border border-[#111111] p-6 flex flex-col h-full rounded-none",
+    star: "text-[#2563EB]",
+    starEmpty: "text-gray-300",
+    text: "text-[#111111] font-light italic mb-6 flex-1 text-sm md:text-base",
+    name: "font-bold text-[#111111] text-sm md:text-base uppercase tracking-wider",
+    role: "text-xs text-gray-500 uppercase tracking-widest",
+    avatar: "w-12 h-12 rounded-none grayscale object-cover border border-[#111111]"
+  }
+};
 
 export default function TestimonialCard({ 
   name, 
@@ -19,63 +58,26 @@ export default function TestimonialCard({
   theme = "coffee"
 }: TestimonialCardProps) {
   
-  let containerClass = "";
-  let starClass = "";
-  let starEmptyClass = "";
-  let textClass = "";
-  let nameClass = "";
-  let roleClass = "";
-  let avatarClass = "";
-  
-  switch (theme) {
-    case "fashion":
-      containerClass = "bg-[#FAFAFA] border border-[#111111] p-6 flex flex-col h-full";
-      starClass = "text-[#C34A36]";
-      starEmptyClass = "text-gray-300";
-      textClass = "text-[#111111] font-light italic mb-6 flex-1 text-sm md:text-base";
-      nameClass = "font-bold text-[#111111] text-sm md:text-base uppercase tracking-wider";
-      roleClass = "text-xs text-gray-500 uppercase tracking-widest";
-      avatarClass = "w-12 h-12 rounded-full grayscale object-cover border border-[#111111]";
-      break;
-    case "barber":
-      containerClass = "bg-[#1A1A1A] border border-[#333333] p-6 shadow-lg flex flex-col h-full";
-      starClass = "text-[#E63946]";
-      starEmptyClass = "text-gray-600";
-      textClass = "text-gray-300 italic mb-6 flex-1 text-sm md:text-base";
-      nameClass = "font-black text-white text-sm md:text-base uppercase tracking-wider";
-      roleClass = "text-xs text-gray-400";
-      avatarClass = "w-12 h-12 rounded-full object-cover border-2 border-[#E63946]";
-      break;
-    case "coffee":
-    default:
-      containerClass = "bg-white border border-[#E5D3B3] rounded-2xl p-6 shadow-sm flex flex-col h-full";
-      starClass = "text-[#D4A373]";
-      starEmptyClass = "text-gray-300";
-      textClass = "text-[#3D2B1F]/80 italic mb-6 flex-1 text-sm md:text-base";
-      nameClass = "font-bold text-[#3D2B1F] text-sm md:text-base";
-      roleClass = "text-xs text-[#3D2B1F]/60";
-      avatarClass = "w-12 h-12 rounded-full object-cover border-2 border-[#F5EFE6]";
-      break;
-  }
+  const currentTheme = THEME_CONFIG[theme] || THEME_CONFIG.coffee;
 
   return (
-    <div className={containerClass}>
+    <div className={currentTheme.container}>
       <div className="flex gap-1 mb-4">
         {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} size={16} fill={i < rating ? "currentColor" : "none"} className={i < rating ? starClass : starEmptyClass} />
+          <Star key={i} size={16} fill={i < rating ? "currentColor" : "none"} className={i < rating ? currentTheme.star : currentTheme.starEmpty} />
         ))}
       </div>
-      <p className={textClass}>"{comment}"</p>
+      <p className={currentTheme.text}>"{comment}"</p>
       
       <div className="flex items-center gap-4 mt-auto">
         <img 
           src={avatar} 
           alt={name} 
-          className={avatarClass}
+          className={currentTheme.avatar}
         />
         <div>
-          <p className={nameClass}>{name}</p>
-          <p className={roleClass}>{role}</p>
+          <p className={currentTheme.name}>{name}</p>
+          <p className={currentTheme.role}>{role}</p>
         </div>
       </div>
     </div>

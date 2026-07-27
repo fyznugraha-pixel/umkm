@@ -15,9 +15,18 @@ export default function KatalogPage() {
   const WA_NUMBER = "6287794693241";
 
   return (
-    <div className="w-full flex flex-col items-center pt-24 pb-32 px-4">
+    <div className="w-full flex flex-col items-center pt-24 pb-32 px-4 relative bg-slate-950 min-h-screen">
+      
+      {/* 1. TEKSTUR BACKGROUND (Grain/Noise Halus) - Consistent with Home */}
+      <div 
+        className="fixed inset-0 z-0 pointer-events-none opacity-20 mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      ></div>
+
       {/* Header */}
-      <section className="max-w-4xl w-full text-center mb-16">
+      <section className="max-w-4xl w-full text-center mb-16 relative z-10">
         <motion.h1 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -48,7 +57,7 @@ export default function KatalogPage() {
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
                 activeTab === tier 
                   ? 'bg-yellow-500 text-slate-950 shadow-lg shadow-yellow-500/20' 
-                  : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                  : 'glass-pill hover:brightness-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)]'
               }`}
             >
               {tier}
@@ -66,8 +75,8 @@ export default function KatalogPage() {
               onClick={() => setActiveCategory(cat)}
               className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
                 activeCategory === cat 
-                  ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' 
-                  : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/10'
+                  ? 'bg-yellow-500 text-slate-950 shadow-lg shadow-yellow-500/20' 
+                  : 'glass-pill hover:brightness-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)]'
               }`}
             >
               {cat}
@@ -96,7 +105,7 @@ export default function KatalogPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
-                  className="group bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-colors flex flex-col"
+                  className="group glass-card rounded-2xl overflow-hidden hover:border-yellow-500/50 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] transition-all flex flex-col"
                 >
                 <div className="relative h-48 sm:h-56 w-full bg-slate-800 overflow-hidden">
                   <img 
@@ -104,17 +113,26 @@ export default function KatalogPage() {
                     alt={item.businessName} 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <span className="bg-slate-950/80 backdrop-blur-sm text-xs font-medium px-3 py-1 rounded-full text-slate-300">
+                  {/* Scrim Overlay to ensure text contrast for badges */}
+                  <div className="absolute top-0 inset-x-0 h-[45%] bg-gradient-to-b from-black/70 to-transparent pointer-events-none z-10"></div>
+                  
+                  <div className="absolute top-4 left-4 flex gap-2 z-20">
+                    <span 
+                      className="glass-pill text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+                    >
                       {item.category}
                     </span>
-                    <span className="bg-yellow-500 text-slate-950 text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    <span 
+                      className="glass-pill text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+                    >
                       {item.packageType}
                     </span>
                   </div>
                   {item.comparisonGroup && (
-                    <div className="absolute top-4 right-4">
-                      <span className="bg-indigo-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg">
+                    <div className="absolute top-4 right-4 z-20">
+                      <span 
+                        className="glass-pill text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+                      >
                         Bandingkan Versi
                       </span>
                     </div>
@@ -133,6 +151,12 @@ export default function KatalogPage() {
                     
                     <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
                       <div className="flex flex-col">
+                        {item.originalPrice && item.discountNote && (
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-slate-500 line-through text-xs">{item.originalPrice}</span>
+                            <span className="text-red-400 text-[10px] font-bold bg-red-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider">{item.discountNote}</span>
+                          </div>
+                        )}
                         <span className="font-bold text-white text-lg">{item.packagePrice}</span>
                       </div>
                     <Link 

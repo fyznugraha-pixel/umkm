@@ -43,10 +43,10 @@ export default function RapiBarbershopBasicDemo() {
         theme="barber"
         sections={[
           { id: "hero", label: "Beranda" },
-          { id: "profil", label: "Tradisi" },
-          { id: "layanan", label: "Layanan" },
           { id: "testimoni", label: "Ulasan" },
           { id: "galeri", label: "Portofolio" },
+          { id: "layanan", label: "Layanan" },
+          { id: "profil", label: "Tradisi" },
           { id: "faq", label: "FAQ" },
           { id: "lokasi", label: "Lokasi" }
         ]} 
@@ -97,28 +97,62 @@ export default function RapiBarbershopBasicDemo() {
         </div>
       </section>
 
-      {/* 2. PROFIL USAHA (LEBIH DETAIL) */}
-      <section id="profil" className="py-24 px-6 max-w-5xl mx-auto">
+      {/* 2. TESTIMONI (Trust Layer immediately after Hero) */}
+      <section id="testimoni" className="py-24 px-6 max-w-7xl mx-auto border-b border-[#333333]">
         <ScrollReveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-6">Tradisi & <span className="text-[#E63946]">Presisi</span></h2>
-          <div className="w-24 h-1 bg-[#E63946] mx-auto mb-6"></div>
-          <div className="mb-8">
-            <StatusBadge theme="barber" schedule={[
-              { days: [1, 2, 3, 4, 5], openHour: 10, closeHour: 21 },
-              { days: [0, 6], openHour: 9, closeHour: 22 }
-            ]} />
-          </div>
-          <p className="text-xl leading-relaxed text-gray-400 mb-8 font-light">
-            Berdiri sejak 2018, RAPI Barbershop didedikasikan untuk pria modern yang menghargai kualitas. Kami menggabungkan teknik pangkas klasik (*old-school barbering*) dengan gaya modern masa kini.
-          </p>
-          <p className="text-lg leading-relaxed text-gray-500 max-w-3xl mx-auto">
-            Dengan 6 kapster bersertifikat (*master barber*), kami memastikan setiap helai rambut dipotong dengan tingkat presisi tertinggi. Kebersihan alat adalah prioritas utama kami—semua peralatan melalui proses sterilisasi UV sebelum menyentuh kulit Anda. Di sini, Anda bukan sekadar pelanggan, melainkan *gentleman* yang berhak mendapatkan perawatan terbaik.
-          </p>
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">The <span className="text-[#E63946]">Gentlemen's</span> Review</h2>
+          <p className="text-gray-400">Kepercayaan dari ribuan pelanggan yang telah membuktikan ketajaman pisau cukur kami.</p>
+        </ScrollReveal>
+        
+        <ScrollReveal delay={0.2} className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <TestimonialCard 
+            name="Raditya M." role="Karyawan Swasta" theme="barber" rating={5}
+            avatar="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200"
+            comment="Hasil potongan fade-nya rapi banget, transisinya halus. Asli, ini barber terbaik di kota. Kapsternya ngerti banget bentuk muka."
+          />
+          <TestimonialCard 
+            name="dr. Antonius" role="Dokter Gigi" theme="barber" rating={5}
+            avatar="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
+            comment="Tempatnya bersih, sterilisasi alatnya jalan, dan suasananya beneran santai. Hot towel shave-nya bikin fresh lagi setelah seharian praktek."
+          />
+          <TestimonialCard 
+            name="Kevin Sanjaya" role="Mahasiswa" theme="barber" rating={4}
+            avatar="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=200"
+            comment="Gue biasanya susah jelasin maunya potong kayak gimana. Tapi kapster disini jago ngasih referensi yang pas buat tipe rambut ikal gue."
+          />
         </ScrollReveal>
       </section>
 
-      {/* 3. LAYANAN & HARGA LENGKAP */}
-      <section id="layanan" className="py-24 px-6 bg-[#111111] border-y border-[#333333]">
+      {/* 3. GALERI HASIL KERJA (Showcase) */}
+      <section id="galeri" className="py-24 px-6 bg-[#111111]">
+        <div className="max-w-6xl mx-auto">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">Hall of <span className="text-[#E63946]">Fades</span></h2>
+            <p className="text-gray-400">Bukti nyata dari presisi kami. *Real cut, real gentleman.*</p>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2}>
+            <GalleryGrid 
+              aspectRatio="portrait"
+              theme="barber"
+              images={[
+                { src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800", caption: "High Fade Pompadour" },
+                { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&q=80&w=800", caption: "Classic Trim & Style" },
+                { src: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=800", caption: "Gentleman Shave" },
+                { src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800", caption: "Beard Trim & Shape" },
+                { src: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=800", caption: "Premium Station" },
+                { src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800", caption: "Skin Fade Cut" },
+                { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&q=80&w=800", caption: "Hair Treatment" },
+                { src: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=800", caption: "Precision Detailing" },
+                { src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800", caption: "Hot Towel Shave" },
+              ]}
+            />
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 4. LAYANAN & HARGA LENGKAP */}
+      <section id="layanan" className="py-24 px-6 border-y border-[#333333]">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-16">
             <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4">Layanan <span className="text-[#E63946]">Lengkap</span></h2>
@@ -186,58 +220,21 @@ export default function RapiBarbershopBasicDemo() {
         </div>
       </section>
 
-      {/* 4. TESTIMONI (Sebelum Galeri untuk Trust) */}
-      <section id="testimoni" className="py-24 px-6 max-w-7xl mx-auto">
+      {/* 5. PROFIL USAHA (LEBIH DETAIL & DIPERSINGKAT) */}
+      <section id="profil" className="py-24 px-6 max-w-5xl mx-auto">
         <ScrollReveal className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">The <span className="text-[#E63946]">Gentlemen's</span> Review</h2>
-          <p className="text-gray-400">Kepercayaan dari ribuan pelanggan yang telah membuktikan ketajaman pisau cukur kami.</p>
+          <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-6">Tradisi & <span className="text-[#E63946]">Presisi</span></h2>
+          <div className="w-24 h-1 bg-[#E63946] mx-auto mb-6"></div>
+          <div className="mb-8">
+            <StatusBadge theme="barber" schedule={[
+              { days: [1, 2, 3, 4, 5], openHour: 10, closeHour: 21 },
+              { days: [0, 6], openHour: 9, closeHour: 22 }
+            ]} />
+          </div>
+          <p className="text-xl leading-relaxed text-gray-400 mb-8 font-light max-w-3xl mx-auto">
+            Berdiri sejak 2018, RAPI Barbershop menggabungkan teknik pangkas klasik (*old-school barbering*) dengan gaya modern masa kini. Di sini, Anda bukan sekadar pelanggan, melainkan *gentleman* yang berhak mendapatkan perawatan terbaik.
+          </p>
         </ScrollReveal>
-        
-        <ScrollReveal delay={0.2} className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <TestimonialCard 
-            name="Raditya M." role="Karyawan Swasta" theme="barber" rating={5}
-            avatar="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200"
-            comment="Hasil potongan fade-nya rapi banget, transisinya halus. Asli, ini barber terbaik di kota. Kapsternya ngerti banget bentuk muka."
-          />
-          <TestimonialCard 
-            name="dr. Antonius" role="Dokter Gigi" theme="barber" rating={5}
-            avatar="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200"
-            comment="Tempatnya bersih, sterilisasi alatnya jalan, dan suasananya beneran santai. Hot towel shave-nya bikin fresh lagi setelah seharian praktek."
-          />
-          <TestimonialCard 
-            name="Kevin Sanjaya" role="Mahasiswa" theme="barber" rating={4}
-            avatar="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=200"
-            comment="Gue biasanya susah jelasin maunya potong kayak gimana. Tapi kapster disini jago ngasih referensi yang pas buat tipe rambut ikal gue."
-          />
-        </ScrollReveal>
-      </section>
-
-      {/* 5. GALERI HASIL KERJA (Showcase) */}
-      <section id="galeri" className="py-24 px-6 bg-[#111111] border-y border-[#333333]">
-        <div className="max-w-6xl mx-auto">
-          <ScrollReveal className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">Hall of <span className="text-[#E63946]">Fades</span></h2>
-            <p className="text-gray-400">Bukti nyata dari presisi kami. *Real cut, real gentleman.*</p>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={0.2}>
-            <GalleryGrid 
-              aspectRatio="portrait"
-            theme="barber"
-            images={[
-              { src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800", caption: "High Fade Pompadour" },
-              { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&q=80&w=800", caption: "Classic Trim & Style" },
-              { src: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=800", caption: "Gentleman Shave" },
-              { src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800", caption: "Beard Trim & Shape" },
-              { src: "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=800", caption: "Premium Station" },
-              { src: "https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=800", caption: "Skin Fade Cut" },
-              { src: "https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&q=80&w=800", caption: "Hair Treatment" },
-              { src: "https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=800", caption: "Precision Detailing" },
-              { src: "https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=800", caption: "Hot Towel Shave" },
-            ]}
-          />
-          </ScrollReveal>
-        </div>
       </section>
 
       {/* 6. FAQ ACCORDION */}

@@ -47,8 +47,8 @@ export default function RuangRupaBasicDemo() {
           { id: "koleksi", label: "Koleksi" },
           { id: "lookbook", label: "Lookbook" },
           { id: "testimoni", label: "Ulasan" },
-          { id: "faq", label: "FAQ" },
-          { id: "lokasi", label: "Studio" }
+          { id: "lokasi", label: "Studio" },
+          { id: "faq", label: "FAQ" }
         ]} 
       />
 
@@ -247,38 +247,7 @@ export default function RuangRupaBasicDemo() {
         </div>
       </section>
 
-      {/* 6. FAQ ACCORDION (New Basic Tier Feature) */}
-      <section id="faq" className="py-24 px-6 md:px-16 lg:px-24">
-        <div className="max-w-7xl mx-auto">
-          <ScrollReveal className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Pertanyaan <span className="text-[#C34A36]">Umum</span></h2>
-            <p className="text-gray-500 max-w-xl mx-auto">Informasi seputar ukuran, pengiriman, dan kebijakan Ruang & Rupa.</p>
-          </ScrollReveal>
-          
-          <ScrollReveal delay={0.2}>
-            <FAQAccordion theme="fashion" items={[
-              {
-                question: "Bagaimana cara mengetahui ukuran yang pas?",
-                answer: "Setiap halaman produk kami menyertakan Size Guide yang mendetail (Lingkar Dada, Panjang Lengan, Panjang Badan). Kami sarankan Anda mengukur pakaian favorit Anda dan membandingkannya dengan panduan kami."
-              },
-              {
-                question: "Apakah bisa melakukan custom size?",
-                answer: "Saat ini kami fokus memproduksi koleksi ready-to-wear dengan sizing S hingga XXL. Untuk custom size (made to order), kami hanya membuka slot terbatas sebulan sekali. Pantau terus Instagram kami untuk info pembukaan slot."
-              },
-              {
-                question: "Berapa lama estimasi pengiriman?",
-                answer: "Order yang masuk sebelum jam 15.00 WIB akan dikirim pada hari yang sama. Pengiriman reguler memakan waktu 2-3 hari kerja untuk Jabodetabek, dan 3-5 hari untuk luar daerah."
-              },
-              {
-                question: "Apakah melayani penukaran (retur) jika kekecilan/kebesaran?",
-                answer: "Tentu! Anda dapat menukar size dalam batas waktu 3 hari setelah barang diterima, dengan syarat tag belum dilepas, belum dicuci, dan belum dipakai beraktivitas. Ongkos kirim retur ditanggung oleh pembeli."
-              }
-            ]} />
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* 7. LOKASI / STUDIO & INFO KONTAK */}
+      {/* 6. LOKASI / STUDIO & INFO KONTAK */}
       <section id="lokasi" className="py-24 px-6 md:px-16 lg:px-24 bg-[#111111] text-white">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
           <ScrollReveal>
@@ -340,6 +309,37 @@ export default function RuangRupaBasicDemo() {
                 <p className="text-gray-400 text-sm">Jl. Buah Batu No.123, Bandung, Jawa Barat</p>
               </div>
             </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* 7. FAQ ACCORDION (New Basic Tier Feature) */}
+      <section id="faq" className="py-24 px-6 md:px-16 lg:px-24">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-4">Pertanyaan <span className="text-[#C34A36]">Umum</span></h2>
+            <p className="text-gray-500 max-w-xl mx-auto">Informasi seputar ukuran, pengiriman, dan kebijakan Ruang & Rupa.</p>
+          </ScrollReveal>
+          
+          <ScrollReveal delay={0.2}>
+            <FAQAccordion theme="fashion" items={[
+              {
+                question: "Bagaimana cara mengetahui ukuran yang pas?",
+                answer: "Setiap halaman produk kami menyertakan Size Guide yang mendetail (Lingkar Dada, Panjang Lengan, Panjang Badan). Kami sarankan Anda mengukur pakaian favorit Anda dan membandingkannya dengan panduan kami."
+              },
+              {
+                question: "Apakah bisa melakukan custom size?",
+                answer: "Saat ini kami fokus memproduksi koleksi ready-to-wear dengan sizing S hingga XXL. Untuk custom size (made to order), kami hanya membuka slot terbatas sebulan sekali. Pantau terus Instagram kami untuk info pembukaan slot."
+              },
+              {
+                question: "Berapa lama estimasi pengiriman?",
+                answer: "Order yang masuk sebelum jam 15.00 WIB akan dikirim pada hari yang sama. Pengiriman reguler memakan waktu 2-3 hari kerja untuk Jabodetabek, dan 3-5 hari untuk luar daerah."
+              },
+              {
+                question: "Apakah melayani penukaran (retur) jika kekecilan/kebesaran?",
+                answer: "Tentu! Anda dapat menukar size dalam batas waktu 3 hari setelah barang diterima, dengan syarat tag belum dilepas, belum dicuci, dan belum dipakai beraktivitas. Ongkos kirim retur ditanggung oleh pembeli."
+              }
+            ]} />
           </ScrollReveal>
         </div>
       </section>
