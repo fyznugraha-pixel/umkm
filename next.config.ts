@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/portfolio',
+        source: '/portofolio',
         destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio',
       },
       {
