@@ -5,11 +5,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/portofolio',
-        destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio',
+        destination: 'https://portfolio-fayiz-pied.vercel.app/portofolio',
       },
       {
         source: '/portofolio/:path*',
-        destination: 'https://portfolio-fayiz-pied.vercel.app/portfolio/:path*',
+        destination: 'https://portfolio-fayiz-pied.vercel.app/portofolio/:path*',
       },
     ];
   },
