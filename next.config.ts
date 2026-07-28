@@ -12,14 +12,12 @@ const nextConfig: NextConfig = {
         destination: 'https://portfolio-fayiz-pied.vercel.app/portofolio/:path*',
       },
       {
-        source: '/sertifikat/:path*',
-        destination: 'https://tactlink-e-sertifikat.vercel.app/sertifikat/:path*',
-        basePath: false,
-      },
-      {
         source: '/sertifikat',
         destination: 'https://tactlink-e-sertifikat.vercel.app/sertifikat',
-        basePath: false,
+      },
+      {
+        source: '/sertifikat/:path*',
+        destination: 'https://tactlink-e-sertifikat.vercel.app/sertifikat/:path*',
       }
     ];
   },
