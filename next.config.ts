@@ -13,12 +13,12 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/sertifikat/:path*',
-        destination: 'https://tactlink-e-sertifikat.vercel.app/:path*',
+        destination: 'https://tactlink-e-sertifikat.vercel.app/sertifikat/:path*',
         basePath: false,
       },
       {
         source: '/sertifikat',
-        destination: 'https://tactlink-e-sertifikat.vercel.app/',
+        destination: 'https://tactlink-e-sertifikat.vercel.app/sertifikat',
         basePath: false,
       }
     ];
