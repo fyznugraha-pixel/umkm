@@ -4,11 +4,16 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Check, MessageCircle, ArrowRight, LayoutTemplate, PenTool, Rocket, Code2, ChevronDown, Coffee, Shirt, Briefcase, Smartphone, Tent, Sparkles, ExternalLink } from "lucide-react";
-import { pricingPlans, addOns } from "@/data/pricing";
-import { catalogData } from "@/data/catalog";
+import { getPricingPlans, getAddOns } from "@/data/pricing";
+import { getCatalogData } from "@/data/catalog";
 import SpotlightCard from "@/components/SpotlightCard";
 import BlurText from "@/components/BlurText";
 import RotatingText from "@/components/RotatingText";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Button } from "@/components/ui/button";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -26,10 +31,15 @@ const staggerContainer = {
 };
 
 export default function HomePage() {
+  const { t, language } = useLanguage();
+  const pricingPlans = getPricingPlans(language);
+  const addOns = getAddOns(language);
   const WA_NUMBER = "6287794693241";
+  const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website%20UMKM`;
   
   // State for Mockup Carousel
   const [currentMockupIndex, setCurrentMockupIndex] = useState(0);
+  const catalogData = getCatalogData(language);
   const mockupItems = catalogData.filter(c => ["kopi-semesta", "ruang-rupa", "rapi-barbershop", "bersih-wangi-laundry"].includes(c.comparisonGroup || ""));
   // Get unique thumbnails (one per group)
   const uniqueMockups = mockupItems.filter((item, index, self) => 
@@ -76,56 +86,55 @@ export default function HomePage() {
           initial="hidden" animate="visible" variants={staggerContainer}
         >
           <h1 className="text-5xl md:text-7xl font-display font-bold tracking-tight mb-6 leading-[1.1] md:leading-[1.1] drop-shadow-sm">
-            <BlurText text="Bikin UMKM Kamu Punya" delay={0} /> <br className="hidden md:block"/>
-            <BlurText text="Rumah Sendiri di" className="text-yellow-500" delay={0.3} /> <BlurText text="Internet" className="text-blue-400" delay={0.6} />
+            <BlurText text={t('home.hero.title1')} delay={0} /> <br className="hidden md:block"/>
+            <BlurText text={t('home.hero.title2')} className="text-yellow-500" delay={0.3} /> <BlurText text={t('home.hero.title3')} className="text-blue-400" delay={0.6} />
           </h1>
-          <motion.div variants={fadeUp} className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto drop-shadow-sm">
-            <div className="flex flex-col md:flex-row flex-wrap items-center justify-center gap-x-3 gap-y-3 mb-4">
-              <span>Solusi website premium khusus untuk bisnis</span>
-              
-              {/* 4. ELEVATED BADGE (Glassmorphism) */}
-              <div className="relative group rounded-full overflow-hidden glass-pill shadow-[0_4px_24px_rgba(0,0,0,0.2)]">
+          <motion.div variants={fadeUp} className="text-lg md:text-xl text-slate-300 mb-10 max-w-4xl mx-auto drop-shadow-sm leading-relaxed w-full px-4">
+            <div className="flex flex-row items-center justify-center gap-3 mb-4 w-full">
+              <span className="shrink text-center">
+                {t('home.hero.subtitle')}
+              </span>
+              <div className="relative group rounded-full overflow-hidden glass-pill shadow-[0_4px_24px_rgba(0,0,0,0.2)] shrink-0">
                 <RotatingText 
                   texts={dynamicCategories.map((cat, idx) => (
                     <span key={idx} className="flex items-center gap-2 text-white font-bold">
-                      {cat} {getCategoryIcon(cat)}
+                      {t(`catalog.badges.${cat}`)} {getCategoryIcon(cat)}
                     </span>
                   ))}
-                  className="px-5 py-1.5 rounded-full text-base"
+                  className="px-4 py-1.5 rounded-full text-sm md:text-base"
                 />
               </div>
             </div>
-            Tingkatkan kredibilitas dan jangkau lebih banyak pelanggan tanpa pusing urusan teknis.
+            <p className="mt-4 px-4">{t('home.hero.description')}</p>
           </motion.div>
 
           <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
             <a 
-              href={`https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20mau%20konsultasi%20gratis%20untuk%20website%20UMKM%20saya`}
-              target="_blank"
+              href={WA_LINK} 
+              target="_blank" 
               rel="noreferrer"
-              className="w-full sm:w-auto bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-slate-950 font-bold px-8 py-4 rounded-full flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-[0_0_30px_rgba(234,179,8,0.2)]"
+              className="w-full sm:w-auto bg-gradient-to-b from-yellow-400 to-yellow-500 hover:from-yellow-300 hover:to-yellow-400 text-slate-950 font-bold px-8 h-14 rounded-full flex items-center justify-center gap-2 transition-all hover:scale-105 shadow-[0_0_30px_rgba(234,179,8,0.2)] whitespace-nowrap"
             >
-              Konsultasi Gratis via WhatsApp
-              <MessageCircle size={20} />
+              <MessageCircle size={20} /> {t('home.hero.cta_whatsapp')}
             </a>
             <a 
               href="#pricelist"
-              className="w-full sm:w-auto bg-slate-900/50 backdrop-blur-sm hover:bg-slate-800/80 text-white border border-slate-700 font-medium px-8 py-4 rounded-full transition-colors shadow-xl"
+              className="w-full sm:w-auto bg-[rgba(255,255,255,0.05)] hover:bg-[rgba(255,255,255,0.1)] text-white hover:text-white border border-slate-700 font-medium px-8 h-14 rounded-full flex items-center justify-center gap-2 transition-colors shadow-xl backdrop-blur-md whitespace-nowrap"
             >
-              Lihat Paket Harga
+              <span className="whitespace-nowrap">{t('home.hero.cta_pricing')}</span> <ArrowRight size={20} className="shrink-0" />
             </a>
           </motion.div>
 
           {/* 5. TRUST INDICATOR RINGAN */}
           <motion.div variants={fadeUp} className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-xs md:text-sm text-slate-400 font-medium mb-12">
             <div className="flex items-center gap-1.5">
-              <Check size={14} className="text-yellow-500" />
-              <span>Sudah dipakai UMKM Kuliner, Fashion & Jasa</span>
+              <Check size={14} className="text-yellow-500 shrink-0" />
+              <span>{t('home.hero.trust1')}</span>
             </div>
             <div className="hidden md:block w-1 h-1 rounded-full bg-slate-700"></div>
             <div className="flex items-center gap-1.5">
-              <Check size={14} className="text-yellow-500" />
-              <span>Konsultasi gratis, tanpa komitmen</span>
+              <Check size={14} className="text-yellow-500 shrink-0" />
+              <span>{t('home.hero.trust2')}</span>
             </div>
           </motion.div>
 
@@ -201,11 +210,10 @@ export default function HomePage() {
             />
           </div>
           <div className="text-center md:text-left">
-            <h2 className="text-3xl font-bold font-display mb-2 text-slate-900">Hai, Saya Faiz!</h2>
-            <p className="text-yellow-600 text-sm font-bold uppercase tracking-wider mb-4">Web Developer Khusus UMKM</p>
+            <h2 className="text-3xl font-bold font-display mb-2 text-slate-900">{t('home.trust.title')}</h2>
+            <p className="text-yellow-600 text-sm font-bold uppercase tracking-wider mb-4">{t('home.trust.subtitle')}</p>
             <p className="text-slate-700 text-lg leading-relaxed">
-              Saya fokus membantu pelaku UMKM lokal memiliki identitas digital yang profesional. 
-              Saya percaya bahwa setiap bisnis, sekecil apapun, berhak mendapatkan desain website kualitas agensi dengan harga yang masuk akal.
+              {t('home.trust.description')}
             </p>
           </div>
         </motion.div>
@@ -215,22 +223,20 @@ export default function HomePage() {
       <section className="w-full py-24 px-4 bg-[#f8f5f0] flex justify-center">
         <div className="max-w-[1400px] mx-auto w-full">
           <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-slate-900">Bagaimana Proses Kerjanya?</h2>
-            <p className="text-slate-600 font-medium mb-6">Anti ribet, terima beres. Anda cukup siapkan materi bisnisnya.</p>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-slate-900">{t('home.process.title')}</h2>
+            <p className="text-slate-600 font-medium mb-6">{t('home.process.subtitle')}</p>
             <div className="md:hidden flex items-center justify-center text-xs text-slate-400 font-bold uppercase tracking-wider animate-pulse gap-2">
-              <ArrowRight size={14} /> Geser untuk tahap selanjutnya <ArrowRight size={14} />
+              <ArrowRight size={14} /> {t('home.process.swipe')} <ArrowRight size={14} />
             </div>
           </div>
           
           <div className="flex flex-nowrap md:grid md:grid-cols-4 gap-4 md:gap-8 relative overflow-x-auto pb-8 snap-x snap-mandatory [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div className="hidden md:block absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-slate-300 to-transparent -translate-y-1/2 z-0"></div>
             
-            {[
-              { icon: MessageCircle, title: "1. Konsultasi", desc: "Diskusi via WA tentang kebutuhan bisnis dan fitur.", time: "1-2 Hari" },
-              { icon: PenTool, title: "2. Desain & Draft", desc: "Pembuatan struktur dan desain visual website.", time: "3-5 Hari" },
-              { icon: Code2, title: "3. Development", desc: "Proses coding dan integrasi fitur interaktif.", time: "4-7 Hari" },
-              { icon: Rocket, title: "4. Deploy & Handover", desc: "Website online, optimasi, dan serah terima.", time: "1 Hari" },
-            ].map((step, idx) => (
+            {[0, 1, 2, 3].map((idx) => {
+              const icons = [MessageCircle, PenTool, Code2, Rocket];
+              const Icon = icons[idx];
+              return (
               <motion.div 
                 key={idx}
                 initial="hidden" whileInView="visible" viewport={{ once: true }}
@@ -238,15 +244,16 @@ export default function HomePage() {
                 className="relative z-10 flex flex-col items-center text-center bg-white p-6 rounded-2xl border border-slate-100 shadow-xl shadow-slate-200/50 min-w-[80vw] sm:min-w-[300px] md:min-w-0 snap-center shrink-0"
               >
                 <div className="w-16 h-16 bg-[#f8f5f0] border border-slate-200 rounded-full flex items-center justify-center text-yellow-600 mb-6 shadow-sm">
-                  <step.icon size={28} />
+                  <Icon size={28} />
                 </div>
-                <h3 className="text-xl font-bold mb-2 text-slate-900">{step.title}</h3>
-                <p className="text-slate-600 text-sm mb-4">{step.desc}</p>
+                <h3 className="text-xl font-bold mb-2 text-slate-900">{t(`home.process.steps.${idx}.title`)}</h3>
+                <p className="text-slate-600 text-sm mb-4">{t(`home.process.steps.${idx}.desc`)}</p>
                 <span className="text-xs font-bold text-teal-700 bg-teal-50 px-3 py-1 rounded-full border border-teal-100">
-                  Estimasi: {step.time}
+                  {t('home.process.estimated')}: {t(`home.process.steps.${idx}.time`)}
                 </span>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -255,9 +262,9 @@ export default function HomePage() {
       <section id="pricelist" className="w-full py-24 px-4 bg-slate-900/30 border-y border-white/5 flex justify-center">
         <div className="max-w-[1400px] mx-auto w-full">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Investasi Digital Anda</h2>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">{t('home.pricing.title')}</h2>
             <p className="text-slate-400 max-w-2xl mx-auto">
-              Pilih paket yang paling sesuai dengan skala bisnis dan kebutuhan Anda saat ini. Tidak ada biaya tersembunyi.
+              {t('home.pricing.subtitle')}
             </p>
           </div>
 
@@ -272,55 +279,59 @@ export default function HomePage() {
                 {plan.isPopular && (
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
                     <span className="whitespace-nowrap bg-gradient-to-r from-yellow-500 to-amber-500 text-slate-950 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider shadow-lg">
-                      Paling Direkomendasikan
+                      {t('home.pricing.popular')}
                     </span>
                   </div>
                 )}
                 <SpotlightCard 
                   spotlightColor={plan.isPopular ? "rgba(234, 179, 8, 0.2)" : "rgba(255, 255, 255, 0.05)"}
-                  className={`flex flex-col p-8 h-full rounded-3xl relative overflow-hidden glass-card ${
+                  className={`flex flex-col h-full rounded-3xl relative overflow-hidden glass-card ${
                     plan.isPopular 
                       ? 'border-yellow-500/50 shadow-[inset_0_0_20px_rgba(234,179,8,0.2)] shadow-yellow-500/10' 
                       : ''
                   }`}
                 >
-                <div className="mb-8">
-                  <h3 className="text-2xl font-bold font-display mb-2">{plan.name}</h3>
-                  <div className="mb-4">
-                    {plan.originalPrice && (
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-lg text-slate-500 line-through decoration-red-500/50">{plan.originalPrice}</span>
-                        {plan.discountNote && (
-                          <span className="text-xs font-bold text-red-400 bg-red-400/10 px-2 py-0.5 rounded-full uppercase tracking-wide">
-                            {plan.discountNote}
-                          </span>
+                  <Card className="bg-transparent border-none shadow-none text-white h-full flex flex-col p-8">
+                    <CardHeader className="p-0 mb-8">
+                      <CardTitle className="text-2xl font-bold font-display mb-2">{plan.name}</CardTitle>
+                      <div className="mb-4">
+                        {plan.originalPrice && (
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-lg text-slate-500 line-through decoration-red-500/50">{plan.originalPrice}</span>
+                            {plan.discountNote && (
+                              <Badge variant="destructive" className="bg-red-400/10 text-red-400 uppercase tracking-wide">
+                                {plan.discountNote}
+                              </Badge>
+                            )}
+                          </div>
                         )}
+                        <div className="text-3xl font-bold text-white">{plan.price}</div>
                       </div>
-                    )}
-                    <div className="text-3xl font-bold text-white">{plan.price}</div>
-                  </div>
-                  <p className="text-sm text-slate-400">{plan.description}</p>
-                </div>
-                <div className="flex-1 space-y-4 mb-8">
-                  {plan.features.map((feature, fIdx) => (
-                    <div key={fIdx} className="flex items-start gap-3">
-                      <div className={`mt-0.5 shrink-0 ${feature.included ? 'text-yellow-500' : 'text-slate-700'}`}>
-                        <Check size={18} />
-                      </div>
-                      <span className={`text-sm ${feature.included ? 'text-slate-300' : 'text-slate-600 line-through'}`}>
-                        {feature.name}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <a 
-                  href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(plan.waMessage)}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className={`w-full text-center py-4 rounded-xl font-bold transition-all ${plan.isPopular ? 'bg-yellow-500 hover:bg-yellow-400 text-slate-950' : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'}`}
-                >
-                  {plan.ctaText}
-                </a>
+                      <CardDescription className="text-slate-400 text-sm">{plan.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent className="p-0 flex-1 space-y-4 mb-8">
+                      {plan.features.map((feature, fIdx) => (
+                        <div key={fIdx} className="flex items-start gap-3">
+                          <div className={`mt-0.5 shrink-0 ${feature.included ? 'text-yellow-500' : 'text-slate-700'}`}>
+                            <Check size={18} />
+                          </div>
+                          <span className={`text-sm ${feature.included ? 'text-slate-300' : 'text-slate-600 line-through'}`}>
+                            {feature.name}
+                          </span>
+                        </div>
+                      ))}
+                    </CardContent>
+                    <CardFooter className="p-0">
+                      <a 
+                        href={`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(plan.waMessage)}`} 
+                        target="_blank" 
+                        rel="noreferrer"
+                        className={`w-full h-14 flex items-center justify-center rounded-xl font-bold transition-all ${plan.isPopular ? 'bg-yellow-500 hover:bg-yellow-400 text-slate-950' : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'}`}
+                      >
+                        {plan.ctaText}
+                      </a>
+                    </CardFooter>
+                  </Card>
                 </SpotlightCard>
               </motion.div>
             ))}
@@ -329,17 +340,21 @@ export default function HomePage() {
           {/* Add-ons */}
           <motion.div 
             initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
-            className="max-w-3xl mx-auto bg-slate-950 border border-white/10 rounded-2xl p-6 md:p-8"
+            className="max-w-3xl mx-auto"
           >
-            <h3 className="text-xl font-bold mb-6 text-center">Add-Ons / Layanan Tambahan</h3>
-            <div className="divide-y divide-white/5">
-              {addOns.map((addon, idx) => (
-                <div key={idx} className="flex justify-between items-center py-4">
-                  <span className="text-slate-300">{addon.name}</span>
-                  <span className="text-yellow-500 font-medium">{addon.price}</span>
-                </div>
-              ))}
-            </div>
+            <Card className="bg-slate-950 border-white/10 p-2 md:p-4 text-white">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-center text-white">{t('home.pricing.addons')}</CardTitle>
+              </CardHeader>
+              <CardContent className="divide-y divide-white/5 pb-2">
+                {addOns.map((addon, idx) => (
+                  <div key={idx} className="flex justify-between items-center py-4">
+                    <span className="text-slate-300">{addon.name}</span>
+                    <span className="text-yellow-500 font-medium">{addon.price}</span>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
           </motion.div>
         </div>
       </section>
@@ -361,9 +376,9 @@ export default function HomePage() {
           
           <div className="relative z-10 mb-16">
             <LayoutTemplate size={48} className="mx-auto text-yellow-500 mb-6" />
-            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4 text-white">Sudah Dipakai 3 Jenis UMKM</h2>
+            <h2 className="text-3xl md:text-5xl font-display font-bold mb-4 text-white">{t('home.teaser.title')}</h2>
             <p className="text-lg text-slate-400 max-w-2xl mx-auto">
-              Contoh nyata, bukan sekadar template. Jelajahi fitur premium yang disesuaikan khusus untuk tiap model bisnis.
+              {t('home.teaser.subtitle')}
             </p>
           </div>
           
@@ -375,40 +390,42 @@ export default function HomePage() {
                 <Link 
                   href={`/demo/${item.slug}`} 
                   key={idx}
-                  className="group relative bg-slate-900/50 border border-white/10 rounded-2xl overflow-hidden hover:border-yellow-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-yellow-500/10 hover:-translate-y-2 flex flex-col h-full backdrop-blur-sm"
+                  className="group relative flex flex-col h-full hover:-translate-y-2 transition-transform duration-300"
                 >
-                  <div className="aspect-[4/3] overflow-hidden relative">
-                    <img 
-                      src={item.thumbnail} 
-                      alt={item.businessName} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90" />
-                    <div className="absolute top-4 left-4 flex gap-2">
-                      <span className="bg-slate-950/80 backdrop-blur border border-white/10 text-white text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
-                        {item.category}
-                      </span>
-                      <span className="bg-gradient-to-r from-yellow-500 to-amber-500 text-slate-950 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md">
-                        {item.packageType}
-                      </span>
+                  <Card className="bg-slate-900/50 border-white/10 overflow-hidden h-full flex flex-col backdrop-blur-sm group-hover:border-yellow-500/50 group-hover:shadow-2xl group-hover:shadow-yellow-500/10 transition-all duration-300">
+                    <div className="aspect-[4/3] overflow-hidden relative">
+                      <img 
+                        src={item.thumbnail} 
+                        alt={item.businessName} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-90" />
+                      <div className="absolute top-4 left-4 flex gap-2">
+                        <Badge variant="outline" className="bg-slate-950/80 backdrop-blur border-white/10 text-white text-[10px] uppercase tracking-wider">
+                          {item.category}
+                        </Badge>
+                        <Badge className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 hover:to-amber-400 text-slate-950 text-[10px] uppercase tracking-wider border-none">
+                          {item.packageType}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors">{item.businessName}</h3>
-                      <ExternalLink size={18} className="text-slate-500 group-hover:text-yellow-500 transition-colors" />
-                    </div>
-                    <p className="text-sm text-slate-400 line-clamp-2">{item.description}</p>
-                  </div>
+                    <CardHeader className="p-6 flex-1 flex flex-col">
+                      <div className="flex justify-between items-start mb-2">
+                        <CardTitle className="text-xl font-bold text-white group-hover:text-yellow-400 transition-colors">{item.businessName}</CardTitle>
+                        <ExternalLink size={18} className="text-slate-500 group-hover:text-yellow-500 transition-colors shrink-0 ml-2" />
+                      </div>
+                      <CardDescription className="text-sm text-slate-400 line-clamp-2">{item.description}</CardDescription>
+                    </CardHeader>
+                  </Card>
                 </Link>
               ))}
           </div>
 
           <Link 
             href="/katalog"
-            className="inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 py-4 rounded-full font-bold transition-all hover:scale-105 shadow-xl relative z-10"
+            className="inline-flex items-center justify-center gap-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 px-8 h-14 rounded-full font-bold transition-all hover:scale-105 shadow-xl relative z-10 whitespace-nowrap"
           >
-            Lihat Semua di Katalog <ArrowRight size={18} />
+            {t('home.teaser.cta')} <ArrowRight size={18} />
           </Link>
         </motion.div>
       </section>
@@ -422,30 +439,22 @@ export default function HomePage() {
       <section className="w-full py-24 px-4 bg-[#FDFBF7] border-t border-slate-200 flex justify-center">
         <div className="max-w-4xl mx-auto w-full">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-display font-bold mb-4 text-slate-900">Pertanyaan Seputar Jasa</h2>
-            <p className="text-slate-600 font-medium">Yang sering ditanyakan sebelum memulai project.</p>
+            <h2 className="text-3xl font-display font-bold mb-4 text-slate-900">{t('home.faq.title')}</h2>
+            <p className="text-slate-600 font-medium">{t('home.faq.subtitle')}</p>
           </div>
           
-          <div className="space-y-4">
-            {[
-              { q: "Berapa lama proses pengerjaannya?", a: "Tergantung paket yang dipilih dan kesiapan materi dari Anda (foto, teks, logo). Rata-rata memakan waktu 3 hingga 10 hari kerja." },
-              { q: "Apakah saya bisa menggunakan nama domain sendiri (.com / .id)?", a: "Ya, untuk paket Basic dan Full Katalog sudah termasuk gratis custom domain (misal: namausaha.com) untuk 1 tahun pertama." },
-              { q: "Bagaimana sistem pembayarannya?", a: "Pembayaran dilakukan 2 tahap: DP 50% sebelum project dimulai, dan pelunasan 50% setelah website selesai dan siap online." },
-              { q: "Apakah ada biaya bulanan/tahunan?", a: "Tidak ada biaya bulanan/tahunan maupun biaya hosting tambahan dari kami. Anda hanya perlu memperpanjang custom domain Anda sendiri setiap tahun (mulai tahun kedua)." }
-            ].map((faq, idx) => (
-              <details key={idx} className="group bg-white border border-slate-200 rounded-xl overflow-hidden [&_summary::-webkit-details-marker]:hidden shadow-sm hover:shadow-md transition-shadow">
-                <summary className="flex items-center justify-between p-6 font-bold cursor-pointer text-lg text-slate-900 hover:bg-slate-50 transition-colors">
-                  {faq.q}
-                  <span className="transition group-open:rotate-180">
-                    <ChevronDown size={20} className="text-slate-400" />
-                  </span>
-                </summary>
-                <div className="p-6 pt-0 text-slate-600 border-t border-slate-100 leading-relaxed font-medium">
-                  {faq.a}
-                </div>
-              </details>
+          <Accordion className="space-y-4">
+            {[0, 1, 2, 3].map((idx) => (
+              <AccordionItem key={idx} value={`item-${idx}`} className="bg-white border border-slate-200 rounded-xl px-6 shadow-sm hover:shadow-md transition-shadow">
+                <AccordionTrigger className="font-bold text-lg text-slate-900 hover:no-underline hover:text-slate-700 py-6 text-left">
+                  {t(`home.faq.questions.${idx}.q`)}
+                </AccordionTrigger>
+                <AccordionContent className="text-slate-600 leading-relaxed font-medium pb-6">
+                  {t(`home.faq.questions.${idx}.a`)}
+                </AccordionContent>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
         </div>
       </section>
 
@@ -455,17 +464,17 @@ export default function HomePage() {
           initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Mulai Transformasi Digital Bisnis Anda Hari Ini</h2>
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">{t('home.cta.title')}</h2>
           <p className="text-xl text-slate-400 mb-10">
-            Masih bingung paket mana yang cocok? Mari diskusi gratis tanpa komitmen apapun.
+            {t('home.cta.subtitle')}
           </p>
           <a 
-            href={`https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20tapi%20masih%20bingung%20pilih%20paket.%20Bisa%20bantu%20konsultasi?`}
-            target="_blank"
+            href={`https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20tapi%20masih%20bingung%20pilih%20paket.%20Bisa%20bantu%20konsultasi?`} 
+            target="_blank" 
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold px-10 py-5 rounded-full text-lg transition-transform hover:scale-105 shadow-xl shadow-yellow-500/20"
+            className="inline-flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold px-10 h-16 rounded-full text-lg transition-transform hover:scale-105 shadow-xl shadow-yellow-500/20 whitespace-nowrap"
           >
-            Mulai Konsultasi Sekarang
+            {t('home.cta.button')}
             <ArrowRight size={20} />
           </a>
         </motion.div>

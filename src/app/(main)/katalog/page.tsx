@@ -4,12 +4,19 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { LayoutTemplate, MessageCircle, Sparkles, ArrowUpRight } from "lucide-react";
-import { catalogData } from "@/data/catalog";
+import { getCatalogData } from "@/data/catalog";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const tiers = ["Semua", "Mini Landing Page", "Basic", "Full Katalog"];
 const nicheCategories = ["Semua Kategori", "Kuliner", "Fashion", "Jasa"];
 
 export default function KatalogPage() {
+  const { t, language } = useLanguage();
+  const catalogData = getCatalogData(language);
   const [activeTab, setActiveTab] = useState("Semua");
   const [activeCategory, setActiveCategory] = useState("Semua Kategori");
   const WA_NUMBER = "6287794693241";
@@ -32,7 +39,7 @@ export default function KatalogPage() {
           animate={{ opacity: 1, y: 0 }}
           className="text-4xl md:text-5xl font-display font-bold mb-6"
         >
-          Katalog <span className="text-yellow-400">Portfolio</span>
+          {t('catalog.title1')} <span className="text-yellow-400">{t('catalog.title2')}</span>
         </motion.h1>
         <motion.p 
           initial={{ opacity: 0, y: 20 }}
@@ -40,49 +47,30 @@ export default function KatalogPage() {
           transition={{ delay: 0.1 }}
           className="text-lg text-slate-400 max-w-2xl mx-auto"
         >
-          Kumpulan hasil karya dan proyek website UMKM yang pernah kami kerjakan.
+          {t('catalog.subtitle')}
         </motion.p>
       </section>
 
-      {/* Tabs */}
       <section className="max-w-6xl w-full mb-16 space-y-6">
-        <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-          {tiers.map((tier, idx) => (
-            <motion.button
-              key={tier}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + (idx * 0.05) }}
-              onClick={() => setActiveTab(tier)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                activeTab === tier 
-                  ? 'bg-yellow-500 text-slate-950 shadow-lg shadow-yellow-500/20' 
-                  : 'glass-pill hover:brightness-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)]'
-              }`}
-            >
-              {tier}
-            </motion.button>
-          ))}
-        </div>
+        <Tabs defaultValue="Semua" value={activeTab} onValueChange={setActiveTab} className="w-full flex justify-center mb-6">
+          <TabsList className="bg-slate-900 border border-slate-800 p-1 rounded-full flex-wrap h-auto justify-center">
+            {tiers.map((tier) => (
+              <TabsTrigger key={tier} value={tier} className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-yellow-500 data-[state=active]:text-slate-950">
+                {t(`catalog.badges.${tier}`)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
 
-        <div className="flex flex-wrap justify-center gap-2 md:gap-4">
-          {nicheCategories.map((cat, idx) => (
-            <motion.button
-              key={cat}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + (idx * 0.05) }}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                activeCategory === cat 
-                  ? 'bg-yellow-500 text-slate-950 shadow-lg shadow-yellow-500/20' 
-                  : 'glass-pill hover:brightness-110 shadow-[0_4px_12px_rgba(0,0,0,0.1)]'
-              }`}
-            >
-              {cat}
-            </motion.button>
-          ))}
-        </div>
+        <Tabs defaultValue="Semua Kategori" value={activeCategory} onValueChange={setActiveCategory} className="w-full flex justify-center">
+          <TabsList className="bg-slate-900 border border-slate-800 p-1 rounded-full flex-wrap h-auto justify-center">
+            {nicheCategories.map((cat) => (
+              <TabsTrigger key={cat} value={cat} className="rounded-full px-6 py-2.5 text-sm font-medium data-[state=active]:bg-yellow-500 data-[state=active]:text-slate-950">
+                {t(`catalog.badges.${cat}`)}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+        </Tabs>
       </section>
 
       {/* Catalog Grid or Empty State */}
@@ -105,68 +93,60 @@ export default function KatalogPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
-                  className="group glass-card rounded-2xl overflow-hidden hover:border-yellow-500/50 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] transition-all flex flex-col"
                 >
-                <div className="relative h-48 sm:h-56 w-full bg-slate-800 overflow-hidden">
-                  <img 
-                    src={item.thumbnail} 
-                    alt={item.businessName} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                  {/* Scrim Overlay to ensure text contrast for badges */}
-                  <div className="absolute top-0 inset-x-0 h-[45%] bg-gradient-to-b from-black/70 to-transparent pointer-events-none z-10"></div>
-                  
-                  <div className="absolute top-4 left-4 flex gap-2 z-20">
-                    <span 
-                      className="glass-pill text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
-                    >
-                      {item.category}
-                    </span>
-                    <span 
-                      className="glass-pill text-white text-xs font-bold px-3 py-1 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
-                    >
-                      {item.packageType}
-                    </span>
-                  </div>
-                  {item.comparisonGroup && (
-                    <div className="absolute top-4 right-4 z-20">
-                      <span 
-                        className="glass-pill text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
-                      >
-                        Bandingkan Versi
-                      </span>
-                    </div>
-                  )}
-                </div>
-                
-                  <div className="p-6 flex-1 flex flex-col">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-2xl font-bold font-display text-white group-hover:text-yellow-500 transition-colors">
-                        {item.businessName}
-                      </h3>
-                    </div>
-                    <p className="text-slate-400 text-sm mb-6 flex-1 line-clamp-3">
-                      {item.description}
-                    </p>
-                    
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
-                      <div className="flex flex-col">
-                        {item.originalPrice && item.discountNote && (
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-slate-500 line-through text-xs">{item.originalPrice}</span>
-                            <span className="text-red-400 text-[10px] font-bold bg-red-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider">{item.discountNote}</span>
-                          </div>
-                        )}
-                        <span className="font-bold text-white text-lg">{item.packagePrice}</span>
+                  <Card className="group bg-slate-900/50 border-white/10 overflow-hidden hover:border-yellow-500/50 hover:shadow-[0_0_20px_rgba(234,179,8,0.2)] transition-all flex flex-col h-full rounded-2xl">
+                    <div className="relative h-48 sm:h-56 w-full bg-slate-800 overflow-hidden">
+                      <img 
+                        src={item.thumbnail} 
+                        alt={item.businessName} 
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute top-0 inset-x-0 h-[45%] bg-gradient-to-b from-black/70 to-transparent pointer-events-none z-10"></div>
+                      
+                      <div className="absolute top-4 left-4 flex gap-2 z-20">
+                        <Badge variant="outline" className="bg-slate-950/80 backdrop-blur border-white/10 text-white text-xs font-bold px-3 py-1 uppercase shadow-[0_4px_12px_rgba(0,0,0,0.2)]">
+                          {t(`catalog.badges.${item.category}`)}
+                        </Badge>
+                        <Badge className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-400 text-slate-950 text-xs font-bold px-3 py-1 uppercase shadow-[0_4px_12px_rgba(0,0,0,0.2)] border-none">
+                          {t(`catalog.badges.${item.packageType}`)}
+                        </Badge>
                       </div>
-                    <Link 
-                      href={`/demo/${item.slug}`} 
-                      className="inline-flex items-center gap-2 text-yellow-500 text-sm font-medium hover:text-yellow-400 transition-transform group-hover:translate-x-1"
-                    >
-                      Lihat Demo <ArrowUpRight size={16} />
-                    </Link>
-                  </div>
-                </div>
+                      {item.comparisonGroup && (
+                        <div className="absolute top-4 right-4 z-20">
+                          <Badge variant="secondary" className="bg-white/20 hover:bg-white/30 backdrop-blur text-white text-[10px] font-bold px-2 py-1 uppercase shadow-[0_4px_12px_rgba(0,0,0,0.2)] border-none">
+                            {t('catalog.compare')}
+                          </Badge>
+                        </div>
+                      )}
+                    </div>
+                    
+                    <CardHeader className="p-6 flex-1 flex flex-col">
+                      <CardTitle className="text-2xl font-bold font-display text-white group-hover:text-yellow-500 transition-colors mb-4">
+                        {item.businessName}
+                      </CardTitle>
+                      <CardDescription className="text-slate-400 text-sm mb-6 flex-1 line-clamp-3">
+                        {item.description}
+                      </CardDescription>
+                      
+                      <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                        <div className="flex flex-col">
+                          {item.originalPrice && item.discountNote && (
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-slate-500 line-through text-xs">{item.originalPrice}</span>
+                              <Badge variant="destructive" className="bg-red-500/10 text-red-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wider">{item.discountNote}</Badge>
+                            </div>
+                          )}
+                          <span className="font-bold text-white text-lg">{item.packagePrice}</span>
+                        </div>
+                        <Link 
+                          href={`/demo/${item.slug}`}
+                          className="inline-flex items-center text-yellow-500 hover:text-yellow-400 p-0 h-auto font-medium transition-transform group-hover:translate-x-1"
+                        >
+                          {t('catalog.demo')} <ArrowUpRight size={16} className="ml-2" />
+                        </Link>
+                      </div>
+                    </CardHeader>
+                  </Card>
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -188,28 +168,28 @@ export default function KatalogPage() {
                 </div>
               </div>
               
-              <h2 className="text-3xl font-display font-bold mb-4">Ruang Portfolio Sedang Disiapkan</h2>
+              <h2 className="text-3xl font-display font-bold mb-4">{t('catalog.empty.title')}</h2>
               <p className="text-lg text-slate-400 max-w-xl mx-auto mb-10">
-                Sistem katalog kami sudah siap, namun proyek untuk kategori ini sedang dalam tahap pengembangan. 
+                {t('catalog.empty.desc')}
                 <br/><br/>
-                <strong className="text-white">Jadilah klien pertama kami</strong> dan dapatkan harga khusus serta layanan prioritas tanpa batas revisi.
+                {t('catalog.empty.promo')}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
                 <a 
-                  href={`https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20dengan%20jasa%20website%20UMKM.`}
-                  target="_blank"
+                  href={`https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20dengan%20jasa%20website%20UMKM.`} 
+                  target="_blank" 
                   rel="noreferrer"
-                  className="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-transform hover:scale-105"
+                  className="w-full bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold h-14 rounded-full flex items-center justify-center gap-2 transition-transform hover:scale-105"
                 >
-                  Klaim Promo Klien Pertama
+                  {t('catalog.empty.cta')}
                   <MessageCircle size={20} />
                 </a>
                 <Link 
                   href="/"
-                  className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white border border-white/10 font-medium px-6 py-4 rounded-full transition-colors flex items-center justify-center"
+                  className="w-full sm:w-auto bg-white/5 hover:bg-white/10 text-white hover:text-white border border-white/10 font-medium h-14 rounded-full transition-colors flex items-center justify-center px-6"
                 >
-                  Kembali ke Beranda
+                  {t('catalog.empty.back')}
                 </Link>
               </div>
             </div>

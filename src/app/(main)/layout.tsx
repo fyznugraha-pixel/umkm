@@ -4,13 +4,16 @@ import { MessageCircle, Phone, LayoutTemplate } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
 import AuroraBackground from "@/components/AuroraBackground";
 import MainNavbar from "@/components/MainNavbar";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import LanguageSuggestionPopup from "@/components/LanguageSuggestionPopup";
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const WA_NUMBER = "6287794693241";
   const WA_LINK = `https://wa.me/${WA_NUMBER}?text=Halo,%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website%20UMKM`;
 
   return (
-    <div className="text-slate-300 bg-slate-950 min-h-screen">
+    <LanguageProvider>
+      <div className="text-slate-300 bg-slate-950 min-h-screen">
       {/* Global Background Elements */}
       <div className="fixed inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:40px_40px] -z-40 pointer-events-none" style={{ maskImage: "radial-gradient(ellipse 100% 100% at 50% 0%, #000 40%, transparent 110%)", WebkitMaskImage: "radial-gradient(ellipse 100% 100% at 50% 0%, #000 40%, transparent 110%)" }}></div>
       {/* Navbar */}
@@ -57,6 +60,8 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       >
         <MessageCircle size={24} />
       </a>
+      <LanguageSuggestionPopup />
     </div>
+    </LanguageProvider>
   );
 }

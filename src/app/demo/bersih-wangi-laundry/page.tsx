@@ -245,9 +245,9 @@ export default function BersihWangiDemo() {
                   ]} 
                 />
               </div>
-              <p className="text-slate-400 font-light text-sm">
+              <div className="text-slate-400 font-light text-sm">
                 <MapEmbed src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.5053155700876!2d106.8249641!3d-6.175392399999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5d2e764b12d%3A0x3d2ad6e1e0e9bcc8!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1714902170362!5m2!1sid!2sid" />
-              </p>
+              </div>
             </div>
 
             <div className="flex flex-wrap gap-4">
