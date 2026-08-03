@@ -137,6 +137,47 @@ export default function RuangRupaFullDemo() {
         </div>
       </section>
 
+      {/* 2.5 TIMELINE PRODUKSI */}
+      <section className="py-24 px-6 md:px-16 lg:px-24 bg-[#111111] text-white">
+        <div className="max-w-7xl mx-auto">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-black uppercase tracking-tighter mb-4">Proses <span className="text-[#C34A36]">Kreatif</span></h2>
+            <p className="text-gray-400 max-w-xl mx-auto">Dari sketsa hingga menjadi pakaian esensial di lemari Anda, setiap langkah dikerjakan dengan presisi.</p>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.2}>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+              {/* Line connector for desktop */}
+              <div className="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-white/20 -translate-y-1/2 z-0"></div>
+              
+              <div className="relative z-10 bg-[#111111] p-6 border border-white/20 hover:border-[#C34A36] transition-colors text-center">
+                <div className="w-12 h-12 bg-[#C34A36] text-white font-bold rounded-full flex items-center justify-center mx-auto mb-6 text-xl">1</div>
+                <h3 className="font-bold uppercase tracking-wider mb-2">Desain & Sketsa</h3>
+                <p className="text-gray-400 text-sm">Merancang siluet dan mematangkan konsep visual.</p>
+              </div>
+              
+              <div className="relative z-10 bg-[#111111] p-6 border border-white/20 hover:border-[#C34A36] transition-colors text-center">
+                <div className="w-12 h-12 bg-white text-[#111111] font-bold rounded-full flex items-center justify-center mx-auto mb-6 text-xl">2</div>
+                <h3 className="font-bold uppercase tracking-wider mb-2">Sourcing Material</h3>
+                <p className="text-gray-400 text-sm">Pemilihan bahan katun organik kualitas ekspor.</p>
+              </div>
+              
+              <div className="relative z-10 bg-[#111111] p-6 border border-white/20 hover:border-[#C34A36] transition-colors text-center">
+                <div className="w-12 h-12 bg-white text-[#111111] font-bold rounded-full flex items-center justify-center mx-auto mb-6 text-xl">3</div>
+                <h3 className="font-bold uppercase tracking-wider mb-2">Tailoring</h3>
+                <p className="text-gray-400 text-sm">Proses potong dan jahit oleh artisan lokal.</p>
+              </div>
+              
+              <div className="relative z-10 bg-[#111111] p-6 border border-white/20 hover:border-[#C34A36] transition-colors text-center">
+                <div className="w-12 h-12 bg-white text-[#111111] font-bold rounded-full flex items-center justify-center mx-auto mb-6 text-xl">4</div>
+                <h3 className="font-bold uppercase tracking-wider mb-2">Quality Control</h3>
+                <p className="text-gray-400 text-sm">Pengecekan akhir sebelum dirilis ke publik.</p>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* 3. KATALOG PRODUK INTERAKTIF */}
       <section id="katalog" className="py-24 px-6 md:px-16 lg:px-24 bg-white border-y border-[#111111]/10">
         <div className="max-w-7xl mx-auto">
@@ -176,18 +217,52 @@ export default function RuangRupaFullDemo() {
             <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-4">Official <span className="text-[#C34A36]">Lookbook</span></h2>
             <p className="text-gray-500 max-w-xl mx-auto">Inspirasi styling langsung dari studio kami untuk referensi OOTD harian Anda.</p>
           </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <GalleryGrid 
-              aspectRatio="portrait" 
-              theme="fashion"
-              images={[
-                { src: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800", caption: "Look #1: Urban Monochrome" },
-                { src: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800", caption: "Look #2: Summer Noir" },
-                { src: "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800", caption: "Look #3: Earth Tones" },
-                { src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=800", caption: "Look #4: Minimalist Day" },
-                { src: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800", caption: "Look #5: Office Ready" }
-              ]}
-            />
+          <ScrollReveal delay={0.2} className="relative w-full">
+            <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-10 [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              
+              <div className="snap-center shrink-0 w-[80vw] md:w-[500px] group cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden mb-4">
+                  <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=800" alt="Look 1" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-center">Urban Monochrome</h3>
+              </div>
+              
+              <div className="snap-center shrink-0 w-[80vw] md:w-[500px] group cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden mb-4">
+                  <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800" alt="Look 2" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-center">Summer Noir</h3>
+              </div>
+              
+              <div className="snap-center shrink-0 w-[80vw] md:w-[500px] group cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden mb-4">
+                  <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&q=80&w=800" alt="Look 3" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-center">Earth Tones</h3>
+              </div>
+
+              <div className="snap-center shrink-0 w-[80vw] md:w-[500px] group cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden mb-4">
+                  <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&q=80&w=800" alt="Look 4" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-center">Minimalist Day</h3>
+              </div>
+              
+              <div className="snap-center shrink-0 w-[80vw] md:w-[500px] group cursor-pointer">
+                <div className="aspect-[4/5] overflow-hidden mb-4">
+                  <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&q=80&w=800" alt="Look 5" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <h3 className="text-xl font-bold uppercase tracking-widest text-center">Office Ready</h3>
+              </div>
+
+            </div>
+            
+            <div className="flex items-center justify-center gap-2 mt-4 text-gray-400">
+              <span className="w-2 h-2 rounded-full bg-[#111111]"></span>
+              <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+              <span className="w-2 h-2 rounded-full bg-gray-300"></span>
+              <span className="text-xs uppercase tracking-widest ml-4 font-bold">Geser untuk melihat semua</span>
+            </div>
           </ScrollReveal>
         </div>
       </section>

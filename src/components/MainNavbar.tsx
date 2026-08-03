@@ -36,7 +36,7 @@ export default function MainNavbar() {
     >
       <div className="container mx-auto px-4 min-h-16 flex items-center justify-between max-w-[1400px]">
         <Link href="/" className="hidden md:flex items-center">
-          <img src="/logo/elvora.webp" alt="Elvora Studio" className="h-10 md:h-12 w-auto object-contain" />
+          <img src="/logo/elvora.png" alt="Elvora Space" className="h-10 md:h-12 w-auto object-contain" />
         </Link>
         <nav className="flex flex-1 justify-center md:justify-center gap-6 text-sm md:text-base font-medium text-slate-300">
           <Link href="/" className="hover:text-white transition-colors drop-shadow-sm">{t('nav.home')}</Link>

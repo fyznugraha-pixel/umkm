@@ -299,23 +299,46 @@ export default function KopiSemestaFullDemo() {
         </div>
       </section>
 
-      {/* FAQ SECTION */}
+      {/* FAQ SECTION (Rustic Grid) */}
       <section className="py-24 px-4 bg-white/50 border-t border-[#E5D3B3]">
-        <div className="max-w-3xl mx-auto">
-          <ScrollReveal className="text-center mb-12">
-            <h2 className="text-4xl font-serif mb-4 text-[#3D2B1F]">Pertanyaan Umum</h2>
-            <p className="text-[#3D2B1F]/70">Hal-hal yang sering ditanyakan oleh Sahabat Semesta.</p>
+        <div className="max-w-5xl mx-auto">
+          <ScrollReveal className="text-center mb-16">
+            <h2 className="text-4xl font-serif mb-4 text-[#B36A5E]">Pertanyaan Umum</h2>
+            <p className="text-[#3D2B1F]/70 text-lg">Hal-hal yang sering ditanyakan oleh Sahabat Semesta.</p>
           </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <FAQAccordion 
-              theme="coffee"
-              items={[
-                { question: "Apakah Kopi Semesta menyediakan area smoking?", answer: "Ya, kami memiliki area semi-outdoor di bagian belakang khusus untuk smoking area yang cukup sejuk dan luas." },
-                { question: "Ada wifi dan colokan ngga buat nugas?", answer: "Tentu! Kami menyediakan WiFi berkecepatan tinggi gratis untuk pelanggan, dan hampir setiap meja dilengkapi dengan stop kontak." },
-                { question: "Bisa bayar pakai QRIS/Debit?", answer: "Bisa banget. Kami menerima pembayaran via QRIS, kartu debit/kredit, dan e-wallet utama. Pembayaran cash juga tetap dilayani." },
-                { question: "Apakah order online lewat web ini bisa dikirim ke rumah?", answer: "Saat ini order online via website khusus untuk Pick-up (Ambil di Toko) atau pemesanan dari meja untuk Dine-in." },
-              ]}
-            />
+          
+          <ScrollReveal delay={0.2} className="grid md:grid-cols-2 gap-10">
+            <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+              <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+              <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Apakah Kopi Semesta menyediakan area smoking?</h4>
+              <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+                Ya, kami memiliki area semi-outdoor di bagian belakang khusus untuk smoking area yang cukup sejuk dan luas.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+              <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+              <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Ada wifi dan colokan ngga buat nugas?</h4>
+              <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+                Tentu! Kami menyediakan WiFi berkecepatan tinggi gratis untuk pelanggan, dan hampir setiap meja dilengkapi dengan stop kontak.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+              <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+              <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Bisa bayar pakai QRIS/Debit?</h4>
+              <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+                Bisa banget. Kami menerima pembayaran via QRIS, kartu debit/kredit, dan e-wallet utama. Pembayaran cash juga tetap dilayani.
+              </p>
+            </div>
+            
+            <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+              <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+              <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Apakah order online lewat web ini bisa dikirim ke rumah?</h4>
+              <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+                Saat ini order online via website khusus untuk Pick-up (Ambil di Toko) atau pemesanan dari meja untuk Dine-in.
+              </p>
+            </div>
           </ScrollReveal>
         </div>
       </section>

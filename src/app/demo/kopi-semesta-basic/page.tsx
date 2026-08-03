@@ -148,79 +148,97 @@ export default function KopiSemestaBasicDemo() {
       </section>
 
       {/* 2. MENU LENGKAP */}
-      <section id="menu" className="py-24 px-4 bg-white/50 border-b border-[#E5D3B3]">
-        <div className="max-w-7xl mx-auto">
+      <section id="menu" className="py-24 px-4 bg-[#2A1D15] text-[#F5EFE6]">
+        <div className="max-w-5xl mx-auto">
           <ScrollReveal className="text-center mb-16">
-            <h2 className="text-4xl font-serif mb-4 text-[#3D2B1F]">Katalog Rasa</h2>
-            <p className="text-[#3D2B1F]/70 text-lg">Jelajahi sajian terbaik yang disiapkan sepenuh hati oleh barista kami.</p>
+            <h2 className="text-4xl font-serif mb-4 text-[#D4A373]">Buku Menu</h2>
+            <p className="text-[#F5EFE6]/70 text-lg">Disajikan dengan biji kopi pilihan nusantara.</p>
           </ScrollReveal>
           
-          {/* Category: Kopi */}
-          <div className="mb-16">
-            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#E5D3B3]">
-              <Coffee className="text-[#D4A373]" size={28} />
-              <h3 className="text-2xl font-bold uppercase tracking-wider">Kopi & Susu</h3>
+          <div className="grid md:grid-cols-2 gap-16">
+            {/* Category: Kopi */}
+            <div>
+              <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#D4A373]/30">
+                <Coffee className="text-[#D4A373]" size={28} />
+                <h3 className="text-2xl font-bold uppercase tracking-wider text-[#D4A373]">Kopi & Susu</h3>
+              </div>
+              <ul className="space-y-6">
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Es Kopi Susu Semesta</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Espresso arabika, susu segar, dan aren organik.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">22K</span>
+                </li>
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Latte Hangat</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Espresso pekat dengan steamed milk lembut.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">25K</span>
+                </li>
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Japanese Iced Filter</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Manual brew dingin dengan biji musiman.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">28K</span>
+                </li>
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Caramel Macchiato</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Espresso, vanilla, susu, dan saus karamel.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">30K</span>
+                </li>
+              </ul>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <ItemCard 
-                title="Es Kopi Susu Semesta" price="Rp 22.000"
-                description="Signature drink: Espresso arabika, susu segar, dan gula aren organik."
-                image="https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&q=80&w=600"
-              />
-              <ItemCard 
-                title="Latte Hangat" price="Rp 25.000"
-                description="Espresso pekat dengan steamed milk lembut dan latte art cantik."
-                image="https://images.unsplash.com/photo-1570968915860-54d5c301fa9f?auto=format&fit=crop&q=80&w=600"
-              />
-              <ItemCard 
-                title="Japanese Iced Filter" price="Rp 28.000"
-                description="Manual brew dingin dengan biji kopi single origin pilihan musiman."
-                image="https://images.unsplash.com/photo-1498804103079-a6351b050096?auto=format&fit=crop&q=80&w=600"
-              />
-              <ItemCard 
-                title="Caramel Macchiato" price="Rp 30.000"
-                description="Perpaduan sempurna espresso, vanilla, susu, dan saus karamel."
-                image="https://images.unsplash.com/photo-1485808191679-5f86510681a2?auto=format&fit=crop&q=80&w=600"
-              />
-            </div>
-          </div>
 
-          {/* Category: Snack */}
-          <div>
-            <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#E5D3B3]">
-              <Utensils className="text-[#D4A373]" size={28} />
-              <h3 className="text-2xl font-bold uppercase tracking-wider">Teman Seduh</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <ItemCard 
-                title="Kue Coklat Lumer" price="Rp 18.000"
-                description="Brownies panggang dengan coklat lumer di dalam, disajikan hangat."
-                image="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&q=80&w=600"
-              />
-              <ItemCard 
-                title="Croissant Butter" price="Rp 20.000"
-                description="Classic french pastry yang renyah di luar dan lembut di dalam."
-                image="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=600"
-              />
-              <ItemCard 
-                title="Pizza Pepperoni" price="Rp 35.000"
-                description="Pizza tipis renyah dengan taburan pepperoni dan keju mozzarella, cocok untuk sharing."
-                image="https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&q=80&w=600"
-              />
-              <ItemCard 
-                title="Donat Kampung Aren" price="Rp 12.000"
-                description="Donat klasik empuk dengan taburan gula aren asli."
-                image="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=600"
-              />
+            {/* Category: Snack */}
+            <div>
+              <div className="flex items-center gap-3 mb-8 pb-4 border-b border-[#D4A373]/30">
+                <Utensils className="text-[#D4A373]" size={28} />
+                <h3 className="text-2xl font-bold uppercase tracking-wider text-[#D4A373]">Teman Seduh</h3>
+              </div>
+              <ul className="space-y-6">
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Kue Coklat Lumer</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Brownies panggang dengan coklat lumer.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">18K</span>
+                </li>
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Croissant Butter</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">French pastry renyah di luar lembut di dalam.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">20K</span>
+                </li>
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Pizza Pepperoni</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Pizza tipis renyah (untuk sharing).</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">35K</span>
+                </li>
+                <li className="flex justify-between items-baseline border-b border-[#D4A373]/10 pb-4 border-dashed">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Donat Kampung Aren</h4>
+                    <p className="text-sm text-[#F5EFE6]/60 pr-4">Donat klasik empuk tabur gula aren.</p>
+                  </div>
+                  <span className="text-lg font-serif text-[#D4A373] whitespace-nowrap">12K</span>
+                </li>
+              </ul>
             </div>
           </div>
           
-          <div className="mt-12 text-center">
+          <div className="mt-16 text-center">
             <a 
               href={`https://wa.me/${DUMMY_WA}?text=Halo%20Kopi%20Semesta,%20saya%20ingin%20pesan%20menu`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 font-bold text-[#B36A5E] hover:text-[#3D2B1F] transition-colors border-b-2 border-[#B36A5E] hover:border-[#3D2B1F] pb-1"
+              className="inline-flex items-center gap-2 font-bold text-[#D4A373] hover:text-white transition-colors border-b-2 border-[#D4A373] hover:border-white pb-1"
             >
               Pesan Menu Sekarang via WhatsApp &rarr;
             </a>
@@ -419,32 +437,45 @@ export default function KopiSemestaBasicDemo() {
         </ScrollReveal>
       </section>
 
-      {/* 9. FAQ ACCORDION (New Basic Tier Feature) */}
-      <section className="py-24 px-4 max-w-3xl mx-auto">
+      {/* 9. FAQ GRID (Rustic Style) */}
+      <section className="py-24 px-4 max-w-5xl mx-auto border-t border-[#E5D3B3]">
         <ScrollReveal className="text-center mb-16">
           <h2 className="text-4xl font-serif mb-4 text-[#B36A5E]">Pertanyaan Umum</h2>
           <p className="text-[#3D2B1F]/70 text-lg">Hal-hal yang sering ditanyakan pengunjung Kopi Semesta.</p>
         </ScrollReveal>
         
-        <ScrollReveal delay={0.2}>
-          <FAQAccordion items={[
-          {
-            question: "Apakah Kopi Semesta menyediakan area smoking?",
-            answer: "Tentu! Kami memiliki area semi-outdoor di bagian belakang yang sejuk dan nyaman khusus untuk pengunjung yang ingin merokok."
-          },
-          {
-            question: "Metode pembayaran apa saja yang diterima?",
-            answer: "Kami menerima pembayaran tunai, QRIS, kartu debit/kredit, serta transfer bank (BCA, Mandiri)."
-          },
-          {
-            question: "Apakah kedai ini pet-friendly?",
-            answer: "Ya, kami sangat ramah terhadap hewan peliharaan! Anda boleh membawa anjing atau kucing peliharaan ke area outdoor kami, asalkan tetap dijaga dan menggunakan tali leashes."
-          },
-          {
-            question: "Bisa booking untuk acara privat atau ulang tahun?",
-            answer: "Bisa sekali. Anda dapat menyewa sebagian atau seluruh area kedai kami. Silakan gunakan formulir reservasi di atas dan cantumkan detail acara Anda di kolom catatan."
-          }
-        ]} />
+        <ScrollReveal delay={0.2} className="grid md:grid-cols-2 gap-10">
+          <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+            <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+            <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Apakah Kopi Semesta menyediakan area smoking?</h4>
+            <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+              Tentu! Kami memiliki area semi-outdoor di bagian belakang yang sejuk dan nyaman khusus untuk pengunjung yang ingin merokok.
+            </p>
+          </div>
+          
+          <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+            <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+            <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Metode pembayaran apa saja yang diterima?</h4>
+            <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+              Kami menerima pembayaran tunai, QRIS, kartu debit/kredit, serta transfer bank (BCA, Mandiri).
+            </p>
+          </div>
+          
+          <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+            <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+            <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Apakah kedai ini pet-friendly?</h4>
+            <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+              Ya, kami sangat ramah terhadap hewan peliharaan! Anda boleh membawa anjing atau kucing peliharaan ke area outdoor kami, asalkan tetap dijaga dan menggunakan tali leashes.
+            </p>
+          </div>
+          
+          <div className="bg-white p-6 border border-[#E5D3B3] rounded-sm shadow-sm relative">
+            <div className="absolute -top-3 -left-3 text-4xl text-[#D4A373] opacity-30 font-serif">Q.</div>
+            <h4 className="font-bold text-[#3D2B1F] mb-3 relative z-10 text-lg">Bisa booking untuk acara privat atau ulang tahun?</h4>
+            <p className="text-[#3D2B1F]/70 text-sm leading-relaxed">
+              Bisa sekali. Anda dapat menyewa sebagian atau seluruh area kedai kami. Silakan gunakan formulir reservasi di atas dan cantumkan detail acara Anda di kolom catatan.
+            </p>
+          </div>
         </ScrollReveal>
       </section>
 

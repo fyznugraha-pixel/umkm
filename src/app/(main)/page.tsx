@@ -158,7 +158,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex-1 flex justify-center">
                   <div className="bg-[#0B1121] rounded-md px-3 py-1 text-[10px] md:text-xs text-slate-500 flex items-center gap-2 w-1/2 md:w-1/3 max-w-[200px] justify-center truncate shadow-inner">
-                    <Check size={10} className="text-green-500" /> elvorastudio.com/demo
+                    <Check size={10} className="text-green-500" /> elvoraspace.com/demo
                   </div>
                 </div>
               </div>

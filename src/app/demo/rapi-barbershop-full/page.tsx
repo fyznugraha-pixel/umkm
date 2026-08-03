@@ -93,6 +93,60 @@ export default function RapiBarbershopFull() {
         </div>
       </section>
 
+      {/* 2.5 PILIH KAPSTER */}
+      <section id="kapster" className="py-24 px-6 bg-[#0A0A0A] border-t border-[#333333]">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-4">Pilih <span className="text-[#E63946]">Kapster</span> Anda</h2>
+            <p className="text-gray-400">Tim profesional kami siap memberikan servis terbaik sesuai gaya yang Anda inginkan.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Barber 1 */}
+            <div className="group relative bg-[#111111] border border-[#333333] overflow-hidden">
+              <div className="aspect-[3/4] overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&q=80&w=600" alt="Kapster 1" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-80"></div>
+              </div>
+              <div className="absolute bottom-0 left-0 w-full p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-[#E63946] font-bold tracking-widest uppercase text-sm mb-1">Master Barber</p>
+                <h3 className="text-2xl font-black text-white uppercase tracking-wider mb-2">Bramantyo</h3>
+                <p className="text-gray-400 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Spesialis Fade, Classic Pompadour, dan Executive Contour.</p>
+                <Link href="/demo/rapi-barbershop-full/booking" className="inline-block border-b-2 border-[#E63946] text-white font-bold uppercase tracking-wider text-sm pb-1 hover:text-[#E63946] transition-colors">Pilih Kapster Ini</Link>
+              </div>
+            </div>
+            
+            {/* Barber 2 */}
+            <div className="group relative bg-[#111111] border border-[#333333] overflow-hidden">
+              <div className="aspect-[3/4] overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&q=80&w=600" alt="Kapster 2" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-80"></div>
+              </div>
+              <div className="absolute bottom-0 left-0 w-full p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-[#E63946] font-bold tracking-widest uppercase text-sm mb-1">Senior Barber</p>
+                <h3 className="text-2xl font-black text-white uppercase tracking-wider mb-2">Riko</h3>
+                <p className="text-gray-400 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Spesialis Korean Crop, Mullet, dan Hair Tattooing.</p>
+                <Link href="/demo/rapi-barbershop-full/booking" className="inline-block border-b-2 border-[#E63946] text-white font-bold uppercase tracking-wider text-sm pb-1 hover:text-[#E63946] transition-colors">Pilih Kapster Ini</Link>
+              </div>
+            </div>
+
+            {/* Barber 3 */}
+            <div className="group relative bg-[#111111] border border-[#333333] overflow-hidden">
+              <div className="aspect-[3/4] overflow-hidden relative">
+                <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600" alt="Kapster 3" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent opacity-80"></div>
+              </div>
+              <div className="absolute bottom-0 left-0 w-full p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                <p className="text-[#E63946] font-bold tracking-widest uppercase text-sm mb-1">Stylist / Colorist</p>
+                <h3 className="text-2xl font-black text-white uppercase tracking-wider mb-2">Andra</h3>
+                <p className="text-gray-400 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">Spesialis Hair Coloring, Perming, dan Modern Texture.</p>
+                <Link href="/demo/rapi-barbershop-full/booking" className="inline-block border-b-2 border-[#E63946] text-white font-bold uppercase tracking-wider text-sm pb-1 hover:text-[#E63946] transition-colors">Pilih Kapster Ini</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 3. LAYANAN & HARGA LENGKAP */}
       <section id="layanan" className="py-24 px-6 bg-[#111111] border-y border-[#333333]">
         <div className="max-w-7xl mx-auto">

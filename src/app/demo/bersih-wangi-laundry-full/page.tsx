@@ -223,6 +223,109 @@ export default function BersihWangiFull() {
             </div>
           </ScrollReveal>
 
+          {/* BRANCH A: PAKET LANGGANAN */}
+          <div className="mb-20">
+            <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-[#10B981] inline-block pb-2">Paket Langganan</h3>
+            <p className="text-slate-500 mb-8">Lebih hemat, bebas repot. Pilih paket langganan cuci bulanan yang sesuai dengan gaya hidup Anda.</p>
+            
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* Paket Personal */}
+              <ScrollReveal delay={0.1}>
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Personal</h3>
+                    <p className="text-slate-500 font-light">Cocok untuk mahasiswa atau pekerja single.</p>
+                  </div>
+                  <div className="mb-6">
+                    <div className="flex items-baseline text-slate-900">
+                      <span className="text-2xl font-bold">Rp</span>
+                      <span className="text-5xl font-black tracking-tighter">150.000</span>
+                      <span className="text-slate-500 font-medium ml-1">/bln</span>
+                    </div>
+                  </div>
+                  <ul className="space-y-4 mb-8 flex-1">
+                    <li className="flex items-start gap-3">
+                      <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span className="text-slate-700">Kuota cuci hingga 20 Kg</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span className="text-slate-700">Cuci lipat rapi (tanpa setrika)</span>
+                    </li>
+                  </ul>
+                  <a href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20langganan%20Paket%20Personal`} className="block w-full py-4 px-6 text-center rounded-xl font-bold bg-slate-100 hover:bg-slate-200 text-slate-900 transition-colors">
+                    Pilih Personal
+                  </a>
+                </div>
+              </ScrollReveal>
+
+              {/* Paket Premium */}
+              <ScrollReveal delay={0.2}>
+                <div className="bg-[#10B981] border border-[#10B981] rounded-2xl p-8 hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden transform md:-translate-y-4 shadow-lg text-white">
+                  <div className="absolute top-0 right-0 bg-[#FDE047] text-[#854D0E] text-xs font-bold px-3 py-1 rounded-bl-lg">TERPOPULER</div>
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold mb-2">Premium</h3>
+                    <p className="text-emerald-100 font-light">Perawatan ekstra untuk pakaian harian.</p>
+                  </div>
+                  <div className="mb-6">
+                    <div className="flex items-baseline">
+                      <span className="text-2xl font-bold">Rp</span>
+                      <span className="text-5xl font-black tracking-tighter">280.000</span>
+                      <span className="text-emerald-200 font-medium ml-1">/bln</span>
+                    </div>
+                  </div>
+                  <ul className="space-y-4 mb-8 flex-1">
+                    <li className="flex items-start gap-3">
+                      <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span>Kuota cuci hingga 30 Kg</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span>Cuci + Setrika uap wangi</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span>Gratis pick-up & delivery</span>
+                    </li>
+                  </ul>
+                  <a href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20langganan%20Paket%20Premium`} className="block w-full py-4 px-6 text-center rounded-xl font-bold bg-white text-[#10B981] hover:bg-slate-50 transition-colors">
+                    Pilih Premium
+                  </a>
+                </div>
+              </ScrollReveal>
+
+              {/* Paket Family */}
+              <ScrollReveal delay={0.3}>
+                <div className="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden">
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-slate-900 mb-2">Family</h3>
+                    <p className="text-slate-500 font-light">Solusi cucian bersih untuk seluruh keluarga.</p>
+                  </div>
+                  <div className="mb-6">
+                    <div className="flex items-baseline text-slate-900">
+                      <span className="text-2xl font-bold">Rp</span>
+                      <span className="text-5xl font-black tracking-tighter">450.000</span>
+                      <span className="text-slate-500 font-medium ml-1">/bln</span>
+                    </div>
+                  </div>
+                  <ul className="space-y-4 mb-8 flex-1">
+                    <li className="flex items-start gap-3">
+                      <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span className="text-slate-700">Kuota cuci hingga 60 Kg</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                      <span className="text-slate-700">Cuci + Setrika uap wangi</span>
+                    </li>
+                  </ul>
+                  <a href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20langganan%20Paket%20Family`} className="block w-full py-4 px-6 text-center rounded-xl font-bold bg-slate-100 hover:bg-slate-200 text-slate-900 transition-colors">
+                    Pilih Family
+                  </a>
+                </div>
+              </ScrollReveal>
+            </div>
+          </div>
+
           {/* BRANCH B: LAYANAN KILOAN (DROPOFF) */}
           <div className="mb-20">
             <h3 className="text-2xl font-bold text-slate-800 mb-6 border-b-2 border-[#0EA5E9] inline-block pb-2">Layanan Kiloan (Drop-off)</h3>
@@ -348,20 +451,54 @@ export default function BersihWangiFull() {
         </div>
       </section>
 
-      {/* 7. GALERI PROSES & HASIL */}
+      {/* 7. BEFORE / AFTER (PERBANDINGAN NODA) */}
       <section id="galeri" className="py-24 px-6 bg-[#F8FAFC] scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Standard <span className="text-[#0EA5E9]">Output Kami</span></h2>
+              <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Perbandingan <span className="text-[#0EA5E9]">Before / After</span></h2>
               <p className="text-lg text-slate-600 font-light max-w-2xl mx-auto">
-                Transparansi adalah kunci. Kami tidak ragu menunjukkan detail proses pencucian hingga lipatan akhir yang akan Anda terima.
+                Bukan sekadar mencuci, kami melakukan treatment khusus pada noda membandel sebelum masuk mesin cuci.
               </p>
             </div>
           </ScrollReveal>
           
-          <ScrollReveal delay={0.2}>
-            <GalleryGrid images={GALLERY_PHOTOS} theme="fashion" aspectRatio="landscape" />
+          <ScrollReveal delay={0.2} className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+              <div className="flex overflow-hidden rounded-xl h-64 mb-4">
+                <div className="w-1/2 relative bg-slate-200 border-r-4 border-white">
+                  <div className="absolute top-2 left-2 bg-slate-800 text-white text-xs font-bold px-2 py-1 rounded">BEFORE</div>
+                  <div className="w-full h-full flex items-center justify-center bg-[#FDE047]/20 relative">
+                    <img src="https://images.unsplash.com/photo-1544253198-46cb5b161c56?auto=format&fit=crop&q=80&w=400" alt="Baju Kena Kopi" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" />
+                    <span className="relative z-10 bg-white/80 p-2 text-sm font-bold shadow-sm rounded text-slate-900">Noda Kopi</span>
+                  </div>
+                </div>
+                <div className="w-1/2 relative bg-white">
+                  <div className="absolute top-2 right-2 bg-[#0EA5E9] text-white text-xs font-bold px-2 py-1 rounded">AFTER</div>
+                  <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&q=80&w=400" alt="Baju Bersih" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg">Noda Kopi / Teh</h3>
+              <p className="text-slate-500 text-sm">Berhasil dihilangkan 100% tanpa merusak serat kain putih.</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+              <div className="flex overflow-hidden rounded-xl h-64 mb-4">
+                <div className="w-1/2 relative bg-slate-200 border-r-4 border-white">
+                  <div className="absolute top-2 left-2 bg-slate-800 text-white text-xs font-bold px-2 py-1 rounded">BEFORE</div>
+                  <div className="w-full h-full flex items-center justify-center bg-black/20 relative">
+                    <img src="https://images.unsplash.com/photo-1524316634796-0370897b7cb4?auto=format&fit=crop&q=80&w=400" alt="Baju Kena Saus" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" />
+                    <span className="relative z-10 bg-white/80 p-2 text-sm font-bold shadow-sm rounded text-slate-900">Tinta / Saus</span>
+                  </div>
+                </div>
+                <div className="w-1/2 relative bg-white">
+                  <div className="absolute top-2 right-2 bg-[#0EA5E9] text-white text-xs font-bold px-2 py-1 rounded">AFTER</div>
+                  <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&q=80&w=400" alt="Baju Bersih" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg">Noda Tinta & Saus</h3>
+              <p className="text-slate-500 text-sm">Treatment spotting chemical khusus sebelum masuk mesin cuci utama.</p>
+            </div>
           </ScrollReveal>
         </div>
       </section>

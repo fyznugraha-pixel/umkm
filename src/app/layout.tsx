@@ -19,6 +19,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata: Metadata = {
   title: "Jasa Buat Website UMKM",
   description: "Bikin UMKM Kamu Punya Rumah Sendiri di Internet",
+  icons: {
+    icon: '/logo/elvora-icon.png',
+  },
 };
 
 export default function RootLayout({

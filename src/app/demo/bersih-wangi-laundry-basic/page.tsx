@@ -286,15 +286,64 @@ export default function BersihWangiBasic() {
             </ScrollReveal>
           </div>
           
-          <div className="md:col-span-5 relative h-[50vh] md:h-[75vh] w-full">
-            <ScrollReveal direction="left" delay={0.2} className="w-full h-full">
-              <img 
-                src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=800" 
-                alt="Detail tekstur pakaian terlipat rapi" 
-                className="absolute inset-0 w-full h-full object-cover rounded-tl-[100px] rounded-br-[100px] shadow-2xl"
-              />
-              <div className="absolute inset-0 bg-white/10 mix-blend-overlay"></div>
+          <div className="md:col-span-5 relative w-full">
+            <ScrollReveal direction="left" delay={0.2} className="w-full h-full relative z-10">
+              <div className="bg-white rounded-2xl shadow-2xl border border-slate-100 p-6 md:p-8 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#0EA5E9] to-[#38BDF8]"></div>
+                
+                <div className="flex justify-between items-center mb-6">
+                  <div>
+                    <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-1">Status Pesanan</p>
+                    <h3 className="text-xl font-bold text-slate-900">ID: BW-90214</h3>
+                  </div>
+                  <div className="bg-[#ECFCCB] text-[#65A30D] px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1">
+                    <Sparkles size={12} /> Express
+                  </div>
+                </div>
+
+                <div className="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-slate-200 before:via-slate-200 before:to-transparent">
+                  
+                  {/* Step 1: Done */}
+                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0EA5E9] text-white shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-md z-10">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 bg-slate-50 rounded-xl border border-slate-100 shadow-sm ml-4 md:ml-0 md:group-odd:pr-8 md:group-even:pl-8 text-left md:group-odd:text-right">
+                      <h4 className="font-bold text-slate-900 text-sm">Pick-up Sukses</h4>
+                      <p className="text-xs text-slate-500">Kurir telah mengambil cucian (3.2 Kg)</p>
+                    </div>
+                  </div>
+                  
+                  {/* Step 2: Active */}
+                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white border-4 border-[#0EA5E9] shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 shadow-sm z-10">
+                      <div className="w-2.5 h-2.5 bg-[#0EA5E9] rounded-full animate-pulse"></div>
+                    </div>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 bg-white rounded-xl border-2 border-[#0EA5E9] shadow-md ml-4 md:ml-0 md:group-odd:pr-8 md:group-even:pl-8 text-left md:group-odd:text-right relative">
+                      <h4 className="font-bold text-[#0284C7] text-sm">Proses Cuci & Setrika</h4>
+                      <p className="text-xs text-slate-600">Sedang dicuci dengan deterjen khusus.</p>
+                      <div className="absolute top-1/2 -right-2 md:group-odd:-left-2 md:group-even:-right-2 w-4 h-4 bg-white border-b-2 border-r-2 border-[#0EA5E9] transform rotate-45 -translate-y-1/2 md:group-odd:border-none md:group-odd:border-t-2 md:group-odd:border-l-2"></div>
+                    </div>
+                  </div>
+
+                  {/* Step 3: Pending */}
+                  <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div className="flex items-center justify-center w-10 h-10 rounded-full bg-slate-100 border-2 border-slate-200 text-slate-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10">
+                      <MapPin size={16} />
+                    </div>
+                    <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 ml-4 md:ml-0 md:group-odd:pr-8 md:group-even:pl-8 text-left md:group-odd:text-right">
+                      <h4 className="font-bold text-slate-400 text-sm">Siap Diantar</h4>
+                      <p className="text-xs text-slate-400">Estimasi tiba pkl 17:00 WIB.</p>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </ScrollReveal>
+            
+            {/* Decorative background blobs */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[400px] max-h-[400px] bg-[#0EA5E9]/20 blur-3xl rounded-full z-0"></div>
+            <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#38BDF8]/30 blur-2xl rounded-full z-0"></div>
           </div>
           
         </div>
@@ -310,7 +359,7 @@ export default function BersihWangiBasic() {
         <ProcessTimeline />
       </div>
 
-      {/* 4. LAYANAN & HARGA */}
+      {/* 4. LAYANAN & HARGA (Paket Langganan) */}
       <section id="layanan" className="py-32 px-6 bg-white relative scroll-mt-20">
         <div className="absolute top-0 left-0 w-full overflow-hidden leading-none transform rotate-180">
           <svg className="relative block w-full h-[50px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -318,56 +367,127 @@ export default function BersihWangiBasic() {
           </svg>
         </div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <ScrollReveal>
-            <div className="mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Daftar <span className="text-[#0EA5E9]">Layanan & Harga</span></h2>
-              <p className="text-xl text-slate-600 font-light max-w-2xl">
-                Tersedia opsi Express untuk kebutuhan mendesak dan opsi Reguler untuk perawatan harian Anda. Harga transparan.
+            <div className="mb-16 text-center">
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6 tracking-tight">Paket <span className="text-[#0EA5E9]">Langganan Bulanan</span></h2>
+              <p className="text-xl text-slate-600 font-light max-w-2xl mx-auto">
+                Lebih hemat, bebas repot. Pilih paket langganan cuci bulanan yang sesuai dengan gaya hidup Anda dan keluarga.
               </p>
             </div>
           </ScrollReveal>
 
-          <div className="flex flex-col gap-6">
-            {SERVICES.map((service, index) => (
-              <ScrollReveal key={service.id} delay={index * 0.1}>
-                <div 
-                  className={`flex flex-col md:flex-row gap-6 bg-white border border-slate-200 border-l-[6px] border-l-[#0EA5E9] p-6 md:p-8 hover:shadow-xl transition-shadow ${index % 2 !== 0 ? 'md:ml-12' : ''}`}
-                >
-                  <div className="w-full md:w-56 h-56 md:h-auto shrink-0 relative overflow-hidden bg-slate-100">
-                    <img src={service.image} alt={service.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  </div>
-                  
-                  <div className="flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex justify-between items-start mb-2 flex-wrap gap-2">
-                        <h3 className="text-2xl font-bold text-slate-900">{service.name}</h3>
-                        <span className="bg-[#E0F2FE] text-[#0284C7] text-xs font-bold px-3 py-1 uppercase tracking-wider">{service.highlight}</span>
-                      </div>
-                      <p className="text-slate-600 mb-6 font-light leading-relaxed">{service.description}</p>
-                    </div>
-                    
-                    <div className="flex flex-col sm:flex-row sm:items-end justify-between border-t border-slate-100 pt-4 mt-auto">
-                      <div>
-                        <span className="text-sm text-slate-400 block mb-1">Mulai dari</span>
-                        <div className="flex items-baseline gap-1 text-[#0EA5E9]">
-                          <span className="text-xl font-bold">Rp</span>
-                          <span className="text-4xl font-black tracking-tighter">{service.price}</span>
-                          <span className="text-lg font-medium text-slate-500">{service.priceSuffix}</span>
-                        </div>
-                      </div>
-                      <a 
-                        href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20layanan%20${encodeURIComponent(service.name)}`}
-                        className="mt-4 sm:mt-0 text-sm font-bold uppercase tracking-wider text-slate-900 hover:text-[#0EA5E9] flex items-center gap-2 group"
-                      >
-                        Booking Sekarang 
-                        <span className="w-6 h-[2px] bg-slate-900 group-hover:bg-[#0EA5E9] group-hover:w-8 transition-all"></span>
-                      </a>
-                    </div>
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Paket Personal */}
+            <ScrollReveal delay={0.1}>
+              <div className="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Personal</h3>
+                  <p className="text-slate-500 font-light">Cocok untuk mahasiswa atau pekerja single.</p>
+                </div>
+                <div className="mb-6">
+                  <div className="flex items-baseline text-slate-900">
+                    <span className="text-2xl font-bold">Rp</span>
+                    <span className="text-5xl font-black tracking-tighter">150.000</span>
+                    <span className="text-slate-500 font-medium ml-1">/bln</span>
                   </div>
                 </div>
-              </ScrollReveal>
-            ))}
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Kuota cuci hingga 20 Kg</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Cuci lipat rapi (tanpa setrika)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Deterjen standar antibakteri</span>
+                  </li>
+                </ul>
+                <a href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20langganan%20Paket%20Personal`} className="block w-full py-4 px-6 text-center rounded-xl font-bold bg-slate-100 hover:bg-slate-200 text-slate-900 transition-colors">
+                  Pilih Personal
+                </a>
+              </div>
+            </ScrollReveal>
+
+            {/* Paket Premium */}
+            <ScrollReveal delay={0.2}>
+              <div className="bg-[#0EA5E9] border border-[#0EA5E9] rounded-2xl p-8 hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden transform md:-translate-y-4 shadow-lg text-white">
+                <div className="absolute top-0 right-0 bg-[#FDE047] text-[#854D0E] text-xs font-bold px-3 py-1 rounded-bl-lg">TERPOPULER</div>
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold mb-2">Premium</h3>
+                  <p className="text-sky-100 font-light">Perawatan ekstra untuk pakaian harian.</p>
+                </div>
+                <div className="mb-6">
+                  <div className="flex items-baseline">
+                    <span className="text-2xl font-bold">Rp</span>
+                    <span className="text-5xl font-black tracking-tighter">280.000</span>
+                    <span className="text-sky-200 font-medium ml-1">/bln</span>
+                  </div>
+                </div>
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span>Kuota cuci hingga 30 Kg</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span>Cuci + Setrika uap wangi</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span>Gratis pick-up & delivery (radius 5km)</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-white/20 p-1 rounded-full shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span>Deterjen hypoallergenic premium</span>
+                  </li>
+                </ul>
+                <a href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20langganan%20Paket%20Premium`} className="block w-full py-4 px-6 text-center rounded-xl font-bold bg-white text-[#0EA5E9] hover:bg-slate-50 transition-colors">
+                  Pilih Premium
+                </a>
+              </div>
+            </ScrollReveal>
+
+            {/* Paket Family */}
+            <ScrollReveal delay={0.3}>
+              <div className="bg-white border border-slate-200 rounded-2xl p-8 hover:shadow-xl transition-shadow flex flex-col h-full relative overflow-hidden">
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-slate-900 mb-2">Family</h3>
+                  <p className="text-slate-500 font-light">Solusi cucian bersih untuk seluruh anggota keluarga.</p>
+                </div>
+                <div className="mb-6">
+                  <div className="flex items-baseline text-slate-900">
+                    <span className="text-2xl font-bold">Rp</span>
+                    <span className="text-5xl font-black tracking-tighter">450.000</span>
+                    <span className="text-slate-500 font-medium ml-1">/bln</span>
+                  </div>
+                </div>
+                <ul className="space-y-4 mb-8 flex-1">
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Kuota cuci hingga 60 Kg</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Cuci + Setrika uap wangi</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Prioritas mesin VIP</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="bg-[#E0F2FE] p-1 rounded-full text-[#0EA5E9] shrink-0 mt-0.5"><Sparkles size={14} /></div>
+                    <span className="text-slate-700">Gratis cuci 2 pcs bedcover/selimut</span>
+                  </li>
+                </ul>
+                <a href={`https://wa.me/${DUMMY_WA}?text=Halo,%20saya%20mau%20langganan%20Paket%20Family`} className="block w-full py-4 px-6 text-center rounded-xl font-bold bg-slate-100 hover:bg-slate-200 text-slate-900 transition-colors">
+                  Pilih Family
+                </a>
+              </div>
+            </ScrollReveal>
           </div>
         </div>
       </section>
@@ -428,20 +548,54 @@ export default function BersihWangiBasic() {
         </div>
       </section>
 
-      {/* 7. GALERI PROSES & HASIL */}
+      {/* 7. BEFORE / AFTER (PERBANDINGAN NODA) */}
       <section id="galeri" className="py-24 px-6 bg-[#F8FAFC] scroll-mt-20">
         <div className="max-w-6xl mx-auto">
           <ScrollReveal>
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Standard <span className="text-[#0EA5E9]">Output Kami</span></h2>
+              <h2 className="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Perbandingan <span className="text-[#0EA5E9]">Before / After</span></h2>
               <p className="text-lg text-slate-600 font-light max-w-2xl mx-auto">
-                Transparansi adalah kunci. Kami tidak ragu menunjukkan detail proses pencucian hingga lipatan akhir yang akan Anda terima.
+                Bukan sekadar mencuci, kami melakukan treatment khusus pada noda membandel sebelum masuk mesin cuci.
               </p>
             </div>
           </ScrollReveal>
           
-          <ScrollReveal delay={0.2}>
-            <GalleryGrid images={GALLERY_PHOTOS} theme="fashion" aspectRatio="landscape" />
+          <ScrollReveal delay={0.2} className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+              <div className="flex overflow-hidden rounded-xl h-64 mb-4">
+                <div className="w-1/2 relative bg-slate-200 border-r-4 border-white">
+                  <div className="absolute top-2 left-2 bg-slate-800 text-white text-xs font-bold px-2 py-1 rounded">BEFORE</div>
+                  <div className="w-full h-full flex items-center justify-center bg-[#FDE047]/20 relative">
+                    <img src="https://images.unsplash.com/photo-1544253198-46cb5b161c56?auto=format&fit=crop&q=80&w=400" alt="Baju Kena Kopi" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" />
+                    <span className="relative z-10 bg-white/80 p-2 text-sm font-bold shadow-sm rounded text-slate-900">Noda Kopi</span>
+                  </div>
+                </div>
+                <div className="w-1/2 relative bg-white">
+                  <div className="absolute top-2 right-2 bg-[#0EA5E9] text-white text-xs font-bold px-2 py-1 rounded">AFTER</div>
+                  <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&q=80&w=400" alt="Baju Bersih" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg">Noda Kopi / Teh</h3>
+              <p className="text-slate-500 text-sm">Berhasil dihilangkan 100% tanpa merusak serat kain putih.</p>
+            </div>
+
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
+              <div className="flex overflow-hidden rounded-xl h-64 mb-4">
+                <div className="w-1/2 relative bg-slate-200 border-r-4 border-white">
+                  <div className="absolute top-2 left-2 bg-slate-800 text-white text-xs font-bold px-2 py-1 rounded">BEFORE</div>
+                  <div className="w-full h-full flex items-center justify-center bg-black/20 relative">
+                    <img src="https://images.unsplash.com/photo-1524316634796-0370897b7cb4?auto=format&fit=crop&q=80&w=400" alt="Baju Kena Saus" className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80" />
+                    <span className="relative z-10 bg-white/80 p-2 text-sm font-bold shadow-sm rounded text-slate-900">Tinta / Saus</span>
+                  </div>
+                </div>
+                <div className="w-1/2 relative bg-white">
+                  <div className="absolute top-2 right-2 bg-[#0EA5E9] text-white text-xs font-bold px-2 py-1 rounded">AFTER</div>
+                  <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&q=80&w=400" alt="Baju Bersih" className="w-full h-full object-cover" />
+                </div>
+              </div>
+              <h3 className="font-bold text-slate-900 text-lg">Noda Tinta & Saus</h3>
+              <p className="text-slate-500 text-sm">Treatment spotting chemical khusus sebelum masuk mesin cuci utama.</p>
+            </div>
           </ScrollReveal>
         </div>
       </section>

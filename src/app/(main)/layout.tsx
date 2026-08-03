@@ -28,7 +28,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
       <footer id="kontak" className="border-t border-white/10 bg-slate-950 py-12 w-full flex flex-col items-center">
         <div className="container mx-auto px-4 max-w-[1400px] flex flex-col md:flex-row justify-between items-center md:items-start gap-8">
           <div>
-            <img src="/logo/elvora.webp" alt="Elvora Studio" className="h-16 md:h-20 w-auto mb-2 object-contain" />
+            <img src="/logo/elvora.png" alt="Elvora Space" className="h-16 md:h-20 w-auto mb-2 object-contain" />
             <p className="text-slate-400 text-sm max-w-xs">
               Membantu UMKM Indonesia go digital dengan website profesional dan harga terjangkau.
             </p>
@@ -46,7 +46,7 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
           </div>
         </div>
         <div className="container mx-auto px-4 max-w-[1400px] mt-8 pt-8 border-t border-white/5 text-center text-xs text-slate-500">
-          &copy; {new Date().getFullYear()} Elvora Studio. All rights reserved.
+          &copy; {new Date().getFullYear()} Elvora Space. All rights reserved.
         </div>
       </footer>
 
